@@ -1,15 +1,18 @@
 package fxPepe;
 	
+import fi.jyu.mit.fxgui.Dialogs;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
+
+
 /**
  * 
  * @author anssi
- * @version 21 Jan 2020
+ * @version 14 Feb 2020
  *
  */
 public class PepeMain extends Application {
@@ -27,7 +30,6 @@ public class PepeMain extends Application {
 	    
 	    primaryStage.setOnCloseRequest((event) -> {
 	        if ( !pepeCtrl.voikoSulkea() ) event.consume();
-	    
 	    });
 	    
 	    primaryStage.show();
