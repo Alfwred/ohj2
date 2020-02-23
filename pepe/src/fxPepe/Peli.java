@@ -15,14 +15,10 @@ import java.io.PrintStream;
  */
 public class Peli {
     
-    private int     tunniste;
-    private String  nimi            = "";
-    private int     alusta          = 0;
-    private int     julkaisuvuosi   = 0;
-    private int     ostovuosi       = 0;
-    private int     kunto           = 0;
-    private String  lisatiedot      = "";
+    private int tunniste;
+    private String  nimi = "";
     
+    private static int seuraavaTunniste;
     
     /**
      * @return pelin nimi
@@ -40,16 +36,9 @@ public class Peli {
     
     /**
      * Apumetodi, jolla saadaan täytettyä testiarvot pelille
-     * @param t Aputunniste, joka annetaan pelille
      */
-    public void taytaTestiPeliTiedoilla(int t) {
-        tunniste = t;
+    public void taytaTestiPeliTiedoilla() {
         nimi = "Tomb Raider 2";
-        alusta = 2;
-        julkaisuvuosi = 1997;
-        ostovuosi = 1999;
-        kunto = 222;
-        lisatiedot = "Ei lisatietoja";
     }
     
     
@@ -59,17 +48,56 @@ public class Peli {
     * samoja tietoja.
     */
     public void taytaPeliTiedoilla() {
-        int aputunniste = arvoTunniste();
-        taytaTestiPeliTiedoilla(aputunniste);
+        taytaTestiPeliTiedoilla();
     }
 
     
     /**
     * Tulostetaan henkilön tiedot
-    * @param os tietovirta johon tulostetaan
+    * @param out tietovirta johon tulostetaan
     */
+    public void tulosta(PrintStream out) {
+        out.println(tunniste + "|" + nimi);
+    }
+    
+    
+    /**
+     * Tulostetaan henkilön tiedot
+     * @param os tietovirta johon tulostetaan
+     */
     public void tulosta(OutputStream os) {
-    tulosta(new PrintStream(os));
+        tulosta(new PrintStream(os));
+    }
+    
+    
+    /**
+     * Antaa pelille seuraavan tunnistenumeron.
+     * @return tunniste Uusi tunnistenumero
+     * @example
+     * <pre name="test">
+     *   Jasen ra = new Jasen();
+     *   ra.getTunnusNro() === 0;
+     *   ra.rekisteroi();
+     *   Jasen ra2 = new Jasen();
+     *   ra2.rekisteroi();
+     *   int n1 = ra1.getTunnusNro();
+     *   int n2 = ra2.getTunnusNro();
+     *   n1 === n2-1;
+     * </pre>
+     */
+    public int lisaa() {
+        tunniste = seuraavaTunniste;
+        seuraavaTunniste++;
+        return tunniste;
+    }
+    
+    
+    /**
+     * Palauttaa jäsenen tunnusnumeron.
+     * @return jäsenen tunnusnumero
+     */
+    public int getTunniste() {
+        return tunniste;
     }
     
     
@@ -77,7 +105,15 @@ public class Peli {
      * @param args Ei käytössä
      */
     public static void main(String[] args) {
-    // TODO Auto-generated method stub
+        Peli ra = new Peli(), cnc = new Peli();
+        ra.lisaa();
+        cnc.lisaa();
+        ra.tulosta(System.out);
+        ra.taytaPeliTiedoilla();
+        ra.tulosta(System.out);
+        cnc.tulosta(System.out);
+        cnc.taytaPeliTiedoilla();
+        cnc.tulosta(System.out);
     
     }
 
