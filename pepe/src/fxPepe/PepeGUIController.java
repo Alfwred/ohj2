@@ -1,5 +1,30 @@
 package fxPepe;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import fi.jyu.mit.fxgui.ComboBoxChooser;
+import fi.jyu.mit.fxgui.Dialogs;
+import fi.jyu.mit.fxgui.ListChooser;
+import fi.jyu.mit.fxgui.ModalController;
+import fi.jyu.mit.fxgui.TextAreaOutputStream;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
+import fxPepe.Peli;
+import fxPepe.Pepe;
+import fxPepe.SailoException;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,16 +35,32 @@ import fi.jyu.mit.fxgui.*;
 
 
 /**
- * PEPE:n controlleri
- * @author anssi
+ * Luokka Pepen käyttöliittymän tapahtumien hoitamiseksi.
+ * @author Anssi Lepikko
  * @version 14 Feb 2020
  *
  */
 public class PepeGUIController implements Initializable {
+    
+    @FXML private TextField hakuehto;
+    @FXML private Label labelVirhe;
+    @FXML private ScrollPane panelPeli;
+    @FXML private StringGrid<Peli> chooserPelit;
+    
+    private String pepenimi = "pelirekisteri";
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
-        // TODO
+        // TODO jotain?
+    }
+    
+    @FXML private void handleHakuehto() {
+        String hakukentta = hakuehto.getSelectedText();
+        String ehto = hakuehto.getText(); 
+        if ( ehto.isEmpty() )
+            naytaVirhe(null);
+        else
+            naytaVirhe("Ei osata vielä hakea " + hakukentta + ": " + ehto);
     }
     
     /**
@@ -55,8 +96,7 @@ public class PepeGUIController implements Initializable {
      * Avaa pelinlisäysikkunan
      */
     @FXML void handlePeliLisaa() {
-        String kerhonNimi = PepePeliController.kysyNimi(null, "Tomb Raider II");
-        Dialogs.showMessageDialog(kerhonNimi);
+        PepePeliController.lisaaPeli(null, "Tomb Raider II");
     }
     
     /**
@@ -102,6 +142,56 @@ public class PepeGUIController implements Initializable {
         tallenna();
         Platform.exit();
     }
+    
+    
+//===========================================================================================    
+// Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia
+    
+    private Pepe pepe;
+    private Peli peliValittu;
+    private TextArea areaPeli = new TextArea();
+    
+    
+    /**
+     * Tekee tarvittavat muut alustukset, nyt vaihdetaan GridPanen tilalle
+     * yksi iso tekstikenttä, johon voidaan tulostaa jäsenten tiedot.
+     * Alustetaan myös jäsenlistan kuuntelija 
+     */
+    protected void alusta() {
+        panelPeli.setContent(areaPeli);
+        areaPeli.setFont(new Font("Courier New", 12));
+        panelPeli.setFitToHeight(true);
+        
+        chooserPelit.clear();
+        chooserPelit.addSelectionListener(e -> naytaPeli());
+    }
+
+    
+    private void naytaVirhe(String virhe) {
+        if ( virhe == null || virhe.isEmpty() ) {
+            labelVirhe.setText("");
+            labelVirhe.getStyleClass().removeAll("virhe");
+            return;
+        }
+        labelVirhe.setText(virhe);
+        labelVirhe.getStyleClass().add("virhe");
+    }
+    
+    private void setTitle(String title) {
+        ModalController.getStage(hakuehto).setTitle(title);
+    }
+    
+    /**
+     * Alustaa pepen lukemalla sen valitun nimisestä tiedostosta
+     * @param nimi tiedosto josta pepen tiedot luetaan
+     */
+    protected void lueTiedosto(String nimi) {
+        pepenimi = nimi;
+        setTitle("Pepe - " + pepenimi);
+        String virhe = "Ei osata lukea vielä";  // TODO: tähän oikea tiedoston lukeminen
+        // if (virhe != null) 
+            Dialogs.showMessageDialog(virhe);
+    }
 
     /**
      * Tietojen tallennus
@@ -109,195 +199,115 @@ public class PepeGUIController implements Initializable {
     private void tallenna() {
         Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
     }
-    
+
+
     /**
      * Tarkistetaan onko tallennus tehty
-     * @return true jos saa sulkaa sovelluksen, false jos ei
+     * @return true jos saa sulkea sovelluksen, false jos ei
      */
     public boolean voikoSulkea() {
         tallenna();
         return true;
     }
     
-  //===========================================================================================    
- // Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia    
-     
-     private Kerho kerho;
-     private Jasen jasenKohdalla;
-     private TextArea areaJasen = new TextArea();
-     
-     
-     /**
-      * Tekee tarvittavat muut alustukset, nyt vaihdetaan GridPanen tilalle
-      * yksi iso tekstikenttä, johon voidaan tulostaa jäsenten tiedot.
-      * Alustetaan myös jäsenlistan kuuntelija 
-      */
-     protected void alusta() {
-         panelJasen.setContent(areaJasen);
-         areaJasen.setFont(new Font("Courier New", 12));
-         panelJasen.setFitToHeight(true);
-         
-         chooserJasenet.clear();
-         chooserJasenet.addSelectionListener(e -> naytaJasen());
-     }
+    
+    /**
+     * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
+     */
+    protected void naytaPeli() {
+        peliValittu = chooserPelit.getObject();
 
-     
-     private void naytaVirhe(String virhe) {
-         if ( virhe == null || virhe.isEmpty() ) {
-             labelVirhe.setText("");
-             labelVirhe.getStyleClass().removeAll("virhe");
-             return;
-         }
-         labelVirhe.setText(virhe);
-         labelVirhe.getStyleClass().add("virhe");
-     }
-     
-     
-     private void setTitle(String title) {
-         ModalController.getStage(hakuehto).setTitle(title);
-     }
-     
-     
-     /**
-      * Alustaa kerhon lukemalla sen valitun nimisestä tiedostosta
-      * @param nimi tiedosto josta kerhon tiedot luetaan
-      */
-     protected void lueTiedosto(String nimi) {
-         kerhonnimi = nimi;
-         setTitle("Kerho - " + kerhonnimi);
-         String virhe = "Ei osata lukea vielä";  // TODO: tähän oikea tiedoston lukeminen
-         // if (virhe != null) 
-             Dialogs.showMessageDialog(virhe);
-     }
+        if (peliValittu == null) return;
 
-     
-     /**
-      * Kysytään tiedoston nimi ja luetaan se
-      * @return true jos onnistui, false jos ei
-      */
-     public boolean avaa() {
-         String uusinimi = KerhonNimiController.kysyNimi(null, kerhonnimi);
-         if (uusinimi == null) return false;
-         lueTiedosto(uusinimi);
-         return true;
-     }
-
-     
-     /**
-      * Tietojen tallennus
-      */
-     private void tallenna() {
-         Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
-     }
+        areaPeli.setText("");
+        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPeli)) {
+            peliValittu.tulosta(os);
+        }
+    }
 
 
-     /**
-      * Tarkistetaan onko tallennus tehty
-      * @return true jos saa sulkea sovelluksen, false jos ei
-      */
-     public boolean voikoSulkea() {
-         tallenna();
-         return true;
-     }
-     
-     
-     /**
-      * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
-      */
-     protected void naytaJasen() {
-         jasenKohdalla = chooserJasenet.getSelectedObject();
+    /**
+     * Hakee jäsenten tiedot listaan
+     * @param jnro jäsenen numero, joka aktivoidaan haun jälkeen
+     */
+    protected void hae(int jnro) {
+        chooserPelit.clear();
 
-         if (jasenKohdalla == null) return;
-
-         areaJasen.setText("");
-         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaJasen)) {
-             jasenKohdalla.tulosta(os);
-         }
-     }
+        int index = 0;
+        for (int i = 0; i < pepe.getPeleja(); i++) {
+            Peli jasen = pepe.annaPeli(i);
+            if (jasen.getTunniste() == jnro) index = i;
+            chooserPelit.add(jasen);
+        }
+        chooserPelit.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää jäsenen
+    }
 
 
-     /**
-      * Hakee jäsenten tiedot listaan
-      * @param jnro jäsenen numero, joka aktivoidaan haun jälkeen
-      */
-     protected void hae(int jnro) {
-         chooserJasenet.clear();
+    /**
+     * Luo uuden jäsenen jota aletaan editoimaan 
+     */
+    protected void uusiPeli() {
+        Peli uusi = new Peli();
+        uusi.lisaa();
+        uusi.taytaPeliTiedoilla();
+        try {
+            pepe.lisaa(uusi);
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
+            return;
+        }
+        hae(uusi.getTunniste());
+    }
+    
 
-         int index = 0;
-         for (int i = 0; i < kerho.getJasenia(); i++) {
-             Jasen jasen = kerho.annaJasen(i);
-             if (jasen.getTunnusNro() == jnro) index = i;
-             chooserJasenet.add(jasen.getNimi(), jasen);
-         }
-         chooserJasenet.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää jäsenen
-     }
+    /**
+     * @param pepe Pepe jota käytetään tässä käyttöliittymässä
+     */
+    public void setPepe(Pepe pepe) {
+        this.pepe = pepe;
+        naytaPeli();
+    }
 
+    
+    /**
+     * Näytetään ohjelman suunnitelma erillisessä selaimessa.
+     */
+    private void avustus() {
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            URI uri = new URI("https://tim.jyu.fi/view/kurssit/tie/ohj2/2019k/ht/vesal");
+            desktop.browse(uri);
+        } catch (URISyntaxException e) {
+            return;
+        } catch (IOException e) {
+            return;
+        }
+    }
 
-     /**
-      * Luo uuden jäsenen jota aletaan editoimaan 
-      */
-     protected void uusiJasen() {
-         Jasen uusi = new Jasen();
-         uusi.rekisteroi();
-         uusi.vastaaAkuAnkka();
-         try {
-             kerho.lisaa(uusi);
-         } catch (SailoException e) {
-             Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
-             return;
-         }
-         hae(uusi.getTunnusNro());
-     }
-     
-
-     /**
-      * @param kerho Kerho jota käytetään tässä käyttöliittymässä
-      */
-     public void setKerho(Kerho kerho) {
-         this.kerho = kerho;
-         naytaJasen();
-     }
-
-     
-     /**
-      * Näytetään ohjelman suunnitelma erillisessä selaimessa.
-      */
-     private void avustus() {
-         Desktop desktop = Desktop.getDesktop();
-         try {
-             URI uri = new URI("https://tim.jyu.fi/view/kurssit/tie/ohj2/2019k/ht/vesal");
-             desktop.browse(uri);
-         } catch (URISyntaxException e) {
-             return;
-         } catch (IOException e) {
-             return;
-         }
-     }
-
-     /**
-      * Tulostaa jäsenen tiedot
-      * @param os tietovirta johon tulostetaan
-      * @param jasen tulostettava jäsen
-      */
-     public void tulosta(PrintStream os, final Jasen jasen) {
-         os.println("----------------------------------------------");
-         jasen.tulosta(os);
-         os.println("----------------------------------------------");
-     }
-     
-     /**
-      * Tulostaa listassa olevat jäsenet tekstialueeseen
-      * @param text alue johon tulostetaan
-      */
-     public void tulostaValitut(TextArea text) {
-         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(text)) {
-             os.println("Tulostetaan kaikki jäsenet");
-             for (int i = 0; i < kerho.getJasenia(); i++) {
-                 Jasen jasen = kerho.annaJasen(i);
-                 tulosta(os, jasen);
-                 os.println("\n\n");
-             }
-         }
-     }
-
+    /**
+     * Tulostaa jäsenen tiedot
+     * @param os tietovirta johon tulostetaan
+     * @param jasen tulostettava jäsen
+     */
+    public void tulosta(PrintStream os, final Peli jasen) {
+        os.println("----------------------------------------------");
+        jasen.tulosta(os);
+        os.println("----------------------------------------------");
+    }
+    
+    
+    /**
+     * Tulostaa listassa olevat jäsenet tekstialueeseen
+     * @param text alue johon tulostetaan
+     */
+    public void tulostaValitut(TextArea text) {
+        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(text)) {
+            os.println("Tulostetaan kaikki jäsenet");
+            for (int i = 0; i < pepe.getPeleja(); i++) {
+                Peli jasen = pepe.annaPeli(i);
+                tulosta(os, jasen);
+                os.println("\n\n");
+            }
+        }
+    }
 }

@@ -75,7 +75,7 @@ public class PepePeliController implements Initializable {
      * @param oletus mitä nimeä näytetään oletuksena
      * @return null jos painetaan Cancel, muuten kirjoitettu nimi
      */
-    public static String kysyNimi(Stage modalityStage, String oletus) {
+    public static String lisaaPeli(Stage modalityStage, String oletus) {
         try {
             // Selvitetään tiedoston osoite
             URL url = PepePeliController.class.getResource("PepePeliView.fxml");

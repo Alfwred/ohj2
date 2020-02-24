@@ -3,6 +3,7 @@
 <?import fi.jyu.mit.fxgui.StringGrid?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -52,11 +53,22 @@
                <center>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <center>
-                        <StringGrid emptyStyleClass="" rivit="# | Pelin nimi | Alusta | P | K | O | Hankintavuosi&#10;1 | Tomb Raider 1 | PS1 | 3 | 3 | 3 | 1997&#10;2 | Half-Life | PC | 1 | 2 | 3 | 1999&#10;3 | Crash Bandicoot 2 | PS1 | 2 | 3 | 3 | 1999&#10;4 | Luigi's Mansion | GC | 1 | 1 | 1 | 2016&#10;5 | Metal Gear Solid: Virtual Missions | PS1 | 2 | 2 | 3 | 2018&#10;6 | Metal Gear Solid: Phantom Pain | PC | 3 | 3 | 3 | 2016&#10;7 | Boulder Dash | C64 | 3 | 2 | 3 | 1986" BorderPane.alignment="CENTER">
+                        <StringGrid fx:id="gridPeliLista" emptyStyleClass="" rivit="# | Pelin nimi | Alusta | P | K | O | Hankintavuosi&#10;1 | Tomb Raider 1 | PS1 | 3 | 3 | 3 | 1997&#10;2 | Half-Life | PC | 1 | 2 | 3 | 1999&#10;3 | Crash Bandicoot 2 | PS1 | 2 | 3 | 3 | 1999&#10;4 | Luigi's Mansion | GC | 1 | 1 | 1 | 2016&#10;5 | Metal Gear Solid: Virtual Missions | PS1 | 2 | 2 | 3 | 2018&#10;6 | Metal Gear Solid: Phantom Pain | PC | 3 | 3 | 3 | 2016&#10;7 | Boulder Dash | C64 | 3 | 2 | 3 | 1986" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets />
                            </BorderPane.margin></StringGrid>
                      </center>
+                     <bottom>
+                        <HBox prefHeight="30.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label fx:id="labelVirhe">
+                                 <HBox.margin>
+                                    <Insets left="10.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </bottom>
                   </BorderPane>
                </center>
             </BorderPane>
@@ -106,18 +118,23 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </Button>
-                        <TextField prefWidth="200.0" promptText="Syötä hakutermi">
+                        <TextField fx:id="hakuehto" onAction="#handleHakuehto" prefWidth="200.0" promptText="Syötä hakutermi">
                            <HBox.margin>
                               <Insets bottom="20.0" right="20.0" top="6.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" onAction="#handleListaSuodata" text="SUODATA">
+                        <Button mnemonicParsing="false" onAction="#handleHakuehto" text="HAE">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                            <HBox.margin>
-                              <Insets bottom="20.0" />
+                              <Insets bottom="20.0" right="15.0" />
                            </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleListaSuodata" text="SUODATA">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
                         </Button>
                      </children>
                      <padding>
