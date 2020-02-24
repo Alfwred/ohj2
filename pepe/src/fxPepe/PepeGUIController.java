@@ -45,7 +45,7 @@ public class PepeGUIController implements Initializable {
     @FXML private TextField hakuehto;
     @FXML private Label labelVirhe;
     @FXML private ScrollPane panelPeli;
-    @FXML private StringGrid<Peli> chooserPelit;
+    @FXML private ListChooser<Peli> chooserPelit;
     
     private String pepenimi = "pelirekisteri";
 
@@ -96,7 +96,8 @@ public class PepeGUIController implements Initializable {
      * Avaa pelinlisäysikkunan
      */
     @FXML void handlePeliLisaa() {
-        PepePeliController.lisaaPeli(null, "Tomb Raider II");
+        //PepePeliController.lisaaPeli(null, "Tomb Raider II");
+        uusiPeli();
     }
     
     /**
@@ -215,7 +216,7 @@ public class PepeGUIController implements Initializable {
      * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
      */
     protected void naytaPeli() {
-        peliValittu = chooserPelit.getObject();
+        peliValittu = chooserPelit.getSelectedObject();
 
         if (peliValittu == null) return;
 
@@ -237,7 +238,7 @@ public class PepeGUIController implements Initializable {
         for (int i = 0; i < pepe.getPeleja(); i++) {
             Peli jasen = pepe.annaPeli(i);
             if (jasen.getTunniste() == jnro) index = i;
-            chooserPelit.add(jasen);
+            chooserPelit.add(jasen.getNimi(), jasen);
         }
         chooserPelit.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää jäsenen
     }
