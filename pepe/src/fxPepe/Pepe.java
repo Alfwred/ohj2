@@ -31,26 +31,26 @@ public class Pepe {
 
 
     /**
-     * Lisää pepeen uuden jäsenen
+     * Lisää pepeen uuden pelin
      * @param peli lisättävä peli
      * @throws SailoException jos lisäystä ei voida tehdä
      * @example
      * <pre name="test">
      * #THROWS SailoException
      * Pepe pepe = new Pepe();
-     * Jasen cnc = new Jasen(), d2 = new Jasen();
+     * Peli cnc = new Peli(), d2 = new Peli();
      * cnc.rekisteroi(); d2.rekisteroi();
-     * pepe.getJasenia() === 0;
-     * pepe.lisaa(cnc); pepe.getJasenia() === 1;
-     * pepe.lisaa(d2); pepe.getJasenia() === 2;
-     * pepe.lisaa(cnc); pepe.getJasenia() === 3;
-     * pepe.getJasenia() === 3;
-     * pepe.annaJasen(0) === cnc;
-     * pepe.annaJasen(1) === d2;
-     * pepe.annaJasen(2) === cnc;
-     * pepe.annaJasen(3) === cnc; #THROWS IndexOutOfBoundsException 
-     * pepe.lisaa(cnc); pepe.getJasenia() === 4;
-     * pepe.lisaa(cnc); pepe.getJasenia() === 5;
+     * pepe.getPeleja() === 0;
+     * pepe.lisaa(cnc); pepe.getPeleja() === 1;
+     * pepe.lisaa(d2); pepe.getPeleja() === 2;
+     * pepe.lisaa(cnc); pepe.getPeleja() === 3;
+     * pepe.getPeleja() === 3;
+     * pepe.annaPeli(0) === cnc;
+     * pepe.annaPeli(1) === d2;
+     * pepe.annaPeli(2) === cnc;
+     * pepe.annaPeli(3) === cnc; #THROWS IndexOutOfBoundsException 
+     * pepe.lisaa(cnc); pepe.getPeleja() === 4;
+     * pepe.lisaa(cnc); pepe.getPeleja() === 5;
      * pepe.lisaa(cnc);            #THROWS SailoException
      * </pre>
      */
@@ -101,9 +101,9 @@ public class Pepe {
             // pepe.lueTiedostosta("kelmit");
 
             Peli cnc = new Peli(), d2 = new Peli();
-            cnc.lisaa();
+            cnc.rekisteroi();
             cnc.taytaPeliTiedoilla();
-            d2.lisaa();
+            d2.rekisteroi();
             d2.taytaPeliTiedoilla();
 
             pepe.lisaa(cnc);

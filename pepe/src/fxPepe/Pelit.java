@@ -105,9 +105,9 @@ public class Pelit {
         Pelit pelit = new Pelit();
 
         Peli d1 = new Peli(), d2 = new Peli();
-        d1.lisaa();
+        d1.rekisteroi();
         d1.taytaPeliTiedoilla();
-        d2.lisaa();
+        d2.rekisteroi();
         d2.taytaPeliTiedoilla();
 
         try {

@@ -85,7 +85,7 @@ public class Peli {
      *   n1 === n2-1;
      * </pre>
      */
-    public int lisaa() {
+    public int rekisteroi() {
         tunniste = seuraavaTunniste;
         seuraavaTunniste++;
         return tunniste;
@@ -106,8 +106,8 @@ public class Peli {
      */
     public static void main(String[] args) {
         Peli ra = new Peli(), cnc = new Peli();
-        ra.lisaa();
-        cnc.lisaa();
+        ra.rekisteroi();
+        cnc.rekisteroi();
         ra.tulosta(System.out);
         ra.taytaPeliTiedoilla();
         ra.tulosta(System.out);

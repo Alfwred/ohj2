@@ -47,7 +47,7 @@ public class PepeGUIController implements Initializable {
     @FXML private ScrollPane panelPeli;
     @FXML private ListChooser<Peli> chooserPelit;
     
-    private String pepenimi = "pelirekisteri";
+    private String pepennimi = "pelirekisteri";
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
@@ -187,8 +187,8 @@ public class PepeGUIController implements Initializable {
      * @param nimi tiedosto josta pepen tiedot luetaan
      */
     protected void lueTiedosto(String nimi) {
-        pepenimi = nimi;
-        setTitle("Pepe - " + pepenimi);
+        pepennimi = nimi;
+        setTitle("Pepe - " + pepennimi);
         String virhe = "Ei osata lukea vielä";  // TODO: tähän oikea tiedoston lukeminen
         // if (virhe != null) 
             Dialogs.showMessageDialog(virhe);
@@ -228,30 +228,31 @@ public class PepeGUIController implements Initializable {
 
 
     /**
-     * Hakee jäsenten tiedot listaan
-     * @param jnro jäsenen numero, joka aktivoidaan haun jälkeen
+     * Hakee pelien tiedot listaan
+     * @param pnro jäsenen numero, joka aktivoidaan haun jälkeen
      */
-    protected void hae(int jnro) {
+    protected void hae(int pnro) {
         chooserPelit.clear();
 
         int index = 0;
         for (int i = 0; i < pepe.getPeleja(); i++) {
-            Peli jasen = pepe.annaPeli(i);
-            if (jasen.getTunniste() == jnro) index = i;
-            chooserPelit.add(jasen.getNimi(), jasen);
+            Peli peli = pepe.annaPeli(i);
+            if (peli.getTunniste() == pnro) index = i;
+            chooserPelit.add(peli.getNimi(), peli);
         }
         chooserPelit.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää jäsenen
     }
 
 
     /**
-     * Luo uuden jäsenen jota aletaan editoimaan 
+     * Luo uuden pelin jota aletaan editoimaan 
      */
     protected void uusiPeli() {
         Peli uusi = new Peli();
-        uusi.lisaa();
+        uusi.rekisteroi();
         uusi.taytaPeliTiedoilla();
         try {
+            naytaVirhe(uusi.toString()); // Testi
             pepe.lisaa(uusi);
         } catch (SailoException e) {
             Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
