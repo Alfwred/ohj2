@@ -13,6 +13,7 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxPepe.PepeGUIController">
    <top>
@@ -72,13 +73,16 @@
                         </HBox>
                      </bottom>
                      <top>
-                        <ListChooser fx:id="chooserPelit" prefHeight="100.0" BorderPane.alignment="CENTER" />
+                        <ScrollPane fx:id="panelPeli" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <content>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Yläpuolella: chooserPelit           Alapuolella: PanelPeli" />
+                           </content></ScrollPane>
                      </top>
                   </BorderPane>
                </center>
-               <left>
-                  <ScrollPane fx:id="panelPeli" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-               </left>
+               <top>
+                  <ListChooser fx:id="chooserPelit" prefHeight="150.0" rivit="" BorderPane.alignment="CENTER" />
+               </top>
             </BorderPane>
          </center>
          <top>

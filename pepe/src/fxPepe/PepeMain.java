@@ -7,12 +7,15 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
+import fxPepe.Pepe;
 
 
 /**
  * 
  * @author anssi
  * @version 14 Feb 2020
+ * 
+ * Pääohjelma Pepe-ohjelman käynnistämiseksi
  *
  */
 public class PepeMain extends Application {
@@ -32,14 +35,17 @@ public class PepeMain extends Application {
 	        if ( !pepeCtrl.voikoSulkea() ) event.consume();
 	    });
 	    
+	    Pepe pepe = new Pepe();  
+        pepeCtrl.setPepe(pepe);
+	    
 	    primaryStage.show();
     } catch(Exception e) {
         e.printStackTrace();
     }
 }
 	/**
-	 * 
-	 * @param args pääohjelma PEPE
+	 * Käynnistetään käyttöliittymä
+	 * @param args Komentorivin parametrit
 	 */
 	public static void main(String[] args) {
 		launch(args);

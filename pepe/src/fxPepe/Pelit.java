@@ -11,7 +11,7 @@ package fxPepe;
  */
 public class Pelit {
     
-    private static final int MAX_PELEJA   = 5;
+    private static final int MAX_PELEJA    = 5;
     private int              lkm           = 0;
     private String           tiedostonNimi = "";
     private Peli             alkiot[]      = new Peli[MAX_PELEJA];
@@ -56,9 +56,9 @@ public class Pelit {
     
     
     /**
-     * Palauttaa viitteen i:teen jäseneen.
-     * @param i monennenko jäsenen viite halutaan
-     * @return viite jäseneen, jonka indeksi on i
+     * Palauttaa viitteen i:teen peliin.
+     * @param i monennenko pelim viite halutaan
+     * @return viite peliim, jonka indeksi on i
      * @throws IndexOutOfBoundsException jos i ei ole sallitulla alueella  
      */
     public Peli anna(int i) throws IndexOutOfBoundsException {

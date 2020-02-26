@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import fi.jyu.mit.fxgui.ComboBoxChooser;
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
 import fi.jyu.mit.fxgui.ModalController;
@@ -24,14 +23,6 @@ import javafx.scene.text.Font;
 import fxPepe.Peli;
 import fxPepe.Pepe;
 import fxPepe.SailoException;
-
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import fi.jyu.mit.fxgui.*;
 
 
 /**
@@ -51,7 +42,7 @@ public class PepeGUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
-        // TODO jotain?
+        alusta();
     }
     
     @FXML private void handleHakuehto() {
@@ -67,7 +58,7 @@ public class PepeGUIController implements Initializable {
      * Avataan info-ikkuna
      */
     @FXML void handleInfo() {
-        Dialogs.showMessageDialog("Info! Ei toimi vielä!");
+        avustus();
     }
     
     /**
@@ -111,7 +102,7 @@ public class PepeGUIController implements Initializable {
      * Avataan muokkausikkuna listasta valistusta pelistä
      */
     @FXML void handlePeliMuokkaa() {
-        Dialogs.showMessageDialog("Suorita pelin lisäys! Ei toimi vielä!");
+        //Dialogs.showMessageDialog("Suorita pelin lisäys! Ei toimi vielä!");
         
     }
     
@@ -229,7 +220,7 @@ public class PepeGUIController implements Initializable {
 
     /**
      * Hakee pelien tiedot listaan
-     * @param pnro jäsenen numero, joka aktivoidaan haun jälkeen
+     * @param pnro pelin numero, joka aktivoidaan haun jälkeen
      */
     protected void hae(int pnro) {
         chooserPelit.clear();
@@ -245,14 +236,13 @@ public class PepeGUIController implements Initializable {
 
 
     /**
-     * Luo uuden pelin jota aletaan editoimaan 
+     * Luo uuden pelin, jota aletaan editoimaan 
      */
     protected void uusiPeli() {
         Peli uusi = new Peli();
         uusi.rekisteroi();
         uusi.taytaPeliTiedoilla();
         try {
-            naytaVirhe(uusi.toString()); // Testi
             pepe.lisaa(uusi);
         } catch (SailoException e) {
             Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
@@ -277,7 +267,7 @@ public class PepeGUIController implements Initializable {
     private void avustus() {
         Desktop desktop = Desktop.getDesktop();
         try {
-            URI uri = new URI("https://tim.jyu.fi/view/kurssit/tie/ohj2/2019k/ht/vesal");
+            URI uri = new URI("https://tim.jyu.fi/view/kurssit/tie/ohj2/2020k/ht/anaaalle");
             desktop.browse(uri);
         } catch (URISyntaxException e) {
             return;
@@ -289,11 +279,11 @@ public class PepeGUIController implements Initializable {
     /**
      * Tulostaa jäsenen tiedot
      * @param os tietovirta johon tulostetaan
-     * @param jasen tulostettava jäsen
+     * @param peli tulostettava jäsen
      */
-    public void tulosta(PrintStream os, final Peli jasen) {
+    public void tulosta(PrintStream os, final Peli peli) {
         os.println("----------------------------------------------");
-        jasen.tulosta(os);
+        peli.tulosta(os);
         os.println("----------------------------------------------");
     }
     
