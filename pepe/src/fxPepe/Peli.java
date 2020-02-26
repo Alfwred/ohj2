@@ -84,7 +84,17 @@ public class Peli {
         String[] t = {Integer.toString(peli.getTunniste()), peli.getNimi()};
         return t;
     }
-
+    
+    
+     public String anna(Peli peli, int k) {
+         try {
+             if ( k == 1 ) return peli.getNimi();
+             if (k == 0 ) return Integer.toString(peli.getTunniste());
+             return "";
+         } catch (Exception ex) {
+             return "";
+         }
+     }
     
     /**
      * Antaa pelille seuraavan tunnistenumeron.

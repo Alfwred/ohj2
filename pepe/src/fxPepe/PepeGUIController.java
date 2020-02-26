@@ -219,9 +219,8 @@ public class PepeGUIController implements Initializable {
      * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
      */
     private void naytaGridinValinta() {
-        
-        int r = gridPelit.getRowNr();
-        peliValittu = gridPelit.getObject(r);
+        areaPeli.setText("");
+        peliValittu = gridPelit.getObject();
         
         if (peliValittu == null) {
             areaPeli.setText("null");
@@ -265,13 +264,13 @@ public class PepeGUIController implements Initializable {
     
     
     /**
-     * Hakee pelien tiedot listaan
+     * Hakee pelien tiedot StrinGridiin
      */
     protected void hae() {
         gridPelit.clear();
         for (int i = 0; i < pepe.getPeleja(); i++) {
             Peli peli = pepe.annaPeli(i);
-            gridPelit.add(peli.getKenttia(peli));      
+            gridPelit.add(peli, peli.getKenttia(peli));
         }
     }
 
