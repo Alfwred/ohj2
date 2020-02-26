@@ -74,16 +74,17 @@ public class Peli {
         tulosta(new PrintStream(os));
     }
     
-    /**
-     * Palauttaa Peli-olion merkkijonona
-     * @param peli Peli
-     * @return Merkkijono
-     */
-    public String getString(Peli peli) {
-        return peli.getTunniste() + peli.getNimi();
-        
-    }
     
+    /**
+     * StringGridiin lisaysta varten metodi, joka luo String[] pelistä
+     * @param peli Peli
+     * @return String[]-taulukko pelin tiedoista
+     */
+    public String[] getKenttia(Peli peli) {
+        String[] t = {Integer.toString(peli.getTunniste()), peli.getNimi()};
+        return t;
+    }
+
     
     /**
      * Antaa pelille seuraavan tunnistenumeron.

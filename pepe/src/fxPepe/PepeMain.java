@@ -31,9 +31,10 @@ public class PepeMain extends Application {
 	    primaryStage.setScene(scene);
 	    primaryStage.setTitle("Pepe");
 	    
-	    primaryStage.setOnCloseRequest((event) -> {
-	        if ( !pepeCtrl.voikoSulkea() ) event.consume();
-	    });
+	    // Voiko sulkea -dialogi
+	    //primaryStage.setOnCloseRequest((event) -> {
+	    //   if ( !pepeCtrl.voikoSulkea() ) event.consume();
+	    //});
 	    
 	    Pepe pepe = new Pepe();  
         pepeCtrl.setPepe(pepe);

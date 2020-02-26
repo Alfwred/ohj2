@@ -6,11 +6,13 @@ import java.io.PrintStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
 import fi.jyu.mit.fxgui.ModalController;
+import fi.jyu.mit.fxgui.StringGrid;
 import fi.jyu.mit.fxgui.TextAreaOutputStream;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -37,12 +39,19 @@ public class PepeGUIController implements Initializable {
     @FXML private Label labelVirhe;
     @FXML private ScrollPane panelPeli;
     @FXML private ListChooser<Peli> chooserPelit;
+    @FXML private StringGrid<Peli> gridPelit;
+    
+    private TextArea areaPeli = new TextArea();
     
     private String pepennimi = "pelirekisteri";
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         alusta();
+        
+     // Mitä tehdään kun hiirellä klikataan
+     gridPelit.setOnMouseClicked( e -> { if ( e.getClickCount() == 1 ) naytaGridinValinta(); });
+     
     }
     
     @FXML private void handleHakuehto() {
@@ -141,7 +150,7 @@ public class PepeGUIController implements Initializable {
     
     private Pepe pepe;
     private Peli peliValittu;
-    private TextArea areaPeli = new TextArea();
+
     
     
     /**
@@ -156,6 +165,9 @@ public class PepeGUIController implements Initializable {
         
         chooserPelit.clear();
         chooserPelit.addSelectionListener(e -> naytaPeli());
+        
+        gridPelit.clear();
+        
     }
 
     
@@ -206,32 +218,61 @@ public class PepeGUIController implements Initializable {
     /**
      * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
      */
+    private void naytaGridinValinta() {
+        
+        int r = gridPelit.getRowNr();
+        peliValittu = gridPelit.getObject(r);
+        
+        if (peliValittu == null) {
+            areaPeli.setText("null");
+            return;
+        }
+
+        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPeli)) {
+            peliValittu.tulosta(os);
+        }
+    }
+    
+    
+    /**
+     * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
+     */
     protected void naytaPeli() {
         peliValittu = chooserPelit.getSelectedObject();
-
         if (peliValittu == null) return;
-
         areaPeli.setText("");
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPeli)) {
             peliValittu.tulosta(os);
         }
     }
-
+    
 
     /**
      * Hakee pelien tiedot listaan
      * @param pnro pelin numero, joka aktivoidaan haun jälkeen
      */
-    protected void hae(int pnro) {
+    protected void hae2(int pnro) {
         chooserPelit.clear();
-
         int index = 0;
         for (int i = 0; i < pepe.getPeleja(); i++) {
             Peli peli = pepe.annaPeli(i);
             if (peli.getTunniste() == pnro) index = i;
             chooserPelit.add(peli.getNimi(), peli);
+            
         }
         chooserPelit.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää jäsenen
+    }
+    
+    
+    /**
+     * Hakee pelien tiedot listaan
+     */
+    protected void hae() {
+        gridPelit.clear();
+        for (int i = 0; i < pepe.getPeleja(); i++) {
+            Peli peli = pepe.annaPeli(i);
+            gridPelit.add(peli.getKenttia(peli));      
+        }
     }
 
 
@@ -248,7 +289,7 @@ public class PepeGUIController implements Initializable {
             Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
             return;
         }
-        hae(uusi.getTunniste());
+        hae();
     }
     
 
