@@ -1,5 +1,7 @@
 package fxPepe;
 
+import java.util.List;
+
 /**
  * Pepe-luokka, joka huolehtii pelikannasta. Pääosin kaikki metodit
  * ovat vain "välittäjämetodeja" pelikantaan.
@@ -9,6 +11,7 @@ package fxPepe;
  */
 public class Pepe {
     private final Pelit pelit = new Pelit();
+    private final PeliTiedot peliTiedot = new PeliTiedot(); 
 
 
     /**
@@ -57,7 +60,16 @@ public class Pepe {
     public void lisaa(Peli peli) throws SailoException {
         pelit.lisaa(peli);
     }
+   
 
+    /**
+     * Listään uusi peliTieto Pepeen
+     * @param tieto lisättävä peliTieto 
+     */
+    public void lisaa(PeliTieto tieto) {
+        peliTiedot.lisaa(tieto);
+    }
+    
 
     /**
      * Palauttaa i:n pelin
@@ -67,6 +79,42 @@ public class Pepe {
      */
     public Peli annaPeli(int i) throws IndexOutOfBoundsException {
         return pelit.anna(i);
+    }
+    
+    
+    /**
+     * Haetaan kaikki jäsen harrastukset
+     * @param peli jäsen jolle harrastuksia haetaan
+     * @return tietorakenne jossa viiteet löydetteyihin harrastuksiin
+     * @example
+     * <pre name="test">
+     * #import java.util.*;
+     * 
+     *  Kerho kerho = new Kerho();
+     *  Jasen aku1 = new Jasen(), aku2 = new Jasen(), aku3 = new Jasen();
+     *  aku1.rekisteroi(); aku2.rekisteroi(); aku3.rekisteroi();
+     *  int id1 = aku1.getTunnusNro();
+     *  int id2 = aku2.getTunnusNro();
+     *  Harrastus pitsi11 = new Harrastus(id1); kerho.lisaa(pitsi11);
+     *  Harrastus pitsi12 = new Harrastus(id1); kerho.lisaa(pitsi12);
+     *  Harrastus pitsi21 = new Harrastus(id2); kerho.lisaa(pitsi21);
+     *  Harrastus pitsi22 = new Harrastus(id2); kerho.lisaa(pitsi22);
+     *  Harrastus pitsi23 = new Harrastus(id2); kerho.lisaa(pitsi23);
+     *  
+     *  List<Harrastus> loytyneet;
+     *  loytyneet = kerho.annaHarrastukset(aku3);
+     *  loytyneet.size() === 0; 
+     *  loytyneet = kerho.annaHarrastukset(aku1);
+     *  loytyneet.size() === 2; 
+     *  loytyneet.get(0) == pitsi11 === true;
+     *  loytyneet.get(1) == pitsi12 === true;
+     *  loytyneet = kerho.annaHarrastukset(aku2);
+     *  loytyneet.size() === 3; 
+     *  loytyneet.get(0) == pitsi21 === true;
+     * </pre> 
+     */
+    public List<PeliTieto> annaPeliTiedot(Peli peli) {
+        return peliTiedot.annaPeliTiedot(peli.getTunniste());
     }
 
 
@@ -98,8 +146,8 @@ public class Pepe {
         Pepe pepe = new Pepe();
 
         try {
-            // pepe.lueTiedostosta("kelmit");
-
+            // Pelien testiluonti
+            // pepe.lueTiedostosta("kelmit")
             Peli cnc = new Peli(), d2 = new Peli();
             cnc.rekisteroi();
             cnc.taytaPeliTiedoilla();
@@ -108,6 +156,17 @@ public class Pepe {
 
             pepe.lisaa(cnc);
             pepe.lisaa(d2);
+            
+            // PeliTietojen testiluonti ja sitominen peleihin
+            int id1 = cnc.getTunniste();
+            int id2 = d2.getTunniste();
+            PeliTieto tieto1 = new PeliTieto(id1);
+            tieto1.taytaTestiPeliTietoTiedoilla(id1);
+            pepe.lisaa(tieto1);
+            PeliTieto tieto2 = new PeliTieto(id2);
+            tieto2.taytaTestiPeliTietoTiedoilla(id2);
+            pepe.lisaa(tieto2);
+
 
             System.out.println("============= Pepen testi =================");
 
@@ -115,6 +174,10 @@ public class Pepe {
                 Peli peli = pepe.annaPeli(i);
                 System.out.println("Jäsen paikassa: " + i);
                 peli.tulosta(System.out);
+                
+                List<PeliTieto> peliTieto = pepe.annaPeliTiedot(peli); 
+                for (PeliTieto tieto:peliTieto) 
+                    tieto.tulosta(System.out); 
             }
 
         } catch (SailoException ex) {

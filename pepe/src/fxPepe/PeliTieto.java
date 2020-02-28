@@ -5,6 +5,7 @@ package fxPepe;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Random;
 
 /**
  * @author anssi
@@ -13,52 +14,128 @@ import java.io.PrintStream;
  */
 public class PeliTieto {
     
-    private int     tunniste;
-    private int     alusta          = 0;
-    private int     julkaisuvuosi   = 0;
-    private int     ostovuosi       = 0;
-    private int     levy            = 0;
-    private int     kotelo          = 0;
-    private int     ohjekirja       = 0;
-    private String  lisatiedot      = "";
+    private int     tTunniste;              // Tiedon id
+    private int     pTunniste;              // Id, jolla sidotaan tieto peliin
+    private int     alusta;                 // Pelin alusta
+    private int     julkaisuvuosi;          // Pelin julkaisuvuosi
+    private int     hankintavuosi;          // Pelin hankintavuosi
+    private int     levy;                   // Levyn kunto 0-2
+    private int     kotelo;                 // Kotelon kunto 0-2
+    private int     ohjekirja;              // Ohjekirjan kunto 0-2
+    private String  lisatiedot;             // Lisätiedot pelille (muistiinpanoja)
+    
+    private static int seuraavaTunniste = 1;
 
     /**
      * 
      */
     public PeliTieto() {
-        // TODO Auto-generated constructor stub
+        // Myöhemmin
+    }
+    
+    /**
+     * Alustetaan tietyn pelin peliTiedot
+     * @param pTunniste pelin viite eli tunniste
+     */
+    public PeliTieto(int pTunniste) {
+        this.pTunniste = pTunniste;
     }
     
     
     /**
      * Apumetodi, jolla saadaan täytettyä testiarvot pelille
+     * @param pt pelin tunniste, joka annetaan peliTiedolle talteen
      */
-    public void taytaTestiPeliTietoTiedoilla() {
-        alusta = 2;
+    public void taytaTestiPeliTietoTiedoilla(int pt) {
+        pTunniste = pt;
+        alusta = 5;
         julkaisuvuosi = 1997;
-        ostovuosi = 1999;
-        levy = 3;
-        kotelo = 3;
-        ohjekirja = 3;
-        lisatiedot = "Lisatietoja";
+        hankintavuosi = 1999;
+        levy = 2;
+        kotelo = 2;
+        ohjekirja = 2;
+        lisatiedot = "Sain tämän Jarilta 1999";
     }
     
     
     /**
     * Apumetodi, jolla saadaan täytettyä testiarvot peliTiedolle
-    * Tunniste arvotaan, jotta kahdella jäsenellä ei olisi
+    * Tunniste arvotaan, jotta kahdella peliTiedolla olisi
     * samoja tietoja.
     */
     public void taytaPeliTiedoilla() {
-        taytaTestiPeliTietoTiedoilla();
+        Random random = new Random();
+        int t = random.nextInt(100 - 1 + 1) + 1;;
+        taytaTestiPeliTietoTiedoilla(t);
     }
     
+    
     /**
-    * Tulostetaan henkilön tiedot
+    * Tulostetaan pelin tiedot
+    * @param out tietovirta johon tulostetaan
+    */
+    public void tulosta(PrintStream out) {
+        out.println("Tiedon tunniste: " + tTunniste + " Pelin tunniste: " + pTunniste + " | " + alusta + ", " + julkaisuvuosi + ", " + hankintavuosi + ", " + levy + ", " + kotelo + ", " + ohjekirja + ", " + lisatiedot); ;
+    }
+    
+    
+    /**
+    * Tulostetaan peliTiedot
     * @param os tietovirta johon tulostetaan
     */
     public void tulosta(OutputStream os) {
     tulosta(new PrintStream(os));
+    }
+    
+    /**
+     * Antaa peliTiedolle seuraavan tunnistenumeron.
+     * @return tTunniste Uusi tunnistenumero
+     * @example
+     * <pre name="test">
+     *   PeliTieto ra1 = new PeliTieto();
+     *   ra1.getTunniste() === 0;
+     *   ra1.rekisteroi();
+     *   PeliTieto ra2 = new PeliTieto();
+     *   ra2.rekisteroi();
+     *   int n1 = ra1.getTunniste();
+     *   int n2 = ra2.getTunniste();
+     *   n1 === n2-1;
+     * </pre>
+     */
+    public int rekisteroi() {
+        tTunniste = seuraavaTunniste;
+        seuraavaTunniste++;
+        return tTunniste;
+    }
+    
+    
+    /**
+     * Väliaikainen viritys!
+     * StringGridiin lisaysta varten metodi, joka luo String[] pelistä
+     * @param peli Peli
+     * @return String[]-taulukko pelin tiedoista
+     */
+    public String[] getKenttia(Peli peli) {
+        String[] t = {Integer.toString(peli.getTunniste()), peli.getNimi()};
+        return t;
+    }
+    
+    
+    /**
+     * Palauttaa peliTiedon oman tunniste id
+     * @return peliTiedon tTunniste id
+     */
+    public int getPeliTietoTunniste() {
+        return tTunniste;
+    }
+    
+    
+    /**
+     * Palautetaan mille pelille peliTieto kuuluu
+     * @return pelin id
+     */
+    public int getPelinTunniste() {
+        return pTunniste;
     }
     
     
@@ -66,7 +143,15 @@ public class PeliTieto {
      * @param args Ei käytössä
      */
     public static void main(String[] args) {
-    // TODO Auto-generated method stub
+        PeliTieto tiedot1 = new PeliTieto(), tiedot2 = new PeliTieto();
+        tiedot1.rekisteroi();
+        tiedot2.rekisteroi();
+        tiedot1.tulosta(System.out);
+        tiedot1.taytaPeliTiedoilla();
+        tiedot1.tulosta(System.out);
+        tiedot2.tulosta(System.out);
+        tiedot2.taytaPeliTiedoilla();
+        tiedot2.tulosta(System.out);
     
     }
 

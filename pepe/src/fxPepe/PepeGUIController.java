@@ -336,10 +336,11 @@ public class PepeGUIController implements Initializable {
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(text)) {
             os.println("Tulostetaan kaikki jäsenet");
             for (int i = 0; i < pepe.getPeleja(); i++) {
-                Peli jasen = pepe.annaPeli(i);
-                tulosta(os, jasen);
+                Peli peli = pepe.annaPeli(i);
+                tulosta(os, peli);
                 os.println("\n\n");
             }
+
         }
     }
 }

@@ -16,7 +16,7 @@ import java.util.Random;
  */
 public class Peli {
     
-    private int tunniste;
+    private int pTunniste;
     private String  nimi = "";
     
     private static int seuraavaTunniste;
@@ -37,10 +37,10 @@ public class Peli {
     
     /**
      * Apumetodi, jolla saadaan täytettyä testiarvot pelille
-     * @param t Pelille annettava tunniste
+     * @param t Pelille annettava pTunniste
      */
     public void taytaTestiPeliTiedoilla(int t) {
-        tunniste = t;
+        pTunniste = t;
         nimi = "Tomb Raider 2";
     }
     
@@ -62,7 +62,7 @@ public class Peli {
     * @param out tietovirta johon tulostetaan
     */
     public void tulosta(PrintStream out) {
-        out.println(tunniste + "|" + nimi);
+        out.println(pTunniste + "|" + nimi);
     }
     
     
@@ -86,7 +86,12 @@ public class Peli {
     }
     
     
-     public String anna(Peli peli, int k) {
+     /**
+     * @param peli
+     * @param k
+     * @return
+     */
+    public String anna(Peli peli, int k) {
          try {
              if ( k == 1 ) return peli.getNimi();
              if (k == 0 ) return Integer.toString(peli.getTunniste());
@@ -98,7 +103,7 @@ public class Peli {
     
     /**
      * Antaa pelille seuraavan tunnistenumeron.
-     * @return tunniste Uusi tunnistenumero
+     * @return pTunniste Uusi tunnistenumero
      * @example
      * <pre name="test">
      *   Peli ra1 = new Peli();
@@ -112,18 +117,18 @@ public class Peli {
      * </pre>
      */
     public int rekisteroi() {
-        tunniste = seuraavaTunniste;
+        pTunniste = seuraavaTunniste;
         seuraavaTunniste++;
-        return tunniste;
+        return pTunniste;
     }
     
     
     /**
      * Palauttaa pelin tunnisteen
-     * @return pelin tunniste
+     * @return pelin pTunniste
      */
     public int getTunniste() {
-        return tunniste;
+        return pTunniste;
     }
     
     
@@ -140,7 +145,6 @@ public class Peli {
         cnc.tulosta(System.out);
         cnc.taytaPeliTiedoilla();
         cnc.tulosta(System.out);
-    
     }
 
 }
