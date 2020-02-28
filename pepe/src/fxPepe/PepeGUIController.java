@@ -229,6 +229,10 @@ public class PepeGUIController implements Initializable {
 
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPeli)) {
             peliValittu.tulosta(os);
+            
+            List<PeliTieto> peliTieto = pepe.annaPeliTiedot(peliValittu); 
+            for (PeliTieto tieto : peliTieto) 
+                tieto.tulosta(os); 
         }
     }
     
@@ -241,7 +245,7 @@ public class PepeGUIController implements Initializable {
         if (peliValittu == null) return;
         areaPeli.setText("");
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPeli)) {
-            peliValittu.tulosta(os);
+            peliValittu.tulosta(os);   
         }
     }
     
@@ -282,6 +286,13 @@ public class PepeGUIController implements Initializable {
         Peli uusi = new Peli();
         uusi.rekisteroi();
         uusi.taytaPeliTiedoilla();
+        
+        int id = uusi.getTunniste();
+        PeliTieto tieto = new PeliTieto(id);
+        tieto.rekisteroi();
+        tieto.taytaTestiPeliTietoTiedoilla(id);
+        pepe.lisaa(tieto);
+        
         try {
             pepe.lisaa(uusi);
         } catch (SailoException e) {
