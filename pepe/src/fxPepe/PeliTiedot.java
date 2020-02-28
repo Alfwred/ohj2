@@ -164,6 +164,7 @@ public class PeliTiedot implements Iterable<PeliTieto> {
         for (PeliTieto tieto : pelientiedot2) {
             tieto.tulosta(System.out);
         }
+
     }
 
 }

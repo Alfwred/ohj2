@@ -161,9 +161,11 @@ public class Pepe {
             int id1 = cnc.getTunniste();
             int id2 = d2.getTunniste();
             PeliTieto tieto1 = new PeliTieto(id1);
+            tieto1.rekisteroi();
             tieto1.taytaTestiPeliTietoTiedoilla(id1);
             pepe.lisaa(tieto1);
             PeliTieto tieto2 = new PeliTieto(id2);
+            tieto2.rekisteroi();
             tieto2.taytaTestiPeliTietoTiedoilla(id2);
             pepe.lisaa(tieto2);
 
@@ -172,7 +174,7 @@ public class Pepe {
 
             for (int i = 0; i < pepe.getPeleja(); i++) {
                 Peli peli = pepe.annaPeli(i);
-                System.out.println("Jäsen paikassa: " + i);
+                System.out.println("Peli paikassa: " + i);
                 peli.tulosta(System.out);
                 
                 List<PeliTieto> peliTieto = pepe.annaPeliTiedot(peli); 
