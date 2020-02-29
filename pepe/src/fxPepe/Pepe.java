@@ -83,34 +83,34 @@ public class Pepe {
     
     
     /**
-     * Haetaan kaikki jäsen harrastukset
-     * @param peli jäsen jolle harrastuksia haetaan
-     * @return tietorakenne jossa viiteet löydetteyihin harrastuksiin
+     * Haetaan kaikki pelin peliTiedot
+     * @param peli Peli jolle haetaan peliTietoja
+     * @return tietorakenne jossa viiteet löydetteyihin peliTietoihin
      * @example
      * <pre name="test">
      * #import java.util.*;
      * 
-     *  Kerho kerho = new Kerho();
-     *  Jasen aku1 = new Jasen(), aku2 = new Jasen(), aku3 = new Jasen();
-     *  aku1.rekisteroi(); aku2.rekisteroi(); aku3.rekisteroi();
-     *  int id1 = aku1.getTunnusNro();
-     *  int id2 = aku2.getTunnusNro();
-     *  Harrastus pitsi11 = new Harrastus(id1); kerho.lisaa(pitsi11);
-     *  Harrastus pitsi12 = new Harrastus(id1); kerho.lisaa(pitsi12);
-     *  Harrastus pitsi21 = new Harrastus(id2); kerho.lisaa(pitsi21);
-     *  Harrastus pitsi22 = new Harrastus(id2); kerho.lisaa(pitsi22);
-     *  Harrastus pitsi23 = new Harrastus(id2); kerho.lisaa(pitsi23);
+     *  Pepe p = new Pepe();
+     *  Peli g1 = new Peli(), g2 = new Peli(), g3 = new Peli();
+     *  g1.rekisteroi(); g2.rekisteroi(); g3.rekisteroi();
+     *  int id1 = g1.getTunniste();
+     *  int id2 = g2.getTunniste();
+     *  PeliTieto tieto11 = new PeliTieto(id1); p.lisaa(tieto11);
+     *  PeliTieto tieto12 = new PeliTieto(id1); p.lisaa(tieto12);
+     *  PeliTieto tieto21 = new PeliTieto(id2); p.lisaa(tieto21);
+     *  PeliTieto tieto22 = new PeliTieto(id2); p.lisaa(tieto22);
+     *  PeliTieto tieto23 = new PeliTieto(id2); p.lisaa(tieto23);
      *  
-     *  List<Harrastus> loytyneet;
-     *  loytyneet = kerho.annaHarrastukset(aku3);
+     *  List<PeliTieto> loytyneet;
+     *  loytyneet = p.annaPeliTiedot(g3);
      *  loytyneet.size() === 0; 
-     *  loytyneet = kerho.annaHarrastukset(aku1);
+     *  loytyneet = p.annaPeliTiedot(g1);
      *  loytyneet.size() === 2; 
-     *  loytyneet.get(0) == pitsi11 === true;
-     *  loytyneet.get(1) == pitsi12 === true;
-     *  loytyneet = kerho.annaHarrastukset(aku2);
+     *  loytyneet.get(0) == tieto11 === true;
+     *  loytyneet.get(1) == tieto12 === true;
+     *  loytyneet = p.annaPeliTiedot(g2);
      *  loytyneet.size() === 3; 
-     *  loytyneet.get(0) == pitsi21 === true;
+     *  loytyneet.get(0) == tieto21 === true;
      * </pre> 
      */
     public List<PeliTieto> annaPeliTiedot(Peli peli) {

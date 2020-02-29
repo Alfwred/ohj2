@@ -94,7 +94,7 @@ public class PeliTiedot implements Iterable<PeliTieto> {
      *  int pnrot[] = {2,1,2,1,2};
      *  
      *  for ( PeliTieto tieto:tiedot ) { 
-     *    tieto.getPeliTietoTunniste === pnrot[n]; n++;  
+     *    tieto.getPelinTunniste() === pnrot[n]; n++;  
      *  }
      *  
      *  n === 5;

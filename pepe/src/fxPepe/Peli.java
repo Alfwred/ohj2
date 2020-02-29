@@ -87,9 +87,12 @@ public class Peli {
     
     
      /**
-     * @param peli
-     * @param k
-     * @return
+      * Antaa joko pelin nimen tai tunnisteen merkkijonona
+      * 1 => nimi
+      * 0 => tunniste
+     * @param peli Peli-olio
+     * @param k 1 tai tai 0
+     * @return Merkkijono
      */
     public String anna(Peli peli, int k) {
          try {

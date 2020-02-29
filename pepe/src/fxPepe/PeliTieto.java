@@ -93,12 +93,12 @@ public class PeliTieto {
      * @example
      * <pre name="test">
      *   PeliTieto ra1 = new PeliTieto();
-     *   ra1.getTunniste() === 0;
+     *   ra1.getPelinTunniste() === 0;
      *   ra1.rekisteroi();
      *   PeliTieto ra2 = new PeliTieto();
      *   ra2.rekisteroi();
-     *   int n1 = ra1.getTunniste();
-     *   int n2 = ra2.getTunniste();
+     *   int n1 = ra1.getPelinTunniste();
+     *   int n2 = ra2.getPelinTunniste();
      *   n1 === n2-1;
      * </pre>
      */

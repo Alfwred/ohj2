@@ -31,11 +31,11 @@ public class Pelit {
      * @example
      * <pre name="test">
      * #THROWS SailoException 
-     * Pelit jasenet = new Pelit();
+     * Pelit pelit = new Pelit();
      * Peli cnc = new Peli(), ra = new Peli();
      * pelit.getLkm() === 0;
      * pelit.lisaa(cnc); pelit.getLkm() === 1;
-     * pelit.lisaa(rar); pelit.getLkm() === 2;
+     * pelit.lisaa(ra); pelit.getLkm() === 2;
      * pelit.lisaa(cnc); pelit.getLkm() === 3;
      * pelit.anna(0) === cnc;
      * pelit.anna(1) === ra;
