@@ -149,16 +149,17 @@ public class PeliTiedot implements Iterable<PeliTieto> {
      */
     public static void main(String[] args) {
         PeliTiedot pelientiedot = new PeliTiedot();
+        
         PeliTieto peli1 = new PeliTieto();
         peli1.rekisteroi();
-        peli1.taytaTestiPeliTietoTiedoilla(2);
+        peli1.taytaTestiPeliTietoTiedoilla(1);
+        
         PeliTieto peli2 = new PeliTieto();
         peli2.rekisteroi();
         peli2.taytaTestiPeliTietoTiedoilla(1);
 
         pelientiedot.lisaa(peli1);
         pelientiedot.lisaa(peli2);
-
 
         System.out.println("============= PeliTiedot testi =================");
         

@@ -16,7 +16,7 @@ public class PeliTieto {
     
     private int     tTunniste;              // Tiedon id
     private int     pTunniste;              // Id, jolla sidotaan tieto peliin
-    private Alusta  alusta;                 // Pelin alusta, sidotaan alusta peliTietoon
+    private Alusta  alusta;                 // Pelin alusta-olio, sidotaan alusta peliTietoon
     private int     julkaisuvuosi;          // Pelin julkaisuvuosi
     private int     hankintavuosi;          // Pelin hankintavuosi
     private int     levy;                   // Levyn kunto 0-2
@@ -95,7 +95,7 @@ public class PeliTieto {
     * @param out tietovirta johon tulostetaan
     */
     public void tulosta(PrintStream out) {
-        out.println("Tiedon tunniste: " + tTunniste + " Pelin tunniste: " + pTunniste + " | " + alusta + ", " + julkaisuvuosi + ", " + hankintavuosi + ", " + levy + ", " + kotelo + ", " + ohjekirja + ", " + lisatiedot); ;
+        out.println("Tiedon tunniste: " + tTunniste + " Pelin tunniste: " + pTunniste + " | " + alusta.toString() + ", " + julkaisuvuosi + ", " + hankintavuosi + ", " + levy + ", " + kotelo + ", " + ohjekirja + ", " + lisatiedot); ;
     }
     
     
@@ -163,14 +163,13 @@ public class PeliTieto {
      * @param args Ei käytössä
      */
     public static void main(String[] args) {
-        PeliTieto tiedot1 = new PeliTieto(), tiedot2 = new PeliTieto();
+        PeliTieto tiedot1 = new PeliTieto();
+        PeliTieto tiedot2 = new PeliTieto();
         tiedot1.rekisteroi();
         tiedot2.rekisteroi();
-        tiedot1.tulosta(System.out);
         tiedot1.taytaPeliTiedoilla();
-        tiedot1.tulosta(System.out);
-        tiedot2.tulosta(System.out);
         tiedot2.taytaPeliTiedoilla();
+        tiedot1.tulosta(System.out);
         tiedot2.tulosta(System.out);
     
     }

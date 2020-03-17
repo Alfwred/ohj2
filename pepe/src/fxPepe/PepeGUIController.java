@@ -298,7 +298,7 @@ public class PepeGUIController implements Initializable {
         
         // Testitunnisteen luonti
         int id = uusi.getTunniste();
-        PeliTieto tieto = new PeliTieto(id);
+        PeliTieto tieto = new PeliTieto();
         tieto.rekisteroi();
         tieto.taytaTestiPeliTietoTiedoilla(id, alusta);
         pepe.lisaa(tieto);
@@ -337,31 +337,4 @@ public class PepeGUIController implements Initializable {
         }
     }
 
-    /**
-     * Tulostaa jäsenen tiedot
-     * @param os tietovirta johon tulostetaan
-     * @param peli tulostettava jäsen
-     */
-    public void tulosta(PrintStream os, final Peli peli) {
-        os.println("----------------------------------------------");
-        peli.tulosta(os);
-        os.println("----------------------------------------------");
-    }
-    
-    
-    /**
-     * Tulostaa listassa olevat jäsenet tekstialueeseen
-     * @param text alue johon tulostetaan
-     */
-    public void tulostaValitut(TextArea text) {
-        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(text)) {
-            os.println("Tulostetaan kaikki jäsenet");
-            for (int i = 0; i < pepe.getPeleja(); i++) {
-                Peli peli = pepe.annaPeli(i);
-                tulosta(os, peli);
-                os.println("\n\n");
-            }
-
-        }
-    }
 }

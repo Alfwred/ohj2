@@ -17,7 +17,7 @@ public class Alusta {
     private String  lyhenne;                // Pelin lyhenne
     private String  nimi;                   // Pelin koko nimi
     
-    private static int seuraavaTunniste = 1;
+    private static int seuraavaTunniste = 10;
 
     /**
      * 
@@ -40,23 +40,23 @@ public class Alusta {
      */
     public void taytaTestiAlustaTiedoilla() {
         
-        if (this.aTunniste == 1) {
+        if (this.aTunniste == 10) {
             lyhenne = "GC";
             nimi = "Gamecube";
         }
-        if (this.aTunniste == 2) {
+        if (this.aTunniste == 11) {
             lyhenne = "N64";
             nimi = "Nintendo 64";
         }
-        if (this.aTunniste == 3) {
+        if (this.aTunniste == 12) {
             lyhenne = "PS1";
             nimi = "PlaySation";
         }
-        if (this.aTunniste == 4) {
+        if (this.aTunniste == 13) {
             lyhenne = "PS2";
             nimi = "PlaySation 2";
         }
-        if (this.aTunniste == 5) {
+        if (this.aTunniste == 14) {
             lyhenne = "PS4";
             nimi = "PlaySation 4";
         }
@@ -93,7 +93,7 @@ public class Alusta {
     
     @Override
     public String toString() {
-        return this.aTunniste + " | " + this.lyhenne + " " + this.nimi;
+        return "Alusta: [id " + this.aTunniste + " | " + this.lyhenne + " " + this.nimi + "]";
     }
     
     /**
@@ -102,12 +102,12 @@ public class Alusta {
      * @example
      * <pre name="test">
      *   Alusta a1 = new Alusta();
-     *   a1.getAlustaTunniste() === 0;
+     *   a1.getAlustanTunniste() === 0;
      *   a1.rekisteroi();
      *   Alusta a2 = new Alusta();
      *   a2.rekisteroi();
-     *   int n1 = a1.getAlustaTunniste();
-     *   int n2 = a2.getAlustaTunniste();
+     *   int n1 = a1.getAlustanTunniste();
+     *   int n2 = a2.getAlustanTunniste();
      *   n1 === n2-1;
      * </pre>
      */

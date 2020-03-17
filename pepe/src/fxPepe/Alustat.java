@@ -108,8 +108,9 @@ public class Alustat implements Iterable<Alusta> {
 
 
     /**
-     * Haetaan kaikki pelin alustat
-     * @param tunniste pelin tunniste, jolle alustoja haetaan
+     * En välttämättä tarvitse tätä
+     * Haetaan kaikki peliTietoon kuuluvat alustat
+     * @param tunniste PeliTiedon tunniste, jolle alustoja haetaan
      * @return tietorakenne jossa viiteet löydetteyihin alustoihin
      * @example
      * <pre name="test">
@@ -149,27 +150,38 @@ public class Alustat implements Iterable<Alusta> {
      */
     public static void main(String[] args) {
         Alustat alustat = new Alustat();
+        
         Alusta a1 = new Alusta();
         a1.rekisteroi();
         a1.taytaTestiAlustaTiedoilla();
+        
         Alusta a2 = new Alusta();
         a2.rekisteroi();
         a2.taytaTestiAlustaTiedoilla();
         
+        Alusta a3 = new Alusta();
+        a3.rekisteroi();
+        a3.taytaTestiAlustaTiedoilla();
+        
         a1.tulosta(System.out);
         a2.tulosta(System.out);
+        a3.tulosta(System.out);
 
         alustat.lisaa(a1);
         alustat.lisaa(a2);
+        alustat.lisaa(a3);
         
+        System.out.println(alustat.getLkm());
 
-
+        
         System.out.println("============= Alustat testi =================");
         
         List<Alusta> alustalista = alustat.annaAlustaTiedot(1);
         for (Alusta alusta : alustalista) {
             alusta.tulosta(System.out);
         }
+        
+        
 
     }
 
