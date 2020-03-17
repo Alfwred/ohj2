@@ -11,7 +11,8 @@ import java.util.List;
  */
 public class Pepe {
     private final Pelit pelit = new Pelit();
-    private final PeliTiedot peliTiedot = new PeliTiedot(); 
+    private final PeliTiedot peliTiedot = new PeliTiedot();
+    private final Alustat alustat = new Alustat();
 
 
     /**
@@ -70,6 +71,14 @@ public class Pepe {
         peliTiedot.lisaa(tieto);
     }
     
+    /**
+     * Listään uusi alusta Pepeen
+     * @param alusta Lisättävä alusta 
+     */
+    public void lisaa(Alusta alusta) {
+        alustat.lisaa(alusta);
+    }
+    
 
     /**
      * Palauttaa i:n pelin
@@ -83,7 +92,7 @@ public class Pepe {
     
     
     /**
-     * Haetaan kaikki pelin peliTiedot
+     * Haetaan pelin peliTiedot
      * @param peli Peli jolle haetaan peliTietoja
      * @return tietorakenne jossa viiteet löydetteyihin peliTietoihin
      * @example
@@ -116,7 +125,16 @@ public class Pepe {
     public List<PeliTieto> annaPeliTiedot(Peli peli) {
         return peliTiedot.annaPeliTiedot(peli.getTunniste());
     }
-
+    
+    /**
+     * Haetaan PeliTiedon alusta
+     * @param tieto PeliTieto-olio
+     * @return tietorakenne jossa viiteet löydetteyihin alustoihin
+     */
+    public List<Alusta> annaAlustat(PeliTieto tieto) {
+        return alustat.annaAlustaTiedot(tieto.getPeliTietoTunniste());
+    }
+    
 
     /**
      * Lukee pepen tiedot tiedostosta
@@ -146,8 +164,18 @@ public class Pepe {
         Pepe pepe = new Pepe();
 
         try {
+            
+            // Alustojen testiluonti
+            Alusta a1 = new Alusta();
+            Alusta a2 = new Alusta();
+            a1.rekisteroi();
+            a2.rekisteroi();
+            a1.taytaAlustaTiedoilla();
+            a2.taytaAlustaTiedoilla();
+            
+            
             // Pelien testiluonti
-            // pepe.lueTiedostosta("kelmit")
+            // pepe.lueTiedostosta("pelit")
             Peli cnc = new Peli(), d2 = new Peli();
             cnc.rekisteroi();
             cnc.taytaPeliTiedoilla();
@@ -162,11 +190,11 @@ public class Pepe {
             int id2 = d2.getTunniste();
             PeliTieto tieto1 = new PeliTieto(id1);
             tieto1.rekisteroi();
-            tieto1.taytaTestiPeliTietoTiedoilla(id1);
+            tieto1.taytaTestiPeliTietoTiedoilla(id1, a1);
             pepe.lisaa(tieto1);
             PeliTieto tieto2 = new PeliTieto(id2);
             tieto2.rekisteroi();
-            tieto2.taytaTestiPeliTietoTiedoilla(id2);
+            tieto2.taytaTestiPeliTietoTiedoilla(id2, a2);
             pepe.lisaa(tieto2);
 
 

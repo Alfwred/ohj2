@@ -162,6 +162,7 @@ public class PepeGUIController implements Initializable {
         panelPeli.setContent(areaPeli);
         areaPeli.setFont(new Font("Courier New", 12));
         panelPeli.setFitToHeight(true);
+        panelPeli.setFitToWidth(true);
         
         chooserPelit.clear();
         chooserPelit.addSelectionListener(e -> naytaPeli());
@@ -232,7 +233,7 @@ public class PepeGUIController implements Initializable {
             
             List<PeliTieto> peliTieto = pepe.annaPeliTiedot(peliValittu); 
             for (PeliTieto tieto : peliTieto) 
-                tieto.tulosta(os); 
+                tieto.tulosta(os);
         }
     }
     
@@ -283,14 +284,23 @@ public class PepeGUIController implements Initializable {
      * Luo uuden pelin, jota aletaan editoimaan 
      */
     protected void uusiPeli() {
+        
+        // Testialustan luonti
+        Alusta alusta = new Alusta();
+        alusta.rekisteroi();
+        alusta.taytaTestiAlustaTiedoilla();
+        pepe.lisaa(alusta);
+        
+        // Testipelin luonti
         Peli uusi = new Peli();
         uusi.rekisteroi();
         uusi.taytaPeliTiedoilla();
         
+        // Testitunnisteen luonti
         int id = uusi.getTunniste();
         PeliTieto tieto = new PeliTieto(id);
         tieto.rekisteroi();
-        tieto.taytaTestiPeliTietoTiedoilla(id);
+        tieto.taytaTestiPeliTietoTiedoilla(id, alusta);
         pepe.lisaa(tieto);
         
         try {

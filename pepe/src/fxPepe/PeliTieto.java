@@ -16,7 +16,7 @@ public class PeliTieto {
     
     private int     tTunniste;              // Tiedon id
     private int     pTunniste;              // Id, jolla sidotaan tieto peliin
-    private int     alusta;                 // Pelin alusta
+    private Alusta  alusta;                 // Pelin alusta, sidotaan alusta peliTietoon
     private int     julkaisuvuosi;          // Pelin julkaisuvuosi
     private int     hankintavuosi;          // Pelin hankintavuosi
     private int     levy;                   // Levyn kunto 0-2
@@ -43,12 +43,13 @@ public class PeliTieto {
     
     
     /**
-     * Apumetodi, jolla saadaan täytettyä testiarvot pelille
+     * Apumetodi, jolla saadaan täytettyä testiarvot peliTiedolle
      * @param pt pelin tunniste, joka annetaan peliTiedolle talteen
+     * @param a Alusta, mikä linkitetään PeliTieto-olioon
      */
-    public void taytaTestiPeliTietoTiedoilla(int pt) {
+    public void taytaTestiPeliTietoTiedoilla(int pt, Alusta a) {
         pTunniste = pt;
-        alusta = 5;
+        alusta = a;
         julkaisuvuosi = 1997;
         hankintavuosi = 1999;
         levy = 2;
@@ -57,6 +58,20 @@ public class PeliTieto {
         lisatiedot = "Sain tämän Jarilta 1999";
     }
     
+    /**
+     * Apumetodi, jolla saadaan täytettyä testiarvot peliTiedolle
+     * @param pt pelin tunniste, joka annetaan peliTiedolle talteen
+     */
+    public void taytaTestiPeliTietoTiedoilla(int pt) {
+        pTunniste = pt;
+        alusta = null;
+        julkaisuvuosi = 1997;
+        hankintavuosi = 1999;
+        levy = 2;
+        kotelo = 2;
+        ohjekirja = 2;
+        lisatiedot = "Sain tämän Jarilta 1999";
+    }
     
     /**
     * Apumetodi, jolla saadaan täytettyä testiarvot peliTiedolle
@@ -66,7 +81,12 @@ public class PeliTieto {
     public void taytaPeliTiedoilla() {
         Random random = new Random();
         int t = random.nextInt(100 - 1 + 1) + 1;;
-        taytaTestiPeliTietoTiedoilla(t);
+        
+        Alusta a = new Alusta();
+        a.rekisteroi();
+        a.taytaAlustaTiedoilla();
+          
+        taytaTestiPeliTietoTiedoilla(t, a);
     }
     
     

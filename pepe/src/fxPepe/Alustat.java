@@ -10,33 +10,33 @@ import java.util.*;
  * @version 28 Feb 2020
  *
  */
-public class PeliTiedot implements Iterable<PeliTieto> {
+public class Alustat implements Iterable<Alusta> {
     
     private String tiedostonNimi = "";
     
-    /** Taulukko PeliTiedoista */
-    private final ArrayList<PeliTieto> alkiot = new ArrayList<PeliTieto>();
+    /** Taulukko alustoista */
+    private final ArrayList<Alusta> alkiot = new ArrayList<Alusta>();
 
 
     /**
      * 
      */
-    public PeliTiedot() {
+    public Alustat() {
         // Toistaiseksi tyhja
     }
     
     
     /**
-     * Lisää uuden peliTiedon tietorakenteeseen. Ottaa peliTiedon omistukseensa.
-     * @param tieto lisättävä peliTieto. Huomio: tietorakenne muuttuu omistajaksi
+     * Lisää uuden alustan tietorakenteeseen. Ottaa alustan omistukseensa.
+     * @param alusta lisättävä alusta. Huomio: tietorakenne muuttuu omistajaksi
      */
-    public void lisaa(PeliTieto tieto) {
-        alkiot.add(tieto);
+    public void lisaa(Alusta alusta) {
+        alkiot.add(alusta);
     }
 
 
     /**
-     * Lukee pelitietokannan tiedostosta 
+     * Lukee alustakannan tiedostosta 
      * TODO Kesken.
      * @param hakemisto tiedoston hakemisto
      * @throws SailoException jos lukeminen epäonnistuu
@@ -48,7 +48,7 @@ public class PeliTiedot implements Iterable<PeliTieto> {
 
 
     /**
-     * Tallentaa pelitietokannan tiedostoon  
+     * Tallentaa alustakannan tiedostoon 
      * TODO Kesken.
      * @throws SailoException jos talletus epäonnistuu
      */
@@ -58,8 +58,8 @@ public class PeliTiedot implements Iterable<PeliTieto> {
 
 
     /**
-     * Palauttaa Pepen PeliTietojen lukumäärän
-     * @return PeliTietojen lukumäärä
+     * Palauttaa Pepen alustojen lukumäärän
+     * @return alustojen lukumäärä
      */
     public int getLkm() {
         return alkiot.size();
@@ -102,15 +102,15 @@ public class PeliTiedot implements Iterable<PeliTieto> {
      * </pre>
      */
     @Override
-    public Iterator<PeliTieto> iterator() {
+    public Iterator<Alusta> iterator() {
         return alkiot.iterator();
     }
 
 
     /**
-     * Haetaan kaikki pelin peliTiedot
-     * @param tunniste pelin tunniste, jolle harrastuksia haetaan
-     * @return tietorakenne jossa viiteet löydetteyihin peliTietoihin
+     * Haetaan kaikki pelin alustat
+     * @param tunniste pelin tunniste, jolle alustoja haetaan
+     * @return tietorakenne jossa viiteet löydetteyihin alustoihin
      * @example
      * <pre name="test">
      * #import java.util.*;
@@ -135,36 +135,40 @@ public class PeliTiedot implements Iterable<PeliTieto> {
      *  loytyneet.get(0) == tieto51 === true;
      * </pre> 
      */
-    public List<PeliTieto> annaPeliTiedot(int tunniste) {
-        List<PeliTieto> loydetyt = new ArrayList<PeliTieto>();
-        for (PeliTieto tieto : alkiot)
-            if (tieto.getPelinTunniste() == tunniste) loydetyt.add(tieto);
+    public List<Alusta> annaAlustaTiedot(int tunniste) {
+        List<Alusta> loydetyt = new ArrayList<Alusta>();
+        for (Alusta tieto : alkiot)
+            if (tieto.getAlustanTunniste() == tunniste) loydetyt.add(tieto);
         return loydetyt;
     }
 
 
     /**
-     * Testiohjelma PeliTiedoille
+     * Testiohjelma alustoille
      * @param args ei käytössä
      */
     public static void main(String[] args) {
-        PeliTiedot pelientiedot = new PeliTiedot();
-        PeliTieto peli1 = new PeliTieto();
-        peli1.rekisteroi();
-        peli1.taytaTestiPeliTietoTiedoilla(2);
-        PeliTieto peli2 = new PeliTieto();
-        peli2.rekisteroi();
-        peli2.taytaTestiPeliTietoTiedoilla(1);
-
-        pelientiedot.lisaa(peli1);
-        pelientiedot.lisaa(peli2);
-
-
-        System.out.println("============= PeliTiedot testi =================");
+        Alustat alustat = new Alustat();
+        Alusta a1 = new Alusta();
+        a1.rekisteroi();
+        a1.taytaTestiAlustaTiedoilla();
+        Alusta a2 = new Alusta();
+        a2.rekisteroi();
+        a2.taytaTestiAlustaTiedoilla();
         
-        List<PeliTieto> pelientiedot2 = pelientiedot.annaPeliTiedot(1);
-        for (PeliTieto tieto : pelientiedot2) {
-            tieto.tulosta(System.out);
+        a1.tulosta(System.out);
+        a2.tulosta(System.out);
+
+        alustat.lisaa(a1);
+        alustat.lisaa(a2);
+        
+
+
+        System.out.println("============= Alustat testi =================");
+        
+        List<Alusta> alustalista = alustat.annaAlustaTiedot(1);
+        for (Alusta alusta : alustalista) {
+            alusta.tulosta(System.out);
         }
 
     }

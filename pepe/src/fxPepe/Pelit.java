@@ -4,7 +4,7 @@
 package fxPepe;
 
 /**
- * Pepen jäsenistö joka osaa mm. lisätä uuden jäsenen
+ * Pepen pelistö joka osaa mm. lisätä uuden pelin
  * @author Anssi Lepikko
  * @version 18 Feb 2020
  *

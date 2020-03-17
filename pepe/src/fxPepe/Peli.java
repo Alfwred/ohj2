@@ -67,7 +67,7 @@ public class Peli {
     
     
     /**
-     * Tulostetaan henkilön tiedot
+     * Tulostetaan pelin tiedot
      * @param os tietovirta johon tulostetaan
      */
     public void tulosta(OutputStream os) {
