@@ -17,7 +17,7 @@ public class Alusta {
     private String  lyhenne;                // Pelin lyhenne
     private String  nimi;                   // Pelin koko nimi
     
-    private static int seuraavaTunniste = 10;
+    private static int seuraavaTunniste = 1000;
 
     /**
      * 
@@ -40,23 +40,23 @@ public class Alusta {
      */
     public void taytaTestiAlustaTiedoilla() {
         
-        if (this.aTunniste == 10) {
+        if (this.aTunniste == 1000) {
             lyhenne = "GC";
             nimi = "Gamecube";
         }
-        if (this.aTunniste == 11) {
+        if (this.aTunniste == 1001) {
             lyhenne = "N64";
             nimi = "Nintendo 64";
         }
-        if (this.aTunniste == 12) {
+        if (this.aTunniste == 1002) {
             lyhenne = "PS1";
             nimi = "PlaySation";
         }
-        if (this.aTunniste == 13) {
+        if (this.aTunniste == 1003) {
             lyhenne = "PS2";
             nimi = "PlaySation 2";
         }
-        if (this.aTunniste == 14) {
+        if (this.aTunniste == 1004) {
             lyhenne = "PS4";
             nimi = "PlaySation 4";
         }
@@ -119,24 +119,22 @@ public class Alusta {
     
     
     /**
-     * Väliaikainen viritys!
-     * StringGridiin lisaysta varten metodi, joka luo String[] pelistä
-     * @param peli Peli
-     * @return String[]-taulukko pelin tiedoista
+     * Palauttaa alustan oman tunniste id:n
+     * @return alustan aTunniste id
      */
-    public String[] getKenttia(Peli peli) {
-        String[] t = {Integer.toString(peli.getTunniste()), peli.getNimi()};
-        return t;
+    public int getTunniste() {
+        return aTunniste;
     }
     
     
     /**
-     * Palauttaa alustan oman tunniste id:n
-     * @return alustan aTunniste id
+     * Palauttaa alustan nimen (lyhenne)
+     * @return Alustan nimi
      */
-    public int getAlustanTunniste() {
-        return aTunniste;
+    public String getNimi() {
+        return lyhenne;
     }
+    
       
     /**
      * @param args Ei käytössä

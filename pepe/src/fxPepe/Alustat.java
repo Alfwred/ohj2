@@ -58,7 +58,7 @@ public class Alustat implements Iterable<Alusta> {
 
 
     /**
-     * Palauttaa Pepen alustojen lukumäärän
+     * Palauttaa alustojen lukumäärän
      * @return alustojen lukumäärä
      */
     public int getLkm() {
@@ -67,34 +67,34 @@ public class Alustat implements Iterable<Alusta> {
 
 
     /**
-     * Iteraattori kaikkien peliTietojen läpikäymiseen
-     * @return peliTietoiteraattori
+     * Iteraattori kaikkien alustojen läpikäymiseen
+     * @return alustojen iteraattori
      * 
      * @example
      * <pre name="test">
      * #PACKAGEIMPORT
      * #import java.util.*;
      * 
-     *  PeliTiedot tiedot = new PeliTiedot();
-     *  PeliTieto tieto21 = new PeliTieto(2); tiedot.lisaa(tieto21);
-     *  PeliTieto tieto11 = new PeliTieto(1); tiedot.lisaa(tieto11);
-     *  PeliTieto tieto22 = new PeliTieto(2); tiedot.lisaa(tieto22);
-     *  PeliTieto tieto12 = new PeliTieto(1); tiedot.lisaa(tieto12);
-     *  PeliTieto tieto23 = new PeliTieto(2); tiedot.lisaa(tieto23);
+     *  Alustat alustat = new Alustat();
+     *  Alusta alusta21 = new Alusta(1); alustat.lisaa(alusta21);
+     *  Alusta alusta11 = new Alusta(2); alustat.lisaa(alusta11);
+     *  Alusta alusta22 = new Alusta(3); alustat.lisaa(alusta22);
+     *  Alusta alusta12 = new Alusta(4); alustat.lisaa(alusta12);
+     *  Alusta alusta23 = new Alusta(5); alustat.lisaa(alusta23);
      * 
-     *  Iterator<PeliTieto> i2=tiedot.iterator();
-     *  i2.next() === tieto21;
-     *  i2.next() === tieto11;
-     *  i2.next() === tieto22;
-     *  i2.next() === tieto12;
-     *  i2.next() === tieto23;
-     *  i2.next() === tieto12;  #THROWS NoSuchElementException  
+     *  Iterator<Alusta> i2=alustat.iterator();
+     *  i2.next() === alusta21;
+     *  i2.next() === alusta11;
+     *  i2.next() === alusta22;
+     *  i2.next() === alusta12;
+     *  i2.next() === alusta23;
+     *  i2.next() === alusta11;  #THROWS NoSuchElementException  
      *  
      *  int n = 0;
-     *  int pnrot[] = {2,1,2,1,2};
+     *  int anrot[] = {1,2,3,4,5};
      *  
-     *  for ( PeliTieto tieto:tiedot ) { 
-     *    tieto.getPelinTunniste() === pnrot[n]; n++;  
+     *  for (Alusta alusta:alustat) { 
+     *    alusta.getTunniste() === anrot[n]; n++;  
      *  }
      *  
      *  n === 5;
@@ -108,39 +108,27 @@ public class Alustat implements Iterable<Alusta> {
 
 
     /**
-     * En välttämättä tarvitse tätä
-     * Haetaan kaikki peliTietoon kuuluvat alustat
-     * @param tunniste PeliTiedon tunniste, jolle alustoja haetaan
-     * @return tietorakenne jossa viiteet löydetteyihin alustoihin
+     * Haetaan tunnistetta vastaava Alusta-olio
+     * @param tunniste Alustan tunniste, jolla alustaa haetaan
+     * @return Alusta-olio
      * @example
      * <pre name="test">
      * #import java.util.*;
      * 
-     *  PeliTiedot tiedot = new PeliTiedot();
-     *  PeliTieto tieto21 = new PeliTieto(2); tiedot.lisaa(tieto21);
-     *  PeliTieto tieto11 = new PeliTieto(1); tiedot.lisaa(tieto11);
-     *  PeliTieto tieto22 = new PeliTieto(2); tiedot.lisaa(tieto22);
-     *  PeliTieto tieto12 = new PeliTieto(1); tiedot.lisaa(tieto12);
-     *  PeliTieto tieto23 = new PeliTieto(2); tiedot.lisaa(tieto23);
-     *  PeliTieto tieto51 = new PeliTieto(5); tiedot.lisaa(tieto51);
+     *  Alustat alustat = new Alustat();
+     *  Alusta a1 = new Alusta(); alustat.lisaa(a1);
+     *  Alusta a2 = new Alusta(); alustat.lisaa(a2);
+     *  a1.rekisteroi(); a1.taytaAlustaTiedoilla();
+     *  a2.rekisteroi(); a2.taytaAlustaTiedoilla();
      *  
-     *  List<PeliTieto> loytyneet;
-     *  loytyneet = tiedot.annaPeliTiedot(3);
-     *  loytyneet.size() === 0; 
-     *  loytyneet = tiedot.annaPeliTiedot(1);
-     *  loytyneet.size() === 2; 
-     *  loytyneet.get(0) == tieto11 === true;
-     *  loytyneet.get(1) == tieto12 === true;
-     *  loytyneet = tiedot.annaPeliTiedot(5);
-     *  loytyneet.size() === 1; 
-     *  loytyneet.get(0) == tieto51 === true;
+     *  alustat.annaAlusta(a1.getTunniste()).getTunniste() === a1.getTunniste();
+     *  alustat.annaAlusta(a2.getTunniste()).getTunniste() === a2.getTunniste();
      * </pre> 
      */
-    public List<Alusta> annaAlustaTiedot(int tunniste) {
-        List<Alusta> loydetyt = new ArrayList<Alusta>();
-        for (Alusta tieto : alkiot)
-            if (tieto.getAlustanTunniste() == tunniste) loydetyt.add(tieto);
-        return loydetyt;
+    public Alusta annaAlusta(int tunniste) {
+        for (Alusta alusta : alkiot)
+            if (alusta.getTunniste() == tunniste) return alusta;
+        return null;
     }
 
 
@@ -171,18 +159,12 @@ public class Alustat implements Iterable<Alusta> {
         alustat.lisaa(a2);
         alustat.lisaa(a3);
         
-        System.out.println(alustat.getLkm());
-
+        System.out.println("Alustojen lukumäärä: " + alustat.getLkm());
+        System.out.println("Haetaan alustoja alustan tunnisteen perusteella:");
         
-        System.out.println("============= Alustat testi =================");
-        
-        List<Alusta> alustalista = alustat.annaAlustaTiedot(1);
-        for (Alusta alusta : alustalista) {
-            alusta.tulosta(System.out);
-        }
-        
-        
-
+        alustat.annaAlusta(a1.getTunniste()).tulosta(System.out);
+        alustat.annaAlusta(a2.getTunniste()).tulosta(System.out);
+        alustat.annaAlusta(a3.getTunniste()).tulosta(System.out);
     }
 
 }

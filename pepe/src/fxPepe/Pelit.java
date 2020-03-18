@@ -3,127 +3,188 @@
  */
 package fxPepe;
 
+import java.util.*;
+
 /**
- * Pepen pelistö joka osaa mm. lisätä uuden pelin
- * @author Anssi Lepikko
- * @version 18 Feb 2020
+ * @author anssi
+ * @version 28 Feb 2020
  *
  */
-public class Pelit {
+public class Pelit implements Iterable<Peli> {
     
-    private static final int MAX_PELEJA    = 5;
-    private int              lkm           = 0;
-    private String           tiedostonNimi = "";
-    private Peli             alkiot[]      = new Peli[MAX_PELEJA];
+    private String tiedostonNimi = "";
+    
+    /** Taulukko PeliTiedoista */
+    private final ArrayList<Peli> alkiot = new ArrayList<Peli>();
+
 
     /**
-     * Oletusmuodostaja
+     * 
      */
     public Pelit() {
-        // Attribuuttien oma alustus riittää
+        // Toistaiseksi tyhja
     }
     
     
     /**
-     * Lisää uuden pelin tietorakenteeseen. Ottaa pelin omistukseensa.
-     * @param peli lisätäävän pelin viite. Huom tietorakenne muuttuu omistajaksi.
-     * @throws SailoException jos tietorakenne on jo täynnä
-     * @example
-     * <pre name="test">
-     * #THROWS SailoException 
-     * Pelit pelit = new Pelit();
-     * Peli cnc = new Peli(), ra = new Peli();
-     * pelit.getLkm() === 0;
-     * pelit.lisaa(cnc); pelit.getLkm() === 1;
-     * pelit.lisaa(ra); pelit.getLkm() === 2;
-     * pelit.lisaa(cnc); pelit.getLkm() === 3;
-     * pelit.anna(0) === cnc;
-     * pelit.anna(1) === ra;
-     * pelit.anna(2) === cnc;
-     * pelit.anna(1) == cnc === false;
-     * pelit.anna(1) == ra === true;
-     * pelit.anna(3) === cnc; #THROWS IndexOutOfBoundsException 
-     * pelit.lisaa(cnc); pelit.getLkm() === 4;
-     * pelit.lisaa(cnc); pelit.getLkm() === 5;
-     * pelit.lisaa(cnc);  #THROWS SailoException
-     * </pre>
+     * Lisää uuden peliTiedon tietorakenteeseen. Ottaa peliTiedon omistukseensa.
+     * @param tieto lisättävä peliTieto. Huomio: tietorakenne muuttuu omistajaksi
      */
-    public void lisaa(Peli peli) throws SailoException {
-        if (lkm >= alkiot.length) throw new SailoException("Liikaa alkioita");
-        alkiot[lkm] = peli;
-        lkm++;
+    public void lisaa(Peli tieto) {
+        alkiot.add(tieto);
     }
-    
-    
+
+
     /**
-     * Palauttaa viitteen i:teen peliin.
-     * @param i monennenko pelim viite halutaan
-     * @return viite peliim, jonka indeksi on i
-     * @throws IndexOutOfBoundsException jos i ei ole sallitulla alueella  
-     */
-    public Peli anna(int i) throws IndexOutOfBoundsException {
-        if (i < 0 || lkm <= i)
-            throw new IndexOutOfBoundsException("Laiton indeksi: " + i);
-        return alkiot[i];
-    }
-    
-    
-    /**
-     * Lukee pelikannan tiedostosta. Kesken.
+     * Lukee pelitietokannan tiedostosta 
+     * TODO Kesken.
      * @param hakemisto tiedoston hakemisto
      * @throws SailoException jos lukeminen epäonnistuu
      */
     public void lueTiedostosta(String hakemisto) throws SailoException {
-        tiedostonNimi = hakemisto + "/pelit.dat";
+        tiedostonNimi = hakemisto + ".har";
         throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedostonNimi);
     }
 
 
     /**
-     * Tallentaa pelikannan tiedostoon. Kesken.
+     * Tallentaa pelitietokannan tiedostoon  
+     * TODO Kesken.
      * @throws SailoException jos talletus epäonnistuu
      */
     public void talleta() throws SailoException {
         throw new SailoException("Ei osata vielä tallettaa tiedostoa " + tiedostonNimi);
     }
-    
+
 
     /**
-     * Palauttaa pelirekisterin pelien lukumäärän
-     * @return jäsenten lukumäärä
+     * Palauttaa Pepen PeliTietojen lukumäärän
+     * @return PeliTietojen lukumäärä
      */
     public int getLkm() {
-        return lkm;
+        return alkiot.size();
     }
 
-    
+
     /**
-     * Testiohjelma pelikannalle
+     * Iteraattori kaikkien peliTietojen läpikäymiseen
+     * @return peliTietoiteraattori
+     * 
+     * @example
+     * <pre name="test">
+     * #PACKAGEIMPORT
+     * #import java.util.*;
+     * 
+     *  Pelit pelit = new Pelit();
+     *  Peli p21 = new Peli(1); pelit.lisaa(p21);
+     *  Peli p11 = new Peli(2); pelit.lisaa(p11);
+     *  Peli p22 = new Peli(3); pelit.lisaa(p22);
+     *  Peli p12 = new Peli(4); pelit.lisaa(p12);
+     *  Peli p23 = new Peli(5); pelit.lisaa(p23);
+     * 
+     *  Iterator<Peli> i2=pelit.iterator();
+     *  i2.next() === p21;
+     *  i2.next() === p11;
+     *  i2.next() === p22;
+     *  i2.next() === p12;
+     *  i2.next() === p23;
+     *  i2.next() === p12;  #THROWS NoSuchElementException  
+     *  
+     *  int n = 0;
+     *  int pnrot[] = {1,2,3,4,5};
+     *  
+     *  for ( Peli peli:pelit ) { 
+     *    peli.getTunniste() === pnrot[n]; n++;  
+     *  }
+     *  
+     *  n === 5;
+     *  
+     * </pre>
+     */
+    @Override
+    public Iterator<Peli> iterator() {
+        return alkiot.iterator();
+    }
+
+
+    /**
+     * TODO: Tämän merkitys on vielä epäselvä
+     * Haetaan tunnisteen mukainen peli
+     * @param tunniste pelin tunniste, jolle pelin tietoja haetaan
+     * @return tietorakenne jossa viiteet löydetteyihin peleihin
+     * @example
+     * <pre name="test">
+     * #import java.util.*;
+     * 
+     *  Pelit pelit = new Pelit();
+     *  
+     *  Peli peli21 = new Peli();
+     *  peli21.rekisteroi();
+     *  peli21.taytaPeliTiedoilla();
+     *  pelit.lisaa(peli21);
+     *  
+     *  Peli peli11 = new Peli();
+     *  peli11.rekisteroi();
+     *  peli11.taytaPeliTiedoilla();
+     *  pelit.lisaa(peli11);
+     *  
+     *  Peli peli12 = new Peli();
+     *  peli12.rekisteroi();
+     *  peli12.taytaPeliTiedoilla();
+     *  pelit.lisaa(peli12);
+     *  
+     *  Peli peli25 = new Peli();
+     *  peli25.rekisteroi();
+     *  peli25.taytaPeliTiedoilla();
+     *  pelit.lisaa(peli25);
+     *  
+     *  Peli peli51 = new Peli();
+     *  peli51.rekisteroi();
+     *  peli51.taytaPeliTiedoilla();
+     *  pelit.lisaa(peli51);
+     *  
+     *  List<Peli> loytyneet;
+     *  loytyneet = pelit.annaPeli(1);
+     *  loytyneet.size() === 1; 
+     *  loytyneet = pelit.annaPeli(2);
+     *  loytyneet.size() === 1; 
+     *  loytyneet.get(0) == peli11 === true;
+     *  loytyneet = pelit.annaPeli(5);
+     *  loytyneet.size() === 1; 
+     *  loytyneet.get(0) == peli51 === true;
+     * </pre> 
+     */
+    public List<Peli> annaPeli(int tunniste) {
+        List<Peli> loydetyt = new ArrayList<Peli>();
+        for (Peli peli : alkiot)
+            if (peli.getTunniste() == tunniste) loydetyt.add(peli);
+        return loydetyt;
+    }
+
+
+    /**
+     * Testiohjelma PeliTiedoille
      * @param args ei käytössä
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Pelit pelit = new Pelit();
+        
+        Peli peli1 = new Peli();
+        peli1.rekisteroi();
+        peli1.taytaPeliTiedoilla();
+        
+        Peli peli2 = new Peli();
+        peli2.rekisteroi();
+        peli2.taytaPeliTiedoilla();
 
-        Peli d1 = new Peli(), d2 = new Peli();
-        d1.rekisteroi();
-        d1.taytaPeliTiedoilla();
-        d2.rekisteroi();
-        d2.taytaPeliTiedoilla();
-
-        try {
-            pelit.lisaa(d1);
-            pelit.lisaa(d2);
-
-            System.out.println("============= Pelit testi =================");
-
-            for (int i = 0; i < pelit.getLkm(); i++) {
-                Peli peli = pelit.anna(i);
-                System.out.println("Peli nro: " + i);
-                peli.tulosta(System.out);
-            }
-
-        } catch (SailoException ex) {
-            System.out.println(ex.getMessage());
+        pelit.lisaa(peli1);
+        pelit.lisaa(peli2);
+        
+        System.out.println("Haetaan pelejä pelin tunnisteen perusteella:");    
+        
+        List<Peli> pelilista = pelit.annaPeli(1);
+        for (Peli peli : pelilista) {
+            peli.tulosta(System.out);
         }
     }
 

@@ -8,114 +8,110 @@ import java.io.PrintStream;
 import java.util.Random;
 
 /**
- * Pelirekisterin peli
- * 
- * @author Anssi Lepikko
+ * @author anssi
  * @version 18 Feb 2020
  *
  */
 public class Peli {
     
-    private int pTunniste;
-    private String  nimi = "";
+    private int     pTunniste;              // Pelin oma id
+    private int     nTunniste;              // Pelin nimikkeen id
+    private int     aTunniste;              // Pelin alustan id
+    private int     julkaisuvuosi;          // Pelin julkaisuvuosi
+    private int     hankintavuosi;          // Pelin hankintavuosi
+    private int     levy;                   // Levyn kunto 0-2
+    private int     kotelo;                 // Kotelon kunto 0-2
+    private int     ohjekirja;              // Ohjekirjan kunto 0-2
+    private String  lisatiedot;             // Lisätiedot pelille (muistiinpanoja)
     
-    private static int seuraavaTunniste;
+    private static int seuraavaTunniste = 1;
+
+    /**
+     * 
+     */
+    public Peli() {
+        // Myöhemmin
+    }
     
     /**
-     * @return pelin nimi
-     * @example
-     * <pre name="test">
-     * Peli tr2 = new Peli();
-     * tr2.taytaPeliTiedoilla();
-     * tr2.getNimi() =R= "Tomb Raider 2"
-     * </pre>
+     * Alustetaan tietty peli
+     * @param nTunniste Nimikkeeseen viittaava tunniste
+     * @param aTunniste Alustaan viittaava tunniste
      */
-    public String getNimi() {
-        return this.nimi;
+    public Peli(int nTunniste, int aTunniste) {
+        this.nTunniste = nTunniste;
+        this.aTunniste = aTunniste;
+    }
+    
+    /**
+     * Alustetaan tietty peli syötetyllä tunnisteella
+     * @param pTunniste Pelin oma tunniste id
+     */
+    public Peli(int pTunniste) {
+        this.pTunniste = pTunniste;
     }
     
     
     /**
      * Apumetodi, jolla saadaan täytettyä testiarvot pelille
-     * @param t Pelille annettava pTunniste
+     * @param nt Nimikkeen id, joka haetaan pelille
+     * @param at Alustan id, joka haetaan alustalle
      */
-    public void taytaTestiPeliTiedoilla(int t) {
-        pTunniste = t;
-        nimi = "Tomb Raider 2";
+    public void taytaTestiPeliTiedoilla(int nt, int at) {
+        nTunniste = nt;
+        aTunniste = at;
+        julkaisuvuosi = 1997;
+        hankintavuosi = 1999;
+        levy = 2;
+        kotelo = 2;
+        ohjekirja = 2;
+        lisatiedot = "Sain tämän Jarilta 1999";
     }
     
     
     /**
-    * Apumetodi, jolla saadaan täytettyä testiarvot pelille
-    * Tunniste arvotaan, jotta kahdella pelillä ei olisi
+    * Apumetodi, jolla saadaan täytettyä testiarvot peliTiedolle
+    * Tunniste arvotaan, jotta kahdella peliTiedolla olisi
     * samoja tietoja.
     */
     public void taytaPeliTiedoilla() {
         Random random = new Random();
-        int t = random.nextInt(100 - 1 + 1) + 1;;
-        taytaTestiPeliTiedoilla(t);
+        int t = random.nextInt(100 - 1 + 1) + 100;
+        int a = random.nextInt(100 - 1 + 1) + 1000;
+          
+        taytaTestiPeliTiedoilla(t, a);
     }
-
+    
     
     /**
     * Tulostetaan pelin tiedot
     * @param out tietovirta johon tulostetaan
     */
     public void tulosta(PrintStream out) {
-        out.println(pTunniste + "|" + nimi);
+        out.println("Pelin tunniste: " + pTunniste + " Nimikkeen tunniste: " + nTunniste + " Alustan tunniste: " + aTunniste + " |  " + julkaisuvuosi + ", " + hankintavuosi + ", " + levy + ", " + kotelo + ", " + ohjekirja + ", " + lisatiedot); ;
     }
     
     
     /**
-     * Tulostetaan pelin tiedot
-     * @param os tietovirta johon tulostetaan
-     */
+    * Tulostetaan peli
+    * @param os tietovirta johon tulostetaan
+    */
     public void tulosta(OutputStream os) {
-        tulosta(new PrintStream(os));
+    tulosta(new PrintStream(os));
     }
     
-    
     /**
-     * StringGridiin lisaysta varten metodi, joka luo String[] pelistä
-     * @param peli Peli
-     * @return String[]-taulukko pelin tiedoista
-     */
-    public String[] getKenttia(Peli peli) {
-        String[] t = {Integer.toString(peli.getTunniste()), peli.getNimi()};
-        return t;
-    }
-    
-    
-     /**
-      * Antaa joko pelin nimen tai tunnisteen merkkijonona
-      * 1 => nimi
-      * 0 => tunniste
-     * @param peli Peli-olio
-     * @param k 1 tai tai 0
-     * @return Merkkijono
-     */
-    public String anna(Peli peli, int k) {
-         try {
-             if ( k == 1 ) return peli.getNimi();
-             if (k == 0 ) return Integer.toString(peli.getTunniste());
-             return "";
-         } catch (Exception ex) {
-             return "";
-         }
-     }
-    
-    /**
-     * Antaa pelille seuraavan tunnistenumeron.
+     * Antaa peliTiedolle seuraavan tunnistenumeron.
      * @return pTunniste Uusi tunnistenumero
      * @example
      * <pre name="test">
-     *   Peli ra1 = new Peli();
-     *   ra1.getTunniste() === 0;
+     *   PeliTieto ra1 = new PeliTieto();
+     *   ra1.getPelinTunniste() === 0;
      *   ra1.rekisteroi();
-     *   Peli ra2 = new Peli();
+     *   PeliTieto ra2 = new PeliTieto();
      *   ra2.rekisteroi();
-     *   int n1 = ra1.getTunniste();
-     *   int n2 = ra2.getTunniste();
+     *   int n1 = ra1.getPelinTunniste();
+     *   int n2 = ra2.getPelinTunniste();
      *   n1 === n2-1;
      * </pre>
      */
@@ -127,8 +123,20 @@ public class Peli {
     
     
     /**
-     * Palauttaa pelin tunnisteen
-     * @return pelin pTunniste
+     * Väliaikainen viritys!
+     * StringGridiin lisaysta varten metodi, joka luo String[] pelistä
+     * @param peli Peli
+     * @return String[]-taulukko pelin tiedoista
+     */
+    public String[] getKenttia(Peli peli) {
+        String[] t = {Integer.toString(peli.getTunniste()) + "Testipeli"};
+        return t;
+    }
+    
+    
+    /**
+     * Palauttaa pelin pTunniste id:n
+     * @return id
      */
     public int getTunniste() {
         return pTunniste;
@@ -139,15 +147,17 @@ public class Peli {
      * @param args Ei käytössä
      */
     public static void main(String[] args) {
-        Peli ra = new Peli(), cnc = new Peli();
-        ra.rekisteroi();
-        cnc.rekisteroi();
-        ra.tulosta(System.out);
-        ra.taytaPeliTiedoilla();
-        ra.tulosta(System.out);
-        cnc.tulosta(System.out);
-        cnc.taytaPeliTiedoilla();
-        cnc.tulosta(System.out);
+        Peli p1 = new Peli();
+        Peli p2 = new Peli();
+        p1.rekisteroi();
+        p2.rekisteroi();
+        p1.taytaPeliTiedoilla();
+        p2.taytaPeliTiedoilla();
+        p1.tulosta(System.out);
+        p2.tulosta(System.out);
+        
+        Integer.toString(p1.getTunniste());
+    
     }
 
 }
