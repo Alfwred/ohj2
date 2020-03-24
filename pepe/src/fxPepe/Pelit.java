@@ -153,14 +153,26 @@ public class Pelit implements Iterable<Peli> {
      *  loytyneet.size() === 1; 
      *  loytyneet.get(0) == peli51 === true;
      * </pre> 
-     */
     public List<Peli> annaPeli(int tunniste) {
         List<Peli> loydetyt = new ArrayList<Peli>();
         for (Peli peli : alkiot)
             if (peli.getTunniste() == tunniste) loydetyt.add(peli);
         return loydetyt;
     }
-
+    */
+    
+    
+    /**
+     * Palauttaa pelin tunnisteen perusteella
+     * @param tunniste Haettavan pelin tunniste
+     * @return Peli
+     */
+    public Peli annaPeli(int tunniste) {
+        for (Peli peli : alkiot)
+            if (peli.getTunniste() == tunniste) return peli;
+        return null;
+    }
+    
 
     /**
      * Testiohjelma PeliTiedoille
@@ -176,16 +188,14 @@ public class Pelit implements Iterable<Peli> {
         Peli peli2 = new Peli();
         peli2.rekisteroi();
         peli2.taytaPeliTiedoilla();
-
+        
+        
         pelit.lisaa(peli1);
         pelit.lisaa(peli2);
         
         System.out.println("Haetaan pelejä pelin tunnisteen perusteella:");    
+        pelit.annaPeli(1).tulosta(System.out);
         
-        List<Peli> pelilista = pelit.annaPeli(1);
-        for (Peli peli : pelilista) {
-            peli.tulosta(System.out);
-        }
     }
 
 }

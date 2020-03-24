@@ -93,7 +93,7 @@ public class Alusta {
     
     @Override
     public String toString() {
-        return "Alusta: [id " + this.aTunniste + " | " + this.lyhenne + " " + this.nimi + "]";
+        return  this.lyhenne;
     }
     
     /**

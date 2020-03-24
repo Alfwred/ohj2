@@ -118,6 +118,11 @@ public class Nimike {
         return this.nimi;
     }
     
+    @Override
+    public String toString() {
+        return this.getNimi();
+    }
+    
     
     /**
      * @param args Ei käytössä

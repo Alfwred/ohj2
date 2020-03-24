@@ -10,8 +10,9 @@ import java.util.List;
  *
  */
 public class Pepe {
+    
     private final Pelit pelit = new Pelit();
-    private final PeliTiedot peliTiedot = new PeliTiedot();
+    private final Nimikkeet nimikkeet = new Nimikkeet();
     private final Alustat alustat = new Alustat();
 
 
@@ -64,11 +65,12 @@ public class Pepe {
    
 
     /**
-     * Listään uusi peliTieto Pepeen
-     * @param tieto lisättävä peliTieto 
+     * Listään uusi nimike Pepeen
+     * @param nimike lisättävä nimike
+     * @throws SailoException jos lisäystä ei voida tehdä
      */
-    public void lisaa(PeliTieto tieto) {
-        peliTiedot.lisaa(tieto);
+    public void lisaa(Nimike nimike) throws SailoException {
+        nimikkeet.lisaa(nimike);
     }
     
     /**
@@ -78,61 +80,36 @@ public class Pepe {
     public void lisaa(Alusta alusta) {
         alustat.lisaa(alusta);
     }
+        
     
-
     /**
-     * Palauttaa i:n pelin
-     * @param i monesko peli palautetaan
-     * @return viite i:teen peliin
+     * Palauttaa parametrina pyydetyn pelin
+     * @param i Järjestysnumero
+     * @return Peli, joka pyydettiin
+     */
+    public Peli annaPeli(int i) {
+        return pelit.annaPeli(i);
+    }
+    
+    
+    /**
+     * Paluttaa pelille kuuluvan nimikkeen
+     * @param peli Peli, jonka nimikettä haetaan
+     * @return Pelin nimike
      * @throws IndexOutOfBoundsException jos i väärin
      */
-    public Peli annaPeli(int i) throws IndexOutOfBoundsException {
-        return pelit.anna(i);
+    public Nimike annaNimike(Peli peli) throws IndexOutOfBoundsException {
+        return nimikkeet.annaNimike(peli.getNimike());
     }
-    
+
     
     /**
-     * Haetaan pelin peliTiedot
-     * @param peli Peli jolle haetaan peliTietoja
-     * @return tietorakenne jossa viiteet löydetteyihin peliTietoihin
-     * @example
-     * <pre name="test">
-     * #import java.util.*;
-     * 
-     *  Pepe p = new Pepe();
-     *  Peli g1 = new Peli(), g2 = new Peli(), g3 = new Peli();
-     *  g1.rekisteroi(); g2.rekisteroi(); g3.rekisteroi();
-     *  int id1 = g1.getTunniste();
-     *  int id2 = g2.getTunniste();
-     *  PeliTieto tieto11 = new PeliTieto(id1); p.lisaa(tieto11);
-     *  PeliTieto tieto12 = new PeliTieto(id1); p.lisaa(tieto12);
-     *  PeliTieto tieto21 = new PeliTieto(id2); p.lisaa(tieto21);
-     *  PeliTieto tieto22 = new PeliTieto(id2); p.lisaa(tieto22);
-     *  PeliTieto tieto23 = new PeliTieto(id2); p.lisaa(tieto23);
-     *  
-     *  List<PeliTieto> loytyneet;
-     *  loytyneet = p.annaPeliTiedot(g3);
-     *  loytyneet.size() === 0; 
-     *  loytyneet = p.annaPeliTiedot(g1);
-     *  loytyneet.size() === 2; 
-     *  loytyneet.get(0) == tieto11 === true;
-     *  loytyneet.get(1) == tieto12 === true;
-     *  loytyneet = p.annaPeliTiedot(g2);
-     *  loytyneet.size() === 3; 
-     *  loytyneet.get(0) == tieto21 === true;
-     * </pre> 
+     * Haetaan Pelin alusta
+     * @param peli Peli, jonka alustaa haetaan
+     * @return Pelin alusta
      */
-    public List<PeliTieto> annaPeliTiedot(Peli peli) {
-        return peliTiedot.annaPeliTiedot(peli.getTunniste());
-    }
-    
-    /**
-     * Haetaan PeliTiedon alusta
-     * @param tieto PeliTieto-olio
-     * @return tietorakenne jossa viiteet löydetteyihin alustoihin
-     */
-    public List<Alusta> annaAlustat(PeliTieto tieto) {
-        return alustat.annaAlustaTiedot(tieto.getPeliTietoTunniste());
+    public Alusta annaAlusta(Peli peli) {
+        return alustat.annaAlusta(peli.getAlusta());
     }
     
 
@@ -154,7 +131,24 @@ public class Pepe {
         pelit.talleta();
         // TODO: yritä tallettaa toinen vaikka toinen epäonnistuisi
     }
-
+    
+    
+    /**
+     * Väliaikainen viritys!
+     * StringGridiin lisaysta varten metodi, joka luo String[] pelistä
+     * @param peli Peli
+     * @return String[]-taulukko pelin tiedoista
+     */
+    public String[] getKenttia(Peli peli) {
+        String[] t = {Integer.toString(peli.getTunniste()), annaNimike(peli).toString(), annaAlusta(peli).toString()};
+        return t;
+    }
+    
+    //loytynyt.tulosta(System.out);
+    
+    //pepe.annaNimike(loytynyt).tulosta(System.out);
+    //pepe.annaAlusta(loytynyt).tulosta(System.out);
+    
 
     /**
      * Testiohjelma pepesta
@@ -171,46 +165,50 @@ public class Pepe {
             Alusta a2 = new Alusta();
             a1.rekisteroi();
             a2.rekisteroi();
-            a1.taytaAlustaTiedoilla();
-            a2.taytaAlustaTiedoilla();
+            a1.taytaTestiAlustaTiedoilla();
+            a2.taytaTestiAlustaTiedoilla();
+            
+            pepe.lisaa(a1);
+            pepe.lisaa(a2);
+            
+            // Nimikkeiden testiluonti
+            Nimike n1 = new Nimike();
+            Nimike n2 = new Nimike();
+            n1.rekisteroi();
+            n2.rekisteroi();
+            n1.taytaTestiNimikeTiedoilla();
+            n2.taytaTestiNimikeTiedoilla();
+            
+            pepe.lisaa(n1);
+            pepe.lisaa(n2);
             
             
-            // Pelien testiluonti
-            // pepe.lueTiedostosta("pelit")
-            Peli cnc = new Peli(), d2 = new Peli();
-            cnc.rekisteroi();
-            cnc.taytaPeliTiedoilla();
-            d2.rekisteroi();
-            d2.taytaPeliTiedoilla();
-
-            pepe.lisaa(cnc);
-            pepe.lisaa(d2);
+            // Pelien luonti, nimikkeiden ja alustojen sitominen
+            Peli peli1 = new Peli(0);
+            peli1.rekisteroi();
+            peli1.taytaTestiPeliTiedoilla(n1.getTunniste(), a1.getTunniste());
+            pepe.lisaa(peli1);
             
-            // PeliTietojen testiluonti ja sitominen peleihin
-            int id1 = cnc.getTunniste();
-            int id2 = d2.getTunniste();
-            PeliTieto tieto1 = new PeliTieto(id1);
-            tieto1.rekisteroi();
-            tieto1.taytaTestiPeliTietoTiedoilla(id1, a1);
-            pepe.lisaa(tieto1);
-            PeliTieto tieto2 = new PeliTieto(id2);
-            tieto2.rekisteroi();
-            tieto2.taytaTestiPeliTietoTiedoilla(id2, a2);
-            pepe.lisaa(tieto2);
+            Peli peli2 = new Peli(1);
+            peli2.rekisteroi();
+            peli2.taytaTestiPeliTiedoilla(n2.getTunniste(), a2.getTunniste());
+            pepe.lisaa(peli2);
 
 
             System.out.println("============= Pepen testi =================");
-
-            for (int i = 0; i < pepe.getPeleja(); i++) {
-                Peli peli = pepe.annaPeli(i);
-                System.out.println("Peli paikassa: " + i);
-                peli.tulosta(System.out);
+            
+            // pepe.annaPeli(0).tulosta(System.out);
+            // pepe.annaNimike(pepe.annaPeli(0)).tulosta(System.out);
+            // pepe.annaAlusta(pepe.annaPeli(0)).tulosta(System.out);
+            
+            for (int i = 0; i  < pepe.getPeleja(); i++) {
+                Peli loytynyt = pepe.annaPeli(i);
+                loytynyt.tulosta(System.out);
                 
-                List<PeliTieto> peliTieto = pepe.annaPeliTiedot(peli); 
-                for (PeliTieto tieto:peliTieto) 
-                    tieto.tulosta(System.out); 
+                pepe.annaNimike(loytynyt).tulosta(System.out);
+                pepe.annaAlusta(loytynyt).tulosta(System.out);
             }
-
+            
         } catch (SailoException ex) {
             System.out.println(ex.getMessage());
         }

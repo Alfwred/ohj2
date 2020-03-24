@@ -56,7 +56,7 @@
                <center>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <center>
-                        <StringGrid fx:id="gridPelit" emptyStyleClass="" rivit="#|Peli" BorderPane.alignment="CENTER">
+                        <StringGrid fx:id="gridPelit" emptyStyleClass="" rivit="#|Peli|Alusta" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets />
                            </BorderPane.margin></StringGrid>

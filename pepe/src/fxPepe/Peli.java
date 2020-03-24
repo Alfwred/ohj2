@@ -24,7 +24,7 @@ public class Peli {
     private int     ohjekirja;              // Ohjekirjan kunto 0-2
     private String  lisatiedot;             // Lisätiedot pelille (muistiinpanoja)
     
-    private static int seuraavaTunniste = 1;
+    private static int seuraavaTunniste = 0;
 
     /**
      * 
@@ -123,23 +123,29 @@ public class Peli {
     
     
     /**
-     * Väliaikainen viritys!
-     * StringGridiin lisaysta varten metodi, joka luo String[] pelistä
-     * @param peli Peli
-     * @return String[]-taulukko pelin tiedoista
-     */
-    public String[] getKenttia(Peli peli) {
-        String[] t = {Integer.toString(peli.getTunniste()) + "Testipeli"};
-        return t;
-    }
-    
-    
-    /**
      * Palauttaa pelin pTunniste id:n
      * @return id
      */
     public int getTunniste() {
         return pTunniste;
+    }
+    
+    
+    /**
+     * Palauttaa peliin sidotun alustan nimikkeen tunnisteen (nTunniste)
+     * @return peliin sidotun nimikkeen id
+     */
+    public int getNimike() {
+        return nTunniste;
+    }
+    
+    
+    /**
+     * Palauttaa peliin sidotun alustan tunnisteen (aTunniste)
+     * @return peliin sidotun alustan id
+     */
+    public int getAlusta() {
+        return aTunniste;
     }
     
     

@@ -217,7 +217,7 @@ public class PepeGUIController implements Initializable {
     
     
     /**
-     * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
+     * Näyttää listasta valitun pelin tiedot, tilapäisesti yhteen isoon edit-kenttään
      */
     private void naytaGridinValinta() {
         areaPeli.setText("");
@@ -229,11 +229,11 @@ public class PepeGUIController implements Initializable {
         }
 
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPeli)) {
-            peliValittu.tulosta(os);
             
-            List<PeliTieto> peliTieto = pepe.annaPeliTiedot(peliValittu); 
-            for (PeliTieto tieto : peliTieto) 
-                tieto.tulosta(os);
+            peliValittu.tulosta(os);
+            pepe.annaNimike(peliValittu).tulosta(os);
+            pepe.annaAlusta(peliValittu).tulosta(os);
+            
         }
     }
     
@@ -250,23 +250,6 @@ public class PepeGUIController implements Initializable {
         }
     }
     
-
-    /**
-     * Hakee pelien tiedot listaan
-     * @param pnro pelin numero, joka aktivoidaan haun jälkeen
-     */
-    protected void hae2(int pnro) {
-        chooserPelit.clear();
-        int index = 0;
-        for (int i = 0; i < pepe.getPeleja(); i++) {
-            Peli peli = pepe.annaPeli(i);
-            if (peli.getTunniste() == pnro) index = i;
-            chooserPelit.add(peli.getNimi(), peli);
-            
-        }
-        chooserPelit.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää jäsenen
-    }
-    
     
     /**
      * Hakee pelien tiedot StrinGridiin
@@ -275,35 +258,34 @@ public class PepeGUIController implements Initializable {
         gridPelit.clear();
         for (int i = 0; i < pepe.getPeleja(); i++) {
             Peli peli = pepe.annaPeli(i);
-            gridPelit.add(peli, peli.getKenttia(peli));
+            gridPelit.add(peli, pepe.getKenttia(peli));
         }
     }
 
 
     /**
-     * Luo uuden pelin, jota aletaan editoimaan 
+     * Luo uuden pelin, jota aletaan editoimaan
      */
     protected void uusiPeli() {
         
-        // Testialustan luonti
+        // Alustojen testiluonti
         Alusta alusta = new Alusta();
         alusta.rekisteroi();
-        alusta.taytaTestiAlustaTiedoilla();
-        pepe.lisaa(alusta);
-        
-        // Testipelin luonti
-        Peli uusi = new Peli();
+        alusta.taytaAlustaTiedoilla();
+         
+        // Nimikkeiden testiluonti
+        Nimike nimike = new Nimike();
+        nimike.rekisteroi();
+        nimike.taytaNimikeTiedoilla();
+            
+        // Pelien luonti, nimikkeiden ja alustojen sitominen
+        Peli uusi = new Peli(0);
         uusi.rekisteroi();
-        uusi.taytaPeliTiedoilla();
-        
-        // Testitunnisteen luonti
-        int id = uusi.getTunniste();
-        PeliTieto tieto = new PeliTieto();
-        tieto.rekisteroi();
-        tieto.taytaTestiPeliTietoTiedoilla(id, alusta);
-        pepe.lisaa(tieto);
+        uusi.taytaTestiPeliTiedoilla(nimike.getTunniste(), alusta.getTunniste());
         
         try {
+            pepe.lisaa(alusta);
+            pepe.lisaa(nimike);
             pepe.lisaa(uusi);
         } catch (SailoException e) {
             Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());

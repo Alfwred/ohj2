@@ -67,6 +67,18 @@ public class Nimikkeet {
         return alkiot[i];
     }
     
+    /**
+     * Palauttaa viitteen pelin nimikkeeseen
+     * @param tunniste Pelin tietoihin sidottu tunniste, jonka mukaan nimikettä haetaan
+     * @return viite nimikkeeseen
+     */
+    public Nimike annaNimike(int tunniste) {
+        for (Nimike nimike : alkiot) {
+            if (nimike.getTunniste() == tunniste) return nimike;
+        }
+        return alkiot[0]; // Ei löydy exception tai joku muu myöhemmin
+    }
+    
     
     /**
      * Lukee nimikkeet tiedostosta. Kesken.
