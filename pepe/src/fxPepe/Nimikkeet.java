@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class Nimikkeet {
     
-    private static final int MAX_NIMIKKEITA     = 5;
+    private static final int MAX_NIMIKKEITA     = 10;
     private int              lkm                = 0;
     private String           tiedostonNimi      = "";
     private Nimike           alkiot[]           = new Nimike[MAX_NIMIKKEITA];
@@ -98,12 +98,17 @@ public class Nimikkeet {
     
     /**
      * Luetaan nimikkeet tiedostosta
+     * @throws SailoException Virhe, jos ongelma
      */
-    public static void lueTiedostosta() {
+    public void lueTiedostosta() throws SailoException {
         File tiedosto = new File("nimikkeet.txt");
         try (Scanner sc = new Scanner(new FileInputStream(tiedosto),StandardCharsets.UTF_8)) {
             while (sc.hasNextLine()) {
-                Nimike.parsiNimike(sc.nextLine());
+                String rivi = sc.nextLine();
+                if (rivi.charAt(0) == ';') continue;
+                var uusi = new Nimike();
+                uusi.parsiNimike(rivi);
+                lisaa(uusi);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -134,8 +139,22 @@ public class Nimikkeet {
      * @param args ei käytössä
      */
     public static void main(String args[]) {
+        
         Nimikkeet nimikkeet = new Nimikkeet();
+        try {
+            nimikkeet.lueTiedostosta();
+            
+            for (int i = 0; i < nimikkeet.getLkm(); i++) {
+                Nimike nimike = nimikkeet.anna(i);
+                nimike.tulosta(System.out);
+            }
+        } catch (SailoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
 
+        /**
         Nimike d1 = new Nimike();
         Nimike d2 = new Nimike();
         d1.rekisteroi();
@@ -155,6 +174,6 @@ public class Nimikkeet {
 
         } catch (SailoException ex) {
             System.out.println(ex.getMessage());
-        }
+        } */
     }
 }

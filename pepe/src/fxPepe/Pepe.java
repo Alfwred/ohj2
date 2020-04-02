@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class Pepe {
     
-    private final Pelit pelit = new Pelit();
-    private final Nimikkeet nimikkeet = new Nimikkeet();
-    private final Alustat alustat = new Alustat();
+    private Pelit pelit = new Pelit();
+    private Nimikkeet nimikkeet = new Nimikkeet();
+    private Alustat alustat = new Alustat();
 
 
     /**
@@ -119,7 +119,10 @@ public class Pepe {
      * @throws SailoException jos lukeminen epäonnistuu
      */
     public void lueTiedostosta(String nimi) throws SailoException {
-        Nimikkeet.lueTiedostosta();
+        nimikkeet = new Nimikkeet();
+        alustat = new Alustat();
+        nimikkeet.lueTiedostosta();
+        //alustat.lueTiedostosta();
     }
 
 

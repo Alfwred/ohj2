@@ -77,17 +77,17 @@ public class Nimike {
     
     
     /**
-     * Lukee nimikkeen merkkojonosyötteestä
+     * Lukee nimikkeen merkkijonosyötteestä
      * @param merkkijono Syote, mikä muutetaan Nimike-olioksi
      */
-    public static void parsiNimike(String merkkijono) {
+    public void parsiNimike(String merkkijono) {
         // https://regex101.com/r/HCcqzC/1/
         Pattern esiintyma = Pattern.compile("^(\\d+)\\|(.+)$");
         Matcher etsija = esiintyma.matcher(merkkijono);
 
         if (etsija.find()) {
-            Nimike uusi = new Nimike(Integer.parseInt(etsija.group(1)), etsija.group(2));
-            System.out.println("Parsittu: " + uusi.toString());
+            this.nTunniste = Integer.parseInt(etsija.group(1));
+            this.nimi = etsija.group(2);
         }
     }
 
@@ -164,18 +164,17 @@ public class Nimike {
      * @param args Ei käytössä
      */
     public static void main(String[] args) {
-        Nimikkeet.lueTiedostosta();
         
-        //Nimike nimi1 = new Nimike();
-        //Nimike nimi2 = new Nimike();
-        //nimi1.rekisteroi();
-        //nimi2.rekisteroi();
-        //nimi1.tulosta(System.out);
-        //nimi2.tulosta(System.out);
-        //nimi1.taytaNimikeTiedoilla();
-        //nimi2.taytaNimikeTiedoilla();
-        //nimi1.tulosta(System.out);
-        //nimi2.tulosta(System.out);
+        Nimike nimi1 = new Nimike();
+        Nimike nimi2 = new Nimike();
+        nimi1.rekisteroi();
+        nimi2.rekisteroi();
+        nimi1.tulosta(System.out);
+        nimi2.tulosta(System.out);
+        nimi1.taytaNimikeTiedoilla();
+        nimi2.taytaNimikeTiedoilla();
+        nimi1.tulosta(System.out);
+        nimi2.tulosta(System.out);
     }
 
 }
