@@ -186,6 +186,7 @@ public class PepeGUIController implements Initializable {
         ModalController.getStage(hakuehto).setTitle(title);
     }
     
+    
     /**
      * Alustaa pepen lukemalla sen valitun nimisestä tiedostosta
      * @param nimi tiedosto josta pepen tiedot luetaan
@@ -284,6 +285,7 @@ public class PepeGUIController implements Initializable {
         Peli uusi = new Peli(0);
         uusi.rekisteroi();
         uusi.taytaTestiPeliTiedoilla(nimike.getTunniste(), alusta.getTunniste());
+        uusi.tulosta(System.out);
         
         try {
             pepe.lisaa(alusta);

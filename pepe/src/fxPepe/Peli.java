@@ -95,7 +95,7 @@ public class Peli {
         Matcher etsija = esiintyma.matcher(merkkijono);
 
         if (etsija.find()) {
-            this.pTunniste = Integer.parseInt(etsija.group(1)); // Koska syö leading zeroes
+            setTunniste(Integer.parseInt(etsija.group(1))); // Koska syö leading zeroes
             this.nTunniste = Integer.parseInt(etsija.group(2)); // Koska syö leading zeroes
             this.aTunniste = Integer.parseInt(etsija.group(3));
             this.julkaisuvuosi = Integer.parseInt(etsija.group(4));
@@ -145,6 +145,17 @@ public class Peli {
         seuraavaTunniste++;
         return pTunniste;
     }
+    
+    /**
+     * Asettaa tunnusnumeron ja samalla varmistaa että
+     * seuraava numero on aina suurempi kuin tähän mennessä suurin.
+     * @param id asetettava tunnusnumero
+     */
+    private void setTunniste(int id) {
+        pTunniste = id;
+        if ( pTunniste >= seuraavaTunniste ) seuraavaTunniste = pTunniste + 1;
+    }
+
     
     
     /**
