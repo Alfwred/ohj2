@@ -3,7 +3,13 @@
  */
 package fxPepe;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author anssi
@@ -37,16 +43,15 @@ public class Pelit implements Iterable<Peli> {
 
     /**
      * Lukee pelitietokannan tiedostosta 
-     * TODO Kesken.
      * @param hakemisto tiedoston hakemisto
      * @throws SailoException jos lukeminen epäonnistuu
      */
-    public void lueTiedostosta(String hakemisto) throws SailoException {
-        tiedostonNimi = hakemisto + ".har";
+    public void lueTiedostosta1(String hakemisto) throws SailoException {
+        tiedostonNimi = hakemisto + ".txt";
         throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedostonNimi);
     }
-
-
+    
+    
     /**
      * Tallentaa pelitietokannan tiedostoon  
      * TODO Kesken.
@@ -105,61 +110,6 @@ public class Pelit implements Iterable<Peli> {
     public Iterator<Peli> iterator() {
         return alkiot.iterator();
     }
-
-
-    /**
-     * TODO: Tämän merkitys on vielä epäselvä
-     * Haetaan tunnisteen mukainen peli
-     * @param tunniste pelin tunniste, jolle pelin tietoja haetaan
-     * @return tietorakenne jossa viiteet löydetteyihin peleihin
-     * @example
-     * <pre name="test">
-     * #import java.util.*;
-     * 
-     *  Pelit pelit = new Pelit();
-     *  
-     *  Peli peli21 = new Peli();
-     *  peli21.rekisteroi();
-     *  peli21.taytaPeliTiedoilla();
-     *  pelit.lisaa(peli21);
-     *  
-     *  Peli peli11 = new Peli();
-     *  peli11.rekisteroi();
-     *  peli11.taytaPeliTiedoilla();
-     *  pelit.lisaa(peli11);
-     *  
-     *  Peli peli12 = new Peli();
-     *  peli12.rekisteroi();
-     *  peli12.taytaPeliTiedoilla();
-     *  pelit.lisaa(peli12);
-     *  
-     *  Peli peli25 = new Peli();
-     *  peli25.rekisteroi();
-     *  peli25.taytaPeliTiedoilla();
-     *  pelit.lisaa(peli25);
-     *  
-     *  Peli peli51 = new Peli();
-     *  peli51.rekisteroi();
-     *  peli51.taytaPeliTiedoilla();
-     *  pelit.lisaa(peli51);
-     *  
-     *  List<Peli> loytyneet;
-     *  loytyneet = pelit.annaPeli(1);
-     *  loytyneet.size() === 1; 
-     *  loytyneet = pelit.annaPeli(2);
-     *  loytyneet.size() === 1; 
-     *  loytyneet.get(0) == peli11 === true;
-     *  loytyneet = pelit.annaPeli(5);
-     *  loytyneet.size() === 1; 
-     *  loytyneet.get(0) == peli51 === true;
-     * </pre> 
-    public List<Peli> annaPeli(int tunniste) {
-        List<Peli> loydetyt = new ArrayList<Peli>();
-        for (Peli peli : alkiot)
-            if (peli.getTunniste() == tunniste) loydetyt.add(peli);
-        return loydetyt;
-    }
-    */
     
     
     /**

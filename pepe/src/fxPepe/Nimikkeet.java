@@ -3,6 +3,12 @@
  */
 package fxPepe;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
+
 /**
  * Pepen pelistö joka osaa mm. lisätä uuden pelin
  * @author Anssi Lepikko
@@ -85,9 +91,23 @@ public class Nimikkeet {
      * @param hakemisto tiedoston hakemisto
      * @throws SailoException jos lukeminen epäonnistuu
      */
-    public void lueTiedostosta(String hakemisto) throws SailoException {
+    public void lueTiedostostaVANHA(String hakemisto) throws SailoException {
         tiedostonNimi = hakemisto + "/nimikkeet.dat";
         throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedostonNimi);
+    }
+    
+    /**
+     * Luetaan nimikkeet tiedostosta
+     */
+    public static void lueTiedostosta() {
+        File tiedosto = new File("nimikkeet.txt");
+        try (Scanner sc = new Scanner(new FileInputStream(tiedosto),StandardCharsets.UTF_8)) {
+            while (sc.hasNextLine()) {
+                Nimike.parsiNimike(sc.nextLine());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -137,5 +157,4 @@ public class Nimikkeet {
             System.out.println(ex.getMessage());
         }
     }
-
 }

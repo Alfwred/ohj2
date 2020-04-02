@@ -1,0 +1,6 @@
+id |pelin nimi
+100|Tomb Raider
+101|Tomb Raider II
+102|Diablo 2
+103|Half-Life
+104|Crash Bandicoot

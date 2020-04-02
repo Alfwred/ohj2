@@ -3,6 +3,10 @@
  */
 package fxPepe;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -45,8 +49,8 @@ public class Alustat implements Iterable<Alusta> {
         tiedostonNimi = hakemisto + ".har";
         throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedostonNimi);
     }
-
-
+    
+    
     /**
      * Tallentaa alustakannan tiedostoon 
      * TODO Kesken.

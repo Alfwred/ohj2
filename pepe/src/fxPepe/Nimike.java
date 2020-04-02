@@ -5,6 +5,8 @@ package fxPepe;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Pelirekisterin yksittäisen pelin nimike eli nimi
@@ -21,6 +23,24 @@ public class Nimike {
     private String  nimi = "";
     
     private static int seuraavaTunniste = 100;
+     
+    
+    /**
+     * @param tunniste Tunista
+     * @param nimi Nimi
+     */
+    public Nimike (int tunniste, String nimi) {
+        this.nTunniste = tunniste;
+        this.nimi = nimi;
+    }
+    
+    
+    /**
+     *  Parametriton
+     */
+    public Nimike () {
+        // Parametriton
+    }
     
     
     /**
@@ -53,6 +73,22 @@ public class Nimike {
     */
     public void taytaNimikeTiedoilla() {
         taytaTestiNimikeTiedoilla();
+    }
+    
+    
+    /**
+     * Lukee nimikkeen merkkojonosyötteestä
+     * @param merkkijono Syote, mikä muutetaan Nimike-olioksi
+     */
+    public static void parsiNimike(String merkkijono) {
+        // https://regex101.com/r/HCcqzC/1/
+        Pattern esiintyma = Pattern.compile("^(\\d+)\\|(.+)$");
+        Matcher etsija = esiintyma.matcher(merkkijono);
+
+        if (etsija.find()) {
+            Nimike uusi = new Nimike(Integer.parseInt(etsija.group(1)), etsija.group(2));
+            System.out.println("Parsittu: " + uusi.toString());
+        }
     }
 
     
@@ -120,7 +156,7 @@ public class Nimike {
     
     @Override
     public String toString() {
-        return this.getNimi();
+        return this.getTunniste() + "|" + this.getNimi();
     }
     
     
@@ -128,16 +164,18 @@ public class Nimike {
      * @param args Ei käytössä
      */
     public static void main(String[] args) {
-        Nimike nimi1 = new Nimike();
-        Nimike nimi2 = new Nimike();
-        nimi1.rekisteroi();
-        nimi2.rekisteroi();
-        nimi1.tulosta(System.out);
-        nimi2.tulosta(System.out);
-        nimi1.taytaNimikeTiedoilla();
-        nimi2.taytaNimikeTiedoilla();
-        nimi1.tulosta(System.out);
-        nimi2.tulosta(System.out);
+        Nimikkeet.lueTiedostosta();
+        
+        //Nimike nimi1 = new Nimike();
+        //Nimike nimi2 = new Nimike();
+        //nimi1.rekisteroi();
+        //nimi2.rekisteroi();
+        //nimi1.tulosta(System.out);
+        //nimi2.tulosta(System.out);
+        //nimi1.taytaNimikeTiedoilla();
+        //nimi2.taytaNimikeTiedoilla();
+        //nimi1.tulosta(System.out);
+        //nimi2.tulosta(System.out);
     }
 
 }

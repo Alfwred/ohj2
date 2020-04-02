@@ -119,7 +119,7 @@ public class Pepe {
      * @throws SailoException jos lukeminen epäonnistuu
      */
     public void lueTiedostosta(String nimi) throws SailoException {
-        pelit.lueTiedostosta(nimi);
+        Nimikkeet.lueTiedostosta();
     }
 
 
