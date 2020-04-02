@@ -152,11 +152,12 @@ public class Alustat implements Iterable<Alusta> {
     public static void main(String[] args) {
         
         Alustat alustat = new Alustat();
+        
         try {
             alustat.lueTiedostosta();
             
             for (int i = 0; i < alustat.getLkm(); i++) {
-                Alusta alusta = alustat.annaAlusta(i);
+                Alusta alusta = alustat.annaAlusta(1000 + i);
                 alusta.tulosta(System.out);
             }
         } catch (SailoException e) {

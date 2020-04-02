@@ -86,7 +86,7 @@ public class Alusta {
         Matcher etsija = esiintyma.matcher(merkkijono);
 
         if (etsija.find()) {
-            this.aTunniste = Integer.parseInt(etsija.group(1));
+            this.aTunniste = 1000 + Integer.parseInt(etsija.group(1)); // Koska syö leading zeroes
             this.lyhenne = etsija.group(2);
             this.nimi = etsija.group(3);
         }
@@ -112,7 +112,7 @@ public class Alusta {
     
     @Override
     public String toString() {
-        return  this.lyhenne;
+        return this.lyhenne;
     }
     
     /**
