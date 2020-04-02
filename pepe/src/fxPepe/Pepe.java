@@ -122,7 +122,7 @@ public class Pepe {
         nimikkeet = new Nimikkeet();
         alustat = new Alustat();
         nimikkeet.lueTiedostosta();
-        //alustat.lueTiedostosta();
+        alustat.lueTiedostosta();
     }
 
 

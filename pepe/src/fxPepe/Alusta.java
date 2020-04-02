@@ -5,6 +5,8 @@ package fxPepe;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author anssi
@@ -71,6 +73,23 @@ public class Alusta {
     */
     public void taytaAlustaTiedoilla() {
         taytaTestiAlustaTiedoilla();
+    }
+    
+    
+    /**
+     * Lukee alustan merkkijonosyötteestä
+     * @param merkkijono Syote, mikä muutetaan Nimike-olioksi
+     */
+    public void parsiAlusta(String merkkijono) {
+        // https://regex101.com/r/8faG5b/4/
+        Pattern esiintyma = Pattern.compile("^(\\d+)\\|(.+)\\|(.+)$");
+        Matcher etsija = esiintyma.matcher(merkkijono);
+
+        if (etsija.find()) {
+            this.aTunniste = Integer.parseInt(etsija.group(1));
+            this.lyhenne = etsija.group(2);
+            this.nimi = etsija.group(3);
+        }
     }
     
     

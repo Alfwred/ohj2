@@ -87,16 +87,6 @@ public class Nimikkeet {
     
     
     /**
-     * Lukee nimikkeet tiedostosta. Kesken.
-     * @param hakemisto tiedoston hakemisto
-     * @throws SailoException jos lukeminen epäonnistuu
-     */
-    public void lueTiedostostaVANHA(String hakemisto) throws SailoException {
-        tiedostonNimi = hakemisto + "/nimikkeet.dat";
-        throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedostonNimi);
-    }
-    
-    /**
      * Luetaan nimikkeet tiedostosta
      * @throws SailoException Virhe, jos ongelma
      */

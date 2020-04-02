@@ -40,15 +40,24 @@ public class Alustat implements Iterable<Alusta> {
 
 
     /**
-     * Lukee alustakannan tiedostosta 
-     * TODO Kesken.
-     * @param hakemisto tiedoston hakemisto
-     * @throws SailoException jos lukeminen epäonnistuu
+     * Luetaan alustat tiedostosta
+     * @throws SailoException Virhe, jos ongelma
      */
-    public void lueTiedostosta(String hakemisto) throws SailoException {
-        tiedostonNimi = hakemisto + ".har";
-        throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedostonNimi);
+    public void lueTiedostosta() throws SailoException {
+        File tiedosto = new File("alustat.txt");
+        try (Scanner sc = new Scanner(new FileInputStream(tiedosto),StandardCharsets.UTF_8)) {
+            while (sc.hasNextLine()) {
+                String rivi = sc.nextLine();
+                if (rivi.charAt(0) == ';') continue;
+                var uusi = new Alusta();
+                uusi.parsiAlusta(rivi);
+                lisaa(uusi);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
     
     
     /**
@@ -141,8 +150,21 @@ public class Alustat implements Iterable<Alusta> {
      * @param args ei käytössä
      */
     public static void main(String[] args) {
-        Alustat alustat = new Alustat();
         
+        Alustat alustat = new Alustat();
+        try {
+            alustat.lueTiedostosta();
+            
+            for (int i = 0; i < alustat.getLkm(); i++) {
+                Alusta alusta = alustat.annaAlusta(i);
+                alusta.tulosta(System.out);
+            }
+        } catch (SailoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        /**
         Alusta a1 = new Alusta();
         a1.rekisteroi();
         a1.taytaTestiAlustaTiedoilla();
@@ -169,6 +191,7 @@ public class Alustat implements Iterable<Alusta> {
         alustat.annaAlusta(a1.getTunniste()).tulosta(System.out);
         alustat.annaAlusta(a2.getTunniste()).tulosta(System.out);
         alustat.annaAlusta(a3.getTunniste()).tulosta(System.out);
+        */
     }
 
 }
