@@ -191,11 +191,13 @@ public class PepeGUIController implements Initializable {
      * @param nimi tiedosto josta pepen tiedot luetaan
      */
     protected void lueTiedosto(String nimi) {
-        pepennimi = nimi;
-        setTitle("Pepe - " + pepennimi);
-        String virhe = "Ei osata lukea vielä";  // TODO: tähän oikea tiedoston lukeminen
-        // if (virhe != null) 
-            Dialogs.showMessageDialog(virhe);
+        try {
+            pepe.lueTiedostosta("tiedostonimi");
+            hae();
+        } catch (SailoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -301,6 +303,7 @@ public class PepeGUIController implements Initializable {
     public void setPepe(Pepe pepe) {
         this.pepe = pepe;
         naytaPeli();
+        lueTiedosto("tiedostonimi");
     }
 
     

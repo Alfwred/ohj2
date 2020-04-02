@@ -162,7 +162,19 @@ public class Pepe {
     public static void main(String args[]) {
         
         Pepe pepe = new Pepe();
+        
+        try {
+            pepe.lueTiedostosta("tiedostonimi");
+            for (int i = 0; i  < pepe.getPeleja(); i++) {
+                Peli loytynyt = pepe.annaPeli(i);
+                loytynyt.tulosta(System.out);
+            }
+        } catch (SailoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+        /**
         try {
             
             // Alustojen testiluonti
@@ -217,6 +229,7 @@ public class Pepe {
         } catch (SailoException ex) {
             System.out.println(ex.getMessage());
         }
+        */
     }
 
 }
