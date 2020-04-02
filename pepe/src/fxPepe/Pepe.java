@@ -121,11 +121,13 @@ public class Pepe {
     public void lueTiedostosta(String nimi) throws SailoException {
         nimikkeet = new Nimikkeet();
         alustat = new Alustat();
+        pelit = new Pelit();
         nimikkeet.lueTiedostosta();
         alustat.lueTiedostosta();
+        pelit.lueTiedostosta();
     }
 
-
+    
     /**
      * Tallettaa pepen tiedot tiedostoon
      * @throws SailoException jos tallettamisessa ongelmia

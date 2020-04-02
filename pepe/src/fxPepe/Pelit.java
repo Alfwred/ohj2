@@ -33,22 +33,31 @@ public class Pelit implements Iterable<Peli> {
     
     
     /**
-     * Lisää uuden peliTiedon tietorakenteeseen. Ottaa peliTiedon omistukseensa.
-     * @param tieto lisättävä peliTieto. Huomio: tietorakenne muuttuu omistajaksi
+     * Lisää uuden pelin tietorakenteeseen. Ottaa peliTiedon omistukseensa.
+     * @param peli lisättävä peli. Huomio: tietorakenne muuttuu omistajaksi
      */
-    public void lisaa(Peli tieto) {
-        alkiot.add(tieto);
+    public void lisaa(Peli peli) {
+        alkiot.add(peli);
     }
-
-
+    
+    
     /**
-     * Lukee pelitietokannan tiedostosta 
-     * @param hakemisto tiedoston hakemisto
-     * @throws SailoException jos lukeminen epäonnistuu
+     * Luetaan nimikkeet tiedostosta
+     * @throws SailoException Virhe, jos ongelma
      */
-    public void lueTiedostosta1(String hakemisto) throws SailoException {
-        tiedostonNimi = hakemisto + ".txt";
-        throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedostonNimi);
+    public void lueTiedostosta() throws SailoException {
+        File tiedosto = new File("pelit.txt");
+        try (Scanner sc = new Scanner(new FileInputStream(tiedosto),StandardCharsets.UTF_8)) {
+            while (sc.hasNextLine()) {
+                String rivi = sc.nextLine();
+                if (rivi.charAt(0) == ';') continue;
+                var uusi = new Peli();
+                uusi.parsiPeli(rivi);
+                lisaa(uusi);            
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     
@@ -63,8 +72,8 @@ public class Pelit implements Iterable<Peli> {
 
 
     /**
-     * Palauttaa Pepen PeliTietojen lukumäärän
-     * @return PeliTietojen lukumäärä
+     * Palauttaa Pepen pelien lukumäärän
+     * @return pelien lukumäärä
      */
     public int getLkm() {
         return alkiot.size();
@@ -131,6 +140,18 @@ public class Pelit implements Iterable<Peli> {
     public static void main(String[] args) {
         Pelit pelit = new Pelit();
         
+        try {
+            pelit.lueTiedostosta();
+            for (int i = 0; i < pelit.getLkm(); i++) {
+                Peli peli = pelit.annaPeli(i);
+                peli.tulosta(System.out);
+            }
+        } catch (SailoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        /**
         Peli peli1 = new Peli();
         peli1.rekisteroi();
         peli1.taytaPeliTiedoilla();
@@ -145,7 +166,7 @@ public class Pelit implements Iterable<Peli> {
         
         System.out.println("Haetaan pelejä pelin tunnisteen perusteella:");    
         pelit.annaPeli(1).tulosta(System.out);
-        
+        */
     }
 
 }

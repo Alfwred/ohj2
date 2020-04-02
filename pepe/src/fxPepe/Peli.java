@@ -6,6 +6,8 @@ package fxPepe;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author anssi
@@ -27,10 +29,10 @@ public class Peli {
     private static int seuraavaTunniste = 0;
 
     /**
-     * 
+     * Parametriton
      */
     public Peli() {
-        // Myöhemmin
+        
     }
     
     /**
@@ -84,11 +86,34 @@ public class Peli {
     
     
     /**
+     * Lukee nimikkeen merkkijonosyötteestä
+     * @param merkkijono Syote, mikä muutetaan Nimike-olioksi
+     */
+    public void parsiPeli(String merkkijono) {
+        // https://regex101.com/r/YgveGF/1/
+        Pattern esiintyma = Pattern.compile("^(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(.+|)\\|$");
+        Matcher etsija = esiintyma.matcher(merkkijono);
+
+        if (etsija.find()) {
+            this.pTunniste = Integer.parseInt(etsija.group(1)); // Koska syö leading zeroes
+            this.nTunniste = Integer.parseInt(etsija.group(2)); // Koska syö leading zeroes
+            this.aTunniste = Integer.parseInt(etsija.group(3));
+            this.julkaisuvuosi = Integer.parseInt(etsija.group(4));
+            this.hankintavuosi = Integer.parseInt(etsija.group(5));
+            this.levy = Integer.parseInt(etsija.group(6));
+            this.kotelo = Integer.parseInt(etsija.group(7));
+            this.ohjekirja = Integer.parseInt(etsija.group(8));
+            this.lisatiedot = etsija.group(9);
+        }
+    }
+    
+    
+    /**
     * Tulostetaan pelin tiedot
     * @param out tietovirta johon tulostetaan
     */
     public void tulosta(PrintStream out) {
-        out.println("Pelin tunniste: " + pTunniste + " Nimikkeen tunniste: " + nTunniste + " Alustan tunniste: " + aTunniste + " |  " + julkaisuvuosi + ", " + hankintavuosi + ", " + levy + ", " + kotelo + ", " + ohjekirja + ", " + lisatiedot); ;
+        out.println("Pelin tunniste: " + pTunniste + " Nimikkeen tunniste: " + nTunniste + " Alustan tunniste: " + aTunniste + " | " + julkaisuvuosi + ", " + hankintavuosi + ", " + levy + ", " + kotelo + ", " + ohjekirja + ", " + lisatiedot); ;
     }
     
     
