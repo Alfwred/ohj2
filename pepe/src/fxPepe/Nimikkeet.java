@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Scanner;
  */
 public class Nimikkeet {
     
-    private static final int MAX_NIMIKKEITA     = 10;
+    private static final int MAX_NIMIKKEITA     = 5;
     private int              lkm                = 0;
     private String           tiedostonNimi      = "";
     private Nimike           alkiot[]           = new Nimike[MAX_NIMIKKEITA];
@@ -55,7 +56,10 @@ public class Nimikkeet {
      * </pre>
      */
     public void lisaa(Nimike nimike) throws SailoException {
-        if (lkm >= alkiot.length) throw new SailoException("Liikaa alkioita");
+        if (lkm >= alkiot.length)
+        {
+            alkiot = Arrays.copyOf(alkiot, lkm * 2);
+        }
         alkiot[lkm] = nimike;
         lkm++;
     }
