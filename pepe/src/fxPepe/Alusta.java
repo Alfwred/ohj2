@@ -87,12 +87,12 @@ public class Alusta {
     * @param os tietovirta johon tulostetaan
     */
     public void tulosta(OutputStream os) {
-    tulosta(new PrintStream(os));
+        tulosta(new PrintStream(os));
     }
     
     @Override
     public String toString() {
-        return this.lyhenne + "|" + this.nimi;
+        return this.aTunniste + "|" + this.lyhenne + "|" + this.nimi;
     }
     
     /**

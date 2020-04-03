@@ -195,7 +195,7 @@ public class PepeGUIController implements Initializable {
      */
     protected void lueTiedosto(String nimi) {
         try {
-            pepe.lueTiedostosta("tiedostonimi");
+            pepe.lueTiedostosta();
             hae();
         } catch (SailoException e) {
             // TODO Auto-generated catch block

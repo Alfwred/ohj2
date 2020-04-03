@@ -153,8 +153,7 @@ public class Pelit implements Iterable<Peli> {
      * @param args ei käytössä
      */
     public static void main(String[] args) {
-        Pelit pelit = new Pelit();
-        
+        Pelit pelit = new Pelit();    
         try {
             pelit.lueTiedostosta();
             for (int i = 0; i < pelit.getLkm(); i++) {

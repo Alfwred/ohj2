@@ -67,7 +67,7 @@ public class Peli {
         levy = 2;
         kotelo = 2;
         ohjekirja = 2;
-        lisatiedot = "Sain tämän Jarilta 1999";
+        lisatiedot = "Testipelin lisatiedot";
     }
     
     
@@ -186,7 +186,7 @@ public class Peli {
     
     @Override
     public String toString() {
-        return this.getTunniste() + "|" + this.getNimike() + "|" + this.getAlusta() + "|" + this.julkaisuvuosi + "|" + this.hankintavuosi + "|" + this.levy + "|" + this.kotelo + "|" + this.ohjekirja + "|" + this.lisatiedot;
+        return this.getTunniste() + "|" + this.getNimike() + "|" + this.getAlusta() + "|" + this.julkaisuvuosi + "|" + this.hankintavuosi + "|" + this.levy + "|" + this.kotelo + "|" + this.ohjekirja + "|" + this.lisatiedot +"|";
     }
     
     

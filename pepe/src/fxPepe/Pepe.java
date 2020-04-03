@@ -115,10 +115,9 @@ public class Pepe {
 
     /**
      * Lukee pepen tiedot tiedostosta
-     * @param nimi jota käyteään lukemisessa
      * @throws SailoException jos lukeminen epäonnistuu
      */
-    public void lueTiedostosta(String nimi) throws SailoException {
+    public void lueTiedostosta() throws SailoException {
         nimikkeet = new Nimikkeet();
         alustat = new Alustat();
         pelit = new Pelit();
@@ -160,7 +159,7 @@ public class Pepe {
         Pepe pepe = new Pepe();
         
         try {
-            pepe.lueTiedostosta("tiedostonimi");
+            pepe.lueTiedostosta();
             for (int i = 0; i  < pepe.getPeleja(); i++) {
                 Peli loytynyt = pepe.annaPeli(i);
                 loytynyt.tulosta(System.out);
