@@ -5,7 +5,9 @@ package fxPepe;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -61,12 +63,19 @@ public class Alustat implements Iterable<Alusta> {
     
     
     /**
-     * Tallentaa alustakannan tiedostoon 
-     * TODO Kesken.
+     * Tallentaa alustat tiedostoon  
      * @throws SailoException jos talletus epäonnistuu
      */
-    public void talleta() throws SailoException {
-        throw new SailoException("Ei osata vielä tallettaa tiedostoa " + tiedostonNimi);
+    public void tallenna() throws SailoException {
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream("alustat.txt", false))) {
+            for (Alusta alusta : this) {
+                pw.println(alusta.toString());
+            }
+        } catch (IOException ex) {
+            System.err.println("Virhe luettaessa tiedostoa! " + ex.getMessage());
+            return;
+        }
+
     }
 
 

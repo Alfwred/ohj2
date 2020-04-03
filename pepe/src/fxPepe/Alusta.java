@@ -92,7 +92,7 @@ public class Alusta {
     
     @Override
     public String toString() {
-        return this.lyhenne;
+        return this.lyhenne + "|" + this.nimi;
     }
     
     /**
@@ -111,9 +111,9 @@ public class Alusta {
      * </pre>
      */
     public int rekisteroi() {
-        aTunniste = seuraavaTunniste;
+        this.aTunniste = seuraavaTunniste;
         seuraavaTunniste++;
-        return aTunniste;
+        return this.aTunniste;
     }
     
     
@@ -123,8 +123,8 @@ public class Alusta {
      * @param id asetettava tunnusnumero
      */
     private void setTunniste(int id) {
-        aTunniste = id;
-        if ( aTunniste >= seuraavaTunniste ) seuraavaTunniste = aTunniste + 1;
+        this.aTunniste = id;
+        if ( this.aTunniste >= seuraavaTunniste ) seuraavaTunniste = this.aTunniste + 1;
     }
     
     
@@ -133,7 +133,7 @@ public class Alusta {
      * @return alustan aTunniste id
      */
     public int getTunniste() {
-        return aTunniste;
+        return this.aTunniste;
     }
     
     
@@ -142,7 +142,7 @@ public class Alusta {
      * @return Alustan nimi
      */
     public String getNimi() {
-        return lyhenne;
+        return this.lyhenne;
     }
     
       

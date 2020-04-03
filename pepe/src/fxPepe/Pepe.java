@@ -132,9 +132,10 @@ public class Pepe {
      * Tallettaa pepen tiedot tiedostoon
      * @throws SailoException jos tallettamisessa ongelmia
      */
-    public void talleta() throws SailoException {
-        pelit.talleta();
-        // TODO: yritä tallettaa toinen vaikka toinen epäonnistuisi
+    public void tallenna() throws SailoException {
+        pelit.tallenna();
+        nimikkeet.tallenna();
+        alustat.tallenna();
     }
     
     
@@ -145,7 +146,7 @@ public class Pepe {
      * @return String[]-taulukko pelin tiedoista
      */
     public String[] getKenttia(Peli peli) {
-        String[] t = {Integer.toString(peli.getTunniste()), annaNimike(peli).getNimi(), annaAlusta(peli).toString()};
+        String[] t = {Integer.toString(peli.getTunniste()), annaNimike(peli).getNimi(), annaAlusta(peli).getNimi()};
         return t;
     }
     

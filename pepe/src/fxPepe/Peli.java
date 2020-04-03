@@ -184,6 +184,11 @@ public class Peli {
         return aTunniste;
     }
     
+    @Override
+    public String toString() {
+        return this.getTunniste() + "|" + this.getNimike() + "|" + this.getAlusta() + "|" + this.julkaisuvuosi + "|" + this.hankintavuosi + "|" + this.levy + "|" + this.kotelo + "|" + this.ohjekirja + "|" + this.lisatiedot;
+    }
+    
     
     /**
      * @param args Ei käytössä

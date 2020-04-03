@@ -5,7 +5,9 @@ package fxPepe;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -111,11 +113,20 @@ public class Nimikkeet {
 
 
     /**
-     * Tallentaa nimikkeet tiedostoon. Kesken.
+     * Tallentaa nimikkeet tiedostoon  
      * @throws SailoException jos talletus epäonnistuu
      */
-    public void talleta() throws SailoException {
-        throw new SailoException("Ei osata vielä tallettaa tiedostoa " + tiedostonNimi);
+    public void tallenna() throws SailoException {
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream("nimikkeet.txt", false))) {
+            for (int i = 0; i < this.getLkm(); i++) {
+                Nimike nimike = this.anna(i);
+                pw.println(nimike.toString());
+            }
+        } catch (IOException ex) {
+            System.err.println("Virhe luettaessa tiedostoa! " + ex.getMessage());
+            return;
+        }
+
     }
     
 

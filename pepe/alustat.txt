@@ -1,14 +1,19 @@
-;id |alustan lyhenne |alustan nimi
-0|PC|Personal Computer
-1|PS1|PlayStation 1
-2|PS2|PlayStation 2
-3|PS3|PlayStation 3
-4|PS4|PlayStation 4
-5|NES|Nintendo Entertaiment System
-6|SNES|Super Nintendo Entertaiment System
-7|N64|Nintendo 64
-8|GC|GameCube
-9|WII|Nintendo WII
-10|Xbox|Xbox
-11|Xbox360|Xbox 360
-12|XboxOne|Xbox One
+PC|Personal Computer
+PS1|PlayStation 1
+PS2|PlayStation 2
+PS3|PlayStation 3
+PS4|PlayStation 4
+NES|Nintendo Entertaiment System
+SNES|Super Nintendo Entertaiment System
+N64|Nintendo 64
+GC|GameCube
+WII|Nintendo WII
+Xbox|Xbox
+Xbox360|Xbox 360
+XboxOne|Xbox One
+TESTI|Testialusta
+TESTI|Testialusta
+TESTI|Testialusta
+TESTI|Testialusta
+TESTI|Testialusta
+TESTI|Testialusta

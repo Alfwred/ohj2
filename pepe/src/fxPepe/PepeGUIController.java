@@ -131,15 +131,17 @@ public class PepeGUIController implements Initializable {
     
     /**
      * Tallennetaan pelirekisteri
+     * @throws SailoException Virhe
      */
-    @FXML void handleRekisteriTallenna() {
+    @FXML void handleRekisteriTallenna() throws SailoException {
         tallenna();
     }
     
     /**
      * Lopetetaan ohjelma
+     * @throws SailoException 
      */
-    @FXML private void handleLopeta() {
+    @FXML private void handleLopeta() throws SailoException {
         tallenna();
         Platform.exit();
     }
@@ -203,17 +205,19 @@ public class PepeGUIController implements Initializable {
 
     /**
      * Tietojen tallennus
+     * @throws SailoException 
      */
-    private void tallenna() {
-        Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
+    private void tallenna() throws SailoException {
+        pepe.tallenna();
     }
 
 
     /**
      * Tarkistetaan onko tallennus tehty
      * @return true jos saa sulkea sovelluksen, false jos ei
+     * @throws SailoException Virhe
      */
-    public boolean voikoSulkea() {
+    public boolean voikoSulkea() throws SailoException {
         tallenna();
         return true;
     }

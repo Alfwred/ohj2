@@ -3,13 +3,21 @@
  */
 package fxPepe;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import fi.jyu.mit.ohj2.Mjonot;
 
 /**
  * @author anssi
@@ -62,12 +70,19 @@ public class Pelit implements Iterable<Peli> {
     
     
     /**
-     * Tallentaa pelitietokannan tiedostoon  
-     * TODO Kesken.
+     * Tallentaa pelit tiedostoon  
      * @throws SailoException jos talletus epäonnistuu
      */
-    public void talleta() throws SailoException {
-        throw new SailoException("Ei osata vielä tallettaa tiedostoa " + tiedostonNimi);
+    public void tallenna() throws SailoException {
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream("pelit.txt", false))) {
+            for (Peli peli : this) {
+                pw.println(peli.toString());
+            }
+        } catch (IOException ex) {
+            System.err.println("Virhe luettaessa tiedostoa! " + ex.getMessage());
+            return;
+        }
+
     }
 
 
