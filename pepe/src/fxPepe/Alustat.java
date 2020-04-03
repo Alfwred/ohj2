@@ -157,7 +157,7 @@ public class Alustat implements Iterable<Alusta> {
             alustat.lueTiedostosta();
             
             for (int i = 0; i < alustat.getLkm(); i++) {
-                Alusta alusta = alustat.annaAlusta(1000 + i);
+                Alusta alusta = alustat.annaAlusta(i);
                 alusta.tulosta(System.out);
             }
         } catch (SailoException e) {

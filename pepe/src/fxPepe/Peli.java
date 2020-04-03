@@ -78,8 +78,8 @@ public class Peli {
     */
     public void taytaPeliTiedoilla() {
         Random random = new Random();
-        int t = random.nextInt(100 - 1 + 1) + 100;
-        int a = random.nextInt(100 - 1 + 1) + 1000;
+        int t = random.nextInt(100 - 1 + 1);
+        int a = random.nextInt(100 - 1 + 1);
           
         taytaTestiPeliTiedoilla(t, a);
     }
@@ -95,8 +95,8 @@ public class Peli {
         Matcher etsija = esiintyma.matcher(merkkijono);
 
         if (etsija.find()) {
-            setTunniste(Integer.parseInt(etsija.group(1))); // Koska syö leading zeroes
-            this.nTunniste = Integer.parseInt(etsija.group(2)); // Koska syö leading zeroes
+            setTunniste(Integer.parseInt(etsija.group(1)));
+            this.nTunniste = Integer.parseInt(etsija.group(2));
             this.aTunniste = Integer.parseInt(etsija.group(3));
             this.julkaisuvuosi = Integer.parseInt(etsija.group(4));
             this.hankintavuosi = Integer.parseInt(etsija.group(5));
@@ -146,6 +146,7 @@ public class Peli {
         return pTunniste;
     }
     
+    
     /**
      * Asettaa tunnusnumeron ja samalla varmistaa että
      * seuraava numero on aina suurempi kuin tähän mennessä suurin.
@@ -156,7 +157,6 @@ public class Peli {
         if ( pTunniste >= seuraavaTunniste ) seuraavaTunniste = pTunniste + 1;
     }
 
-    
     
     /**
      * Palauttaa pelin pTunniste id:n

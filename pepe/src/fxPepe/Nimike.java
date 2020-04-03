@@ -22,7 +22,7 @@ public class Nimike {
     private int nTunniste;
     private String  nimi = "";
     
-    private static int seuraavaTunniste = 100;
+    private static int seuraavaTunniste = 0;
      
     
     /**
@@ -48,19 +48,19 @@ public class Nimike {
      */
     public void taytaTestiNimikeTiedoilla() {
 
-        if (this.nTunniste == 100) {
+        if (this.nTunniste == 0) {
             nimi = "Tomb Raider 2";
         }
-        if (this.nTunniste == 101) {
+        if (this.nTunniste == 1) {
             nimi = "Metal Gear Solid";
         }
-        if (this.nTunniste == 102) {
+        if (this.nTunniste == 2) {
             nimi = "Croc";
         }
-        if (this.nTunniste == 103) {
+        if (this.nTunniste == 3) {
             nimi = "Resident Evil";
         }
-        if (this.nTunniste == 104) {
+        if (this.nTunniste == 4) {
             nimi = "Pandemonium";
         }
     }
@@ -86,7 +86,7 @@ public class Nimike {
         Matcher etsija = esiintyma.matcher(merkkijono);
 
         if (etsija.find()) {
-            this.nTunniste = Integer.parseInt(etsija.group(1));
+            setTunniste(Integer.parseInt(etsija.group(1)));
             this.nimi = etsija.group(2);
         }
     }
@@ -132,6 +132,16 @@ public class Nimike {
     }
     
     
+    /**
+     * Asettaa tunnusnumeron ja samalla varmistaa että
+     * seuraava numero on aina suurempi kuin tähän mennessä suurin.
+     * @param id asetettava tunnusnumero
+     */
+    private void setTunniste(int id) {
+        nTunniste = id;
+        if ( nTunniste >= seuraavaTunniste ) seuraavaTunniste = nTunniste + 1;
+    }
+     
     /**
      * Palauttaa nimikkeen tunnisteen
      * @return nimikkeen nTunniste

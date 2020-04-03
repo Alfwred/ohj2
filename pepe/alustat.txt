@@ -1,14 +1,14 @@
 ;id |alustan lyhenne |alustan nimi
-0000|PC|Personal Computer
-0001|PS1|PlayStation 1
-0002|PS2|PlayStation 2
-0003|PS3|PlayStation 3
-0004|PS4|PlayStation 4
-0005|NES|Nintendo Entertaiment System
-0006|SNES|Super Nintendo Entertaiment System
-0007|N64|Nintendo 64
-0008|GC|GameCube
-0009|WII|Nintendo WII
-0010|Xbox|Xbox
-0011|Xbox360|Xbox 360
-0012|XboxOne|Xbox One
+0|PC|Personal Computer
+1|PS1|PlayStation 1
+2|PS2|PlayStation 2
+3|PS3|PlayStation 3
+4|PS4|PlayStation 4
+5|NES|Nintendo Entertaiment System
+6|SNES|Super Nintendo Entertaiment System
+7|N64|Nintendo 64
+8|GC|GameCube
+9|WII|Nintendo WII
+10|Xbox|Xbox
+11|Xbox360|Xbox 360
+12|XboxOne|Xbox One

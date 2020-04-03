@@ -1,6 +1,6 @@
 ;id |pelin nimi
-100|Tomb Raider
-101|Tomb Raider II
-102|Diablo 2
-103|Half-Life
-104|Crash Bandicoot
+0|Tomb Raider
+1|Tomb Raider II
+2|Diablo 2
+3|Half-Life
+4|Crash Bandicoot

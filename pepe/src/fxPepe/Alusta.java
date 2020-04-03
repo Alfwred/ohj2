@@ -19,8 +19,8 @@ public class Alusta {
     private String  lyhenne;                // Pelin lyhenne
     private String  nimi;                   // Pelin koko nimi
     
-    private static int seuraavaTunniste = 1000;
-
+    private static int seuraavaTunniste = 0;
+    
     /**
      * 
      */
@@ -42,23 +42,23 @@ public class Alusta {
      */
     public void taytaTestiAlustaTiedoilla() {
         
-        if (this.aTunniste == 1000) {
+        if (this.aTunniste == 0) {
             lyhenne = "GC";
             nimi = "Gamecube";
         }
-        if (this.aTunniste == 1001) {
+        if (this.aTunniste == 1) {
             lyhenne = "N64";
             nimi = "Nintendo 64";
         }
-        if (this.aTunniste == 1002) {
+        if (this.aTunniste == 2) {
             lyhenne = "PS1";
             nimi = "PlaySation";
         }
-        if (this.aTunniste == 1003) {
+        if (this.aTunniste == 3) {
             lyhenne = "PS2";
             nimi = "PlaySation 2";
         }
-        if (this.aTunniste == 1004) {
+        if (this.aTunniste == 4) {
             lyhenne = "PS4";
             nimi = "PlaySation 4";
         }
@@ -86,7 +86,7 @@ public class Alusta {
         Matcher etsija = esiintyma.matcher(merkkijono);
 
         if (etsija.find()) {
-            this.aTunniste = 1000 + Integer.parseInt(etsija.group(1)); // Koska syö leading zeroes
+            setTunniste(Integer.parseInt(etsija.group(1))); // Koska syö leading zeroes
             this.lyhenne = etsija.group(2);
             this.nimi = etsija.group(3);
         }
@@ -134,6 +134,17 @@ public class Alusta {
         aTunniste = seuraavaTunniste;
         seuraavaTunniste++;
         return aTunniste;
+    }
+    
+    
+    /**
+     * Asettaa tunnusnumeron ja samalla varmistaa että
+     * seuraava numero on aina suurempi kuin tähän mennessä suurin.
+     * @param id asetettava tunnusnumero
+     */
+    private void setTunniste(int id) {
+        aTunniste = id;
+        if ( aTunniste >= seuraavaTunniste ) seuraavaTunniste = aTunniste + 1;
     }
     
     
