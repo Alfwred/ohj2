@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fxPepe;
+package pepe;
 
 import java.io.OutputStream;
 import java.io.PrintStream;

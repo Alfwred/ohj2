@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fxPepe;
+package pepe;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Scanner;
+
+import fxPepe.SailoException;
 
 /**
  * Pepen pelistö joka osaa mm. lisätä uuden pelin

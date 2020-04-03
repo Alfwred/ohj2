@@ -22,8 +22,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
-import fxPepe.Peli;
-import fxPepe.Pepe;
+import pepe.Alusta;
+import pepe.Nimike;
+import pepe.Peli;
+import pepe.Pepe;
 import fxPepe.SailoException;
 
 

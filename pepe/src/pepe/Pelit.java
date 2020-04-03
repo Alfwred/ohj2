@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fxPepe;
+package pepe;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,6 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fi.jyu.mit.ohj2.Mjonot;
+import fxPepe.SailoException;
 
 /**
  * @author anssi

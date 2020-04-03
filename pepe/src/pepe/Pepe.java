@@ -1,6 +1,8 @@
-package fxPepe;
+package pepe;
 
 import java.util.List;
+
+import fxPepe.SailoException;
 
 /**
  * Pepe-luokka, joka huolehtii pelikannasta. Pääosin kaikki metodit

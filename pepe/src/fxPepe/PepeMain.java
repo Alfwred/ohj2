@@ -3,11 +3,11 @@ package fxPepe;
 import fi.jyu.mit.fxgui.Dialogs;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import pepe.Pepe;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
-import fxPepe.Pepe;
 
 
 /**

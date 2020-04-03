@@ -9,3 +9,5 @@
 8|8|16|1997|1999|2|2|2|Testipelin lisatiedot|
 9|9|17|1997|1999|2|2|2|Testipelin lisatiedot|
 10|10|18|1997|1999|2|2|2|Testipelin lisatiedot|
+11|11|19|1997|1999|2|2|2|Testipelin lisatiedot|
+12|12|20|1997|1999|2|2|2|Testipelin lisatiedot|
