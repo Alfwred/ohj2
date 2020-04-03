@@ -113,7 +113,7 @@ public class Nimikkeet {
 
 
     /**
-     * Tallentaa nimikkeet tiedostoon  
+     * Tallentaa nimikkeet tiedostoon   
      * @throws SailoException jos talletus epäonnistuu
      */
     public void tallenna() throws SailoException {
