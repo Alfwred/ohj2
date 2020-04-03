@@ -149,12 +149,7 @@ public class Pepe {
         return t;
     }
     
-    //loytynyt.tulosta(System.out);
     
-    //pepe.annaNimike(loytynyt).tulosta(System.out);
-    //pepe.annaAlusta(loytynyt).tulosta(System.out);
-    
-
     /**
      * Testiohjelma pepesta
      * @param args ei käytössä
@@ -174,6 +169,7 @@ public class Pepe {
             e.printStackTrace();
         }
 
+        
         /**
         try {
             

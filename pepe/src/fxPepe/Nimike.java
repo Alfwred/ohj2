@@ -47,22 +47,7 @@ public class Nimike {
      * Apumetodi, jolla saadaan täytettyä testiarvot nimikkeelle
      */
     public void taytaTestiNimikeTiedoilla() {
-
-        if (this.nTunniste == 0) {
-            nimi = "Tomb Raider 2";
-        }
-        if (this.nTunniste == 1) {
-            nimi = "Metal Gear Solid";
-        }
-        if (this.nTunniste == 2) {
-            nimi = "Croc";
-        }
-        if (this.nTunniste == 3) {
-            nimi = "Resident Evil";
-        }
-        if (this.nTunniste == 4) {
-            nimi = "Pandemonium";
-        }
+            nimi = "Testipelin nimi";
     }
     
     

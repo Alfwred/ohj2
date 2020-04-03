@@ -41,28 +41,8 @@ public class Alusta {
      * Apumetodi, jolla saadaan täytettyä testiarvot alustalle
      */
     public void taytaTestiAlustaTiedoilla() {
-        
-        if (this.aTunniste == 0) {
-            lyhenne = "GC";
-            nimi = "Gamecube";
-        }
-        if (this.aTunniste == 1) {
-            lyhenne = "N64";
-            nimi = "Nintendo 64";
-        }
-        if (this.aTunniste == 2) {
-            lyhenne = "PS1";
-            nimi = "PlaySation";
-        }
-        if (this.aTunniste == 3) {
-            lyhenne = "PS2";
-            nimi = "PlaySation 2";
-        }
-        if (this.aTunniste == 4) {
-            lyhenne = "PS4";
-            nimi = "PlaySation 4";
-        }
-
+            lyhenne = "TESTI";
+            nimi = "Testialusta";
     }
     
     
