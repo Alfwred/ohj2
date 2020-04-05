@@ -3,11 +3,3 @@
 2|Diablo 2
 3|Half-Life
 4|Crash Bandicoot
-5|Testipelin nimi
-6|Testipelin nimi
-7|Testipelin nimi
-8|Testipelin nimi
-9|Testipelin nimi
-10|Testipelin nimi
-11|Testipelin nimi
-12|Testipelin nimi

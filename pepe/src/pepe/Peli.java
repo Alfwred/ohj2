@@ -60,14 +60,14 @@ public class Peli {
      * @param at Alustan id, joka haetaan alustalle
      */
     public void taytaTestiPeliTiedoilla(int nt, int at) {
-        nTunniste = nt;
-        aTunniste = at;
-        julkaisuvuosi = 1997;
-        hankintavuosi = 1999;
-        levy = 2;
-        kotelo = 2;
-        ohjekirja = 2;
-        lisatiedot = "Testipelin lisatiedot";
+        this.nTunniste = nt;
+        this.aTunniste = at;
+        this.julkaisuvuosi = 1997;
+        this.hankintavuosi = 1999;
+        this.levy = 2;
+        this.kotelo = 2;
+        this.ohjekirja = 2;
+        this.lisatiedot = "Testipelin lisatiedot";
     }
     
     
@@ -122,7 +122,7 @@ public class Peli {
     * @param os tietovirta johon tulostetaan
     */
     public void tulosta(OutputStream os) {
-    tulosta(new PrintStream(os));
+        tulosta(new PrintStream(os));
     }
     
     /**
@@ -141,7 +141,7 @@ public class Peli {
      * </pre>
      */
     public int rekisteroi() {
-        pTunniste = seuraavaTunniste;
+        this.pTunniste = seuraavaTunniste;
         seuraavaTunniste++;
         return pTunniste;
     }
@@ -150,43 +150,100 @@ public class Peli {
     /**
      * Asettaa tunnusnumeron ja samalla varmistaa että
      * seuraava numero on aina suurempi kuin tähän mennessä suurin.
-     * @param id asetettava tunnusnumero
+     * @param id Asetettava tunnusnumero
      */
     private void setTunniste(int id) {
-        pTunniste = id;
+        this.pTunniste = id;
         if ( pTunniste >= seuraavaTunniste ) seuraavaTunniste = pTunniste + 1;
     }
 
     
     /**
      * Palauttaa pelin pTunniste id:n
-     * @return id
+     * @return Pelin tunniste id
      */
     public int getTunniste() {
-        return pTunniste;
+        return this.pTunniste;
     }
     
     
     /**
      * Palauttaa peliin sidotun alustan nimikkeen tunnisteen (nTunniste)
-     * @return peliin sidotun nimikkeen id
+     * @return Peliin sidotun nimikkeen id
      */
     public int getNimike() {
-        return nTunniste;
+        return this.nTunniste;
     }
     
     
     /**
      * Palauttaa peliin sidotun alustan tunnisteen (aTunniste)
-     * @return peliin sidotun alustan id
+     * @return Peliin sidotun alustan id
      */
     public int getAlusta() {
-        return aTunniste;
+        return this.aTunniste;
     }
+    
+    
+    /**
+     * Palauttaa pelin julkaisuvuoden
+     * @return Pelin julkaisuvuosi
+     */
+    public int getJulkaisuvuosi() {
+        return this.julkaisuvuosi;
+    }
+    
+    
+    /**
+     * Palauttaa pelin hankintavuoden
+     * @return Pelin hankintavuosi
+     */
+    public int getHankintavuosi() {
+        return this.hankintavuosi;
+    }
+    
+    
+    /**
+     * Palauttaa pelin levyn kunto asteikolla 0-2
+     * @return Pelin levyn kunto
+     */
+    public int getLevy() {
+        return this.levy;
+    }
+    
+    
+    /**
+     * Palauttaa pelin kotelon kunto asteikolla 0-2
+     * @return Pelin kotelon kunto
+     */
+    public int getKotelo() {
+        return this.kotelo;
+    }
+    
+    
+    /**
+     * Palauttaa pelin ohjekirjan kunnon asteikolla 0-2
+     * @return Pelin kokelon kunto
+     */
+    public int getOhjekirja() {
+        return this.ohjekirja;
+    }
+    
+    
+    /**
+     * Palauttaa pelin lisätiedot
+     * @return Pelin lisätiedot
+     */
+    public String getLisatiedot() {
+        return this.lisatiedot;
+    }
+    
     
     @Override
     public String toString() {
-        return this.getTunniste() + "|" + this.getNimike() + "|" + this.getAlusta() + "|" + this.julkaisuvuosi + "|" + this.hankintavuosi + "|" + this.levy + "|" + this.kotelo + "|" + this.ohjekirja + "|" + this.lisatiedot +"|";
+        return this.getTunniste() + "|" + this.getNimike() + "|" + this.getAlusta() +
+                "|" + this.julkaisuvuosi + "|" + this.hankintavuosi + "|" + this.levy +
+                "|" + this.kotelo + "|" + this.ohjekirja + "|" + this.lisatiedot +"|";
     }
     
     
@@ -201,10 +258,8 @@ public class Peli {
         p1.taytaPeliTiedoilla();
         p2.taytaPeliTiedoilla();
         p1.tulosta(System.out);
-        p2.tulosta(System.out);
-        
-        Integer.toString(p1.getTunniste());
-    
+        p2.tulosta(System.out);  
+        Integer.toString(p1.getTunniste()); 
     }
 
 }

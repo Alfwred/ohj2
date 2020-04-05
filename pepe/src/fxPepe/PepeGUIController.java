@@ -60,9 +60,9 @@ public class PepeGUIController implements Initializable {
         String hakukentta = hakuehto.getSelectedText();
         String ehto = hakuehto.getText(); 
         if ( ehto.isEmpty() )
-            naytaVirhe(null);
+            naytaIlmoitus(null);
         else
-            naytaVirhe("Ei osata vielä hakea " + hakukentta + ": " + ehto);
+            naytaIlmoitus("Ei osata vielä hakea " + hakukentta + ": " + ehto);
     }
     
     /**
@@ -98,8 +98,7 @@ public class PepeGUIController implements Initializable {
      * Avaa pelinlisäysikkunan
      */
     @FXML void handlePeliLisaa() {
-        //PepePeliController.lisaaPeli(null, "Tomb Raider II");
-        uusiPeli();
+        uusiPeliTestiPeli();
     }
     
     /**
@@ -121,7 +120,7 @@ public class PepeGUIController implements Initializable {
      * Poistetaann valittu peli
      */
     @FXML void handlePeliPoista() {
-        Dialogs.showMessageDialog("Poista peli! Ei toimi vielä!");
+        poistaPeli();
     }
     
     /**
@@ -176,15 +175,17 @@ public class PepeGUIController implements Initializable {
     }
 
     
-    private void naytaVirhe(String virhe) {
+    private void naytaIlmoitus(String virhe) {
         if ( virhe == null || virhe.isEmpty() ) {
             labelVirhe.setText("");
-            labelVirhe.getStyleClass().removeAll("virhe");
+            labelVirhe.getStyleClass().removeAll("Virhe");
             return;
         }
         labelVirhe.setText(virhe);
-        labelVirhe.getStyleClass().add("virhe");
+        labelVirhe.getStyleClass().add("Virhe");
     }
+
+    
     
     private void setTitle(String title) {
         ModalController.getStage(hakuehto).setTitle(title);
@@ -192,15 +193,13 @@ public class PepeGUIController implements Initializable {
     
     
     /**
-     * Alustaa pepen lukemalla sen valitun nimisestä tiedostosta
-     * @param nimi tiedosto josta pepen tiedot luetaan
+     * Alustaa pepen lukemalla pelikannan
      */
-    protected void lueTiedosto(String nimi) {
+    protected void lueTiedosto() {
         try {
             pepe.lueTiedostosta();
             hae();
         } catch (SailoException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -211,6 +210,7 @@ public class PepeGUIController implements Initializable {
      */
     private void tallenna() throws SailoException {
         pepe.tallenna();
+        naytaIlmoitus("Tallennettu!");
     }
 
 
@@ -259,23 +259,35 @@ public class PepeGUIController implements Initializable {
         }
     }
     
+    /**
+     * 
+     */
+    protected void poistaPeli() {
+        peliValittu = gridPelit.getObject();
+        if (peliValittu == null) return;
+        
+        pepe.poista(peliValittu);
+        naytaIlmoitus("Poisto onnistui");
+        hae();
+    }
+    
     
     /**
      * Hakee pelien tiedot StrinGridiin
      */
     protected void hae() {
-        gridPelit.clear();
-        for (int i = 0; i < pepe.getPeleja(); i++) {
-            Peli peli = pepe.annaPeli(i);
-            gridPelit.add(peli, pepe.getKenttia(peli));
-        }
+            gridPelit.clear();        
+            List<Peli> pelit = pepe.annaPelit();
+            for (Peli peli : pelit) {
+                gridPelit.add(peli, pepe.getKenttia(peli));
+            }
     }
 
 
     /**
      * Luo uuden pelin, jota aletaan editoimaan
      */
-    protected void uusiPeli() {
+    protected void uusiPeliTestiPeli() {
         
         // Alustojen testiluonti
         Alusta alusta = new Alusta();
@@ -291,7 +303,6 @@ public class PepeGUIController implements Initializable {
         Peli uusi = new Peli(0);
         uusi.rekisteroi();
         uusi.taytaTestiPeliTiedoilla(nimike.getTunniste(), alusta.getTunniste());
-        uusi.tulosta(System.out);
         
         try {
             pepe.lisaa(alusta);
@@ -311,7 +322,7 @@ public class PepeGUIController implements Initializable {
     public void setPepe(Pepe pepe) {
         this.pepe = pepe;
         naytaPeli();
-        lueTiedosto("tiedostonimi");
+        lueTiedosto();
     }
 
     

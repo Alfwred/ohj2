@@ -1,6 +1,3 @@
-/**
- * 
- */
 package pepe;
 
 import java.io.File;
@@ -70,6 +67,17 @@ public class Nimikkeet {
     
     
     /**
+     * Poistaa nimikkeen tunnisteen perusteella
+     * @param tunniste Nimikkeen nTunniste
+     */
+    public void poista(int tunniste) { 
+        for (int i = 0; i < lkm; i++) 
+            if (tunniste == alkiot[i].getTunniste()) alkiot[i] = null;
+        lkm--;
+    }
+
+    
+    /**
      * Palauttaa viitteen i:teen nimikkeeseen
      * @param i monennenko nimikkeen viite halutaan
      * @return viite nimikkeeseen, jonka indeksi on i
@@ -80,6 +88,7 @@ public class Nimikkeet {
             throw new IndexOutOfBoundsException("Laiton indeksi: " + i);
         return alkiot[i];
     }
+    
     
     /**
      * Palauttaa viitteen pelin nimikkeeseen

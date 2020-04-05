@@ -28,16 +28,6 @@ public class Pepe {
 
 
     /**
-     * Poistaa pelikannasta ja peliTiedoista ne joilla on nro. Kesken.
-     * @param nro viitenumero, jonka mukaan poistetaan
-     * @return montako pelia poistettiin
-     */
-    public int poista(@SuppressWarnings("unused") int nro) {
-        return 0;
-    }
-
-
-    /**
      * Lisää pepeen uuden pelin
      * @param peli lisättävä peli
      * @throws SailoException jos lisäystä ei voida tehdä
@@ -64,6 +54,40 @@ public class Pepe {
     public void lisaa(Peli peli) throws SailoException {
         pelit.lisaa(peli);
     }
+    
+    
+    /** 
+     * Poistaa tämän pelin (ja nimikkeen, jos mikään muu peli
+     * ei viittaa samaan nimikkeeseen)
+     * @param peli Poistettava peli
+     * @example
+     * TODO paskat testit
+     * <pre name="test">
+     * #THROWS Exception
+     *   alustaKerho();
+     *   kerho.annaHarrastukset(aku1).size() === 2;
+     *   kerho.poistaHarrastus(pitsi11);
+     *   kerho.annaHarrastukset(aku1).size() === 1;
+     */ 
+    public void poista(Peli peli) {
+        int lkm = annaNimikkeet(peli);
+        if (lkm <= 1) nimikkeet.poista(peli.getNimike());
+        pelit.poista(peli);
+    }
+    
+    
+    /**
+     * Etsii kuinka monessa pelissä on sama nimike
+     * @param peli Peli, jonka nimikettä tarkastellaan
+     * @return Nimikkeiden lukumäärä
+     */
+    public int annaNimikkeet(Peli peli) {
+        int lkm = 0;
+        for (Peli loydetty : pelit)
+            if (peli.getNimike() == loydetty.getNimike()) lkm++;;
+            System.out.println(lkm);
+        return lkm;
+    }
    
 
     /**
@@ -85,12 +109,20 @@ public class Pepe {
         
     
     /**
-     * Palauttaa parametrina pyydetyn pelin
-     * @param i Järjestysnumero
-     * @return Peli, joka pyydettiin
+     * Palauttaa pelin parametrina annetun tunnisteen perusteella
+     * @param tunniste Pelin tunniste
+     * @return Peli
      */
-    public Peli annaPeli(int i) {
-        return pelit.annaPeli(i);
+    public Peli annaPeli(int tunniste) {
+        return pelit.annaPeli(tunniste);
+    }
+    
+    
+    /**
+     * @return Lista peleistä
+     */
+    public List<Peli> annaPelit() {
+        return pelit.annaPelit();
     }
     
     
@@ -147,7 +179,16 @@ public class Pepe {
      * @return String[]-taulukko pelin tiedoista
      */
     public String[] getKenttia(Peli peli) {
-        String[] t = {Integer.toString(peli.getTunniste()), annaNimike(peli).getNimi(), annaAlusta(peli).getNimi()};
+        String[] t = {
+                Integer.toString(peli.getTunniste()),
+                annaNimike(peli).getNimi(),
+                annaAlusta(peli).getNimi(),
+                Integer.toString(peli.getJulkaisuvuosi()),
+                Integer.toString(peli.getHankintavuosi()),
+                Integer.toString(peli.getLevy()),
+                Integer.toString(peli.getKotelo()),
+                Integer.toString(peli.getOhjekirja()),
+                peli.getLisatiedot()};
         return t;
     }
     

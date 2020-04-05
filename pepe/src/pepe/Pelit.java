@@ -3,21 +3,13 @@
  */
 package pepe;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import fi.jyu.mit.ohj2.Mjonot;
 import fxPepe.SailoException;
 
 /**
@@ -27,10 +19,9 @@ import fxPepe.SailoException;
  */
 public class Pelit implements Iterable<Peli> {
     
-    private String tiedostonNimi = "";
     
     /** Taulukko PeliTiedoista */
-    private final ArrayList<Peli> alkiot = new ArrayList<Peli>();
+    private final List<Peli> alkiot = new ArrayList<Peli>();
 
 
     /**
@@ -47,6 +38,17 @@ public class Pelit implements Iterable<Peli> {
      */
     public void lisaa(Peli peli) {
         alkiot.add(peli);
+    }
+    
+    
+    /**
+     * Poistaa pelin
+     * @param peli Poistettava peli
+     * @return tosi jos löytyi poistettava peli
+     */
+    public boolean poista(Peli peli) {
+        boolean poistettu = alkiot.remove(peli);
+        return poistettu;
     }
     
     
@@ -136,6 +138,12 @@ public class Pelit implements Iterable<Peli> {
         return alkiot.iterator();
     }
     
+    /**
+     * @return Lista peleistä
+     */
+    public List<Peli> annaPelit() {
+        return alkiot;
+    }
     
     /**
      * Palauttaa pelin tunnisteen perusteella
@@ -143,8 +151,9 @@ public class Pelit implements Iterable<Peli> {
      * @return Peli
      */
     public Peli annaPeli(int tunniste) {
-        for (Peli peli : alkiot)
+        for (Peli peli : alkiot) {
             if (peli.getTunniste() == tunniste) return peli;
+        }
         return null;
     }
     
