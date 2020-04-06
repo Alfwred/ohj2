@@ -44,8 +44,6 @@ public class PepeGUIController implements Initializable {
     @FXML private StringGrid<Peli> gridPelit;
     
     private TextArea areaPeli = new TextArea();
-    
-    private String pepennimi = "pelirekisteri";
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
@@ -112,7 +110,10 @@ public class PepeGUIController implements Initializable {
      * Avataan muokkausikkuna listasta valistusta pelistä
      */
     @FXML void handlePeliMuokkaa() {
-        //Dialogs.showMessageDialog("Suorita pelin lisäys! Ei toimi vielä!");
+        madonreika[0] = peliValittu;
+        madonreika[1] = pepe.annaNimike(peliValittu);
+        madonreika[2] = pepe.annaAlusta(peliValittu);
+        ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, madonreika);
         
     }
     
@@ -153,6 +154,7 @@ public class PepeGUIController implements Initializable {
     
     private Pepe pepe;
     private Peli peliValittu;
+    private Object[] madonreika = new Object[3];
 
     
     
@@ -184,12 +186,6 @@ public class PepeGUIController implements Initializable {
         labelVirhe.setText(virhe);
         labelVirhe.getStyleClass().add("Virhe");
     }
-
-    
-    
-    private void setTitle(String title) {
-        ModalController.getStage(hakuehto).setTitle(title);
-    }
     
     
     /**
@@ -199,11 +195,13 @@ public class PepeGUIController implements Initializable {
         try {
             pepe.lueTiedostosta();
             hae();
+            naytaIlmoitus("Pelit haettu onnistuneesti!");
         } catch (SailoException e) {
             e.printStackTrace();
         }
     }
 
+    
     /**
      * Tietojen tallennus
      * @throws SailoException 

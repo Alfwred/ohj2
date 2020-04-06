@@ -1,7 +1,6 @@
 package pepe;
 
 import java.util.List;
-
 import fxPepe.SailoException;
 
 /**
@@ -70,7 +69,7 @@ public class Pepe {
      *   kerho.annaHarrastukset(aku1).size() === 1;
      */ 
     public void poista(Peli peli) {
-        int lkm = annaNimikkeet(peli);
+        int lkm = annaSamatNimikkeet(peli);
         if (lkm <= 1) nimikkeet.poista(peli.getNimike());
         pelit.poista(peli);
     }
@@ -81,10 +80,10 @@ public class Pepe {
      * @param peli Peli, jonka nimikettä tarkastellaan
      * @return Nimikkeiden lukumäärä
      */
-    public int annaNimikkeet(Peli peli) {
+    public int annaSamatNimikkeet(Peli peli) {
         int lkm = 0;
         for (Peli loydetty : pelit)
-            if (peli.getNimike() == loydetty.getNimike()) lkm++;;
+            if (loydetty.getNimike() == peli.getNimike()) lkm++;;
             System.out.println(lkm);
         return lkm;
     }
@@ -98,6 +97,7 @@ public class Pepe {
     public void lisaa(Nimike nimike) throws SailoException {
         nimikkeet.lisaa(nimike);
     }
+    
     
     /**
      * Listään uusi alusta Pepeen
@@ -173,10 +173,9 @@ public class Pepe {
     
     
     /**
-     * Väliaikainen viritys!
      * StringGridiin lisaysta varten metodi, joka luo String[] pelistä
      * @param peli Peli
-     * @return String[]-taulukko pelin tiedoista
+     * @return String[] pelin tiedoista
      */
     public String[] getKenttia(Peli peli) {
         String[] t = {
