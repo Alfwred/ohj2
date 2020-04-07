@@ -194,7 +194,7 @@ public class Pepe {
                 Integer.toString(peli.getHankintavuosi()),
                 Integer.toString(peli.getLevy()),
                 Integer.toString(peli.getKotelo()),
-                Integer.toString(peli.getOhjekirja()),
+                Integer.toString(peli.getOhje()),
                 peli.getLisatiedot()};
         return t;
     }

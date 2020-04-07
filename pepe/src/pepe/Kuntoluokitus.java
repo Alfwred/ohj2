@@ -3,9 +3,6 @@
  */
 package pepe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author anssi
  * @version 7 Apr 2020
@@ -13,23 +10,46 @@ import java.util.List;
  */
 public class Kuntoluokitus {
     
-    /** Taulukko Kunto-olioista */
-    private final List<Kunto> alkiot = new ArrayList<Kunto>();
-    
-    private Kunto heikko;
-    private Kunto tyydyttava;
-    private Kunto hyva;
+    private int luokitus;
+    private String maaritelma;
 
     
     /**
-     * Kuntoluokitusten luonti
+     * Kuntoluokka
+     * @param luokitus Luokitus numeroina 1-3
+     * @param maaritelma Kuvaava määritelmä merkkijonona
+     * 
      */
-    public Kuntoluokitus() {
-        this.heikko = new Kunto(1, "Heikko");
-        this.tyydyttava = new Kunto(2, "Tyydyttävä");
-        this.hyva = new Kunto(3, "Hyvä");
+    public Kuntoluokitus(int luokitus, String maaritelma) {
+        this.luokitus = luokitus;
+        this.maaritelma = maaritelma;
+    }
+    
+    
+    /**
+     * Hakee kunnon luokituksen
+     * @return Luokitus numeraalisena väliltä 1-3
+     */
+    public int getLuokitus() {
+        return this.luokitus;
+    }
+    
+    
+    /**
+     * Hakee kunnon määritelmän
+     * @return Kuvaava maaritelma kunnosta
+     */
+    public String getMaaritelma() {
+        return this.maaritelma;
     }
 
+    
+    @Override
+    public String toString() {
+        return this.maaritelma;
+    }
+    
+    
     /**
      * @param args Ei käytössä
      */

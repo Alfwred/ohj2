@@ -28,9 +28,8 @@ import pepe.*;
 public class PepeMuokkaaController implements ModalControllerInterface<Object[]>, Initializable  {
     
     static List<Alusta> alustat;
-    static Kunto levy;
-    static Kunto ohjekirja;
-    static Kunto kunto;
+    static Kunto kunto = new Kunto();
+    static List<Kuntoluokitus> kuntoluokitukset = kunto.annaKunnot();
 
     @FXML
     private TextField peliNimike;
@@ -45,13 +44,13 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
     private TextField peliHankintavuosi;
     
     @FXML
-    private ComboBox<Kunto> peliKuntoLevy;
+    private ComboBox<Kuntoluokitus> peliKuntoLevy;
 
     @FXML
-    private ComboBox<Kunto> peliKuntoOhjekirja;
+    private ComboBox<Kuntoluokitus> peliKuntoOhje;
 
     @FXML
-    private ComboBox<Kunto> peliKuntoKotelo;
+    private ComboBox<Kuntoluokitus> peliKuntoKotelo;
 
     @FXML
     private TextField peliLisatiedot;
@@ -107,7 +106,9 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
             peliJulkaisuvuosi.setText(peli.getJulkaisuvuosi() + "");
             peliHankintavuosi.setText(peli.getHankintavuosi() + "");
             peliLisatiedot.setText(peli.getLisatiedot());
+            peliKuntoLevy.getItems().addAll(kuntoluokitukset);
+            peliKuntoLevy.getSelectionModel().select(kunto.annaKunto(peli.getLevy()));
+            peliKuntoOhje.getSelectionModel().select(kunto.annaKunto(peli.getOhje()));
+            peliKuntoKotelo.getSelectionModel().select(kunto.annaKunto(peli.getKotelo()));
     }
-
-    
 }

@@ -25,10 +25,10 @@ public class Pelit implements Iterable<Peli> {
 
 
     /**
-     * 
+     * Konstruktori
      */
     public Pelit() {
-        // Toistaiseksi tyhja
+        // Tyhjä
     }
     
     

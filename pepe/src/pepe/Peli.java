@@ -23,7 +23,7 @@ public class Peli {
     private int     hankintavuosi;          // Pelin hankintavuosi
     private int     levy;                   // Levyn kunto 0-2
     private int     kotelo;                 // Kotelon kunto 0-2
-    private int     ohjekirja;              // Ohjekirjan kunto 0-2
+    private int     ohje;              // Ohjekirjan kunto 0-2
     private String  lisatiedot;             // Lisätiedot pelille (muistiinpanoja)
     
     private static int seuraavaTunniste = 0;
@@ -66,7 +66,7 @@ public class Peli {
         this.hankintavuosi = 1999;
         this.levy = 2;
         this.kotelo = 2;
-        this.ohjekirja = 2;
+        this.ohje = 2;
         this.lisatiedot = "Testipelin lisatiedot";
     }
     
@@ -102,7 +102,7 @@ public class Peli {
             this.hankintavuosi = Integer.parseInt(etsija.group(5));
             this.levy = Integer.parseInt(etsija.group(6));
             this.kotelo = Integer.parseInt(etsija.group(7));
-            this.ohjekirja = Integer.parseInt(etsija.group(8));
+            this.ohje = Integer.parseInt(etsija.group(8));
             this.lisatiedot = etsija.group(9);
         }
     }
@@ -113,7 +113,7 @@ public class Peli {
     * @param out tietovirta johon tulostetaan
     */
     public void tulosta(PrintStream out) {
-        out.println("Pelin tunniste: " + pTunniste + " Nimikkeen tunniste: " + nTunniste + " Alustan tunniste: " + aTunniste + " | " + julkaisuvuosi + ", " + hankintavuosi + ", " + levy + ", " + kotelo + ", " + ohjekirja + ", " + lisatiedot); ;
+        out.println("Pelin tunniste: " + pTunniste + " Nimikkeen tunniste: " + nTunniste + " Alustan tunniste: " + aTunniste + " | " + julkaisuvuosi + ", " + hankintavuosi + ", " + levy + ", " + kotelo + ", " + ohje + ", " + lisatiedot); ;
     }
     
     
@@ -222,11 +222,11 @@ public class Peli {
     
     
     /**
-     * Palauttaa pelin ohjekirjan kunnon asteikolla 0-2
+     * Palauttaa pelin ohjeen kunnon asteikolla 0-2
      * @return Pelin kokelon kunto
      */
-    public int getOhjekirja() {
-        return this.ohjekirja;
+    public int getOhje() {
+        return this.ohje;
     }
     
     
@@ -243,7 +243,7 @@ public class Peli {
     public String toString() {
         return this.getTunniste() + "|" + this.getNimike() + "|" + this.getAlusta() +
                 "|" + this.julkaisuvuosi + "|" + this.hankintavuosi + "|" + this.levy +
-                "|" + this.kotelo + "|" + this.ohjekirja + "|" + this.lisatiedot +"|";
+                "|" + this.kotelo + "|" + this.ohje + "|" + this.lisatiedot +"|";
     }
     
     
