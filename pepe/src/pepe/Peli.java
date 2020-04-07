@@ -241,11 +241,18 @@ public class Peli {
     
     /**
      * Asettaa parametrina tuodun kentän arvon
-     * @param vuosi fgfgh
+     * @param muutos Muutoksen tyyppi
+     * @param merkkijono Muutos merkkijonona
      * @return Ok tai virheilmoitus
      */
-    public String asetaMuutokset(int vuosi) {
-        this.julkaisuvuosi = vuosi;
+    public String asetaMuutokset(String muutos, String merkkijono) {
+        switch (muutos) {
+        case "julkaisuvuosi":
+            this.julkaisuvuosi = Integer.parseInt(merkkijono);
+            break;
+        default:
+            break;
+        }
         return "ok";
         
     }

@@ -58,8 +58,7 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
     @FXML
     void handlePeliMuokkaaSuorita() {
         Peli peli = (Peli) kuljetin[1];
-        int muutos = Integer.parseInt(peliJulkaisuvuosi.getText());
-        peli.asetaMuutokset(muutos);
+        peli.asetaMuutokset("julkaisuvuosi", peliJulkaisuvuosi.getText());
         kuljetin[1] = peli;
     }
     

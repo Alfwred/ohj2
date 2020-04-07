@@ -118,11 +118,10 @@ public class PepeGUIController implements Initializable {
      * Avataan muokkausikkuna listasta valistusta pelistä
      */
     @FXML void handlePeliMuokkaa() {
-        Peli peli = peliValittu;
         kuljetin[0] = pepe;
-        kuljetin[1] = peli;
-        kuljetin[2] = pepe.annaNimike(peli);
-        kuljetin[3] = pepe.annaAlusta(peli);
+        kuljetin[1] = peliValittu;
+        kuljetin[2] = pepe.annaNimike(peliValittu);
+        kuljetin[3] = pepe.annaAlusta(peliValittu);
         kuljetin = ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, kuljetin);
         //if (kuljetin[1] == null) return;
         //peliValittu.asetaMuutokset(peli.getJulkaisuvuosi());
