@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import fi.jyu.mit.fxgui.ListChooser?>
 <?import fi.jyu.mit.fxgui.StringGrid?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -56,7 +55,7 @@
                <center>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <center>
-                        <StringGrid fx:id="gridPelit" emptyStyleClass="" rivit="#|Peli|Alusta|Julkaisuvuosi|Hankintavuosi|L|K|O|Lisätietoja" BorderPane.alignment="CENTER">
+                        <StringGrid fx:id="gridPelit" emptyStyleClass="" rivit="#|Peli|Alusta|Julkaisuvuosi|Hankintavuosi|Levy|Ohje|Kunto|Lisätietoja" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets />
                            </BorderPane.margin></StringGrid>
@@ -80,9 +79,6 @@
                      </top>
                   </BorderPane>
                </center>
-               <top>
-                  <ListChooser fx:id="chooserPelit" prefHeight="150.0" rivit="" BorderPane.alignment="CENTER" />
-               </top>
             </BorderPane>
          </center>
          <top>

@@ -239,6 +239,17 @@ public class Peli {
     }
     
     
+    /**
+     * Asettaa parametrina tuodun kentän arvon
+     * @param vuosi fgfgh
+     * @return Ok tai virheilmoitus
+     */
+    public String asetaMuutokset(int vuosi) {
+        this.julkaisuvuosi = vuosi;
+        return "ok";
+        
+    }
+    
     @Override
     public String toString() {
         return this.getTunniste() + "|" + this.getNimike() + "|" + this.getAlusta() +

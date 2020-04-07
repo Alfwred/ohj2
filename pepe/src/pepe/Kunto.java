@@ -48,29 +48,20 @@ public class Kunto implements Iterable<Kuntoluokitus> {
         return new Kuntoluokitus(0, "Kunto ei löytynyt");
     }
 
-
+    
     /**
-     * @return Lista kuntomääritelmistä
+     * @return Lista kuntoluokituksista
      */
-    public List<Kuntoluokitus> annaKunnot() {
+    public List<Kuntoluokitus> annaKuntoluokitukset() {
         return alkiot;
     }
     
-    /**
-     * @return Lista kuntomääritelmistä
-     * @param luokitus luokituksen tunnus
-     */
-    public Kuntoluokitus annaKunto(int luokitus) {
-        for (Kuntoluokitus k : alkiot) if (k.getLuokitus() == luokitus) return k;
-        return null;
-    }
-
 
     /**
      * @param args Ei käytössä
      */
     public static void main(String[] args) {
-        Kunto kunto = new Kunto();
-        System.out.println(kunto.annaKunnot());
+        Pepe pepe = new Pepe();
+        System.out.println(pepe.annaKuntoluokitukset());
     }
 }

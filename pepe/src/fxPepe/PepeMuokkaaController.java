@@ -28,9 +28,9 @@ import pepe.*;
 public class PepeMuokkaaController implements ModalControllerInterface<Object[]>, Initializable  {
     
     static List<Alusta> alustat;
-    static Kunto kunto = new Kunto();
-    static List<Kuntoluokitus> kuntoluokitukset = kunto.annaKunnot();
-
+    static List<Kuntoluokitus> kuntoluokitukset;
+    static Object[] kuljetin;
+    
     @FXML
     private TextField peliNimike;
     
@@ -57,7 +57,10 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
 
     @FXML
     void handlePeliMuokkaaSuorita() {
-        //
+        Peli peli = (Peli) kuljetin[1];
+        int muutos = Integer.parseInt(peliJulkaisuvuosi.getText());
+        peli.asetaMuutokset(muutos);
+        kuljetin[1] = peli;
     }
     
 
@@ -69,8 +72,7 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
 
     @Override
     public Object[] getResult() {
-        // TODO Auto-generated method stub
-        return null;
+        return kuljetin;
     }
     
 
@@ -82,23 +84,26 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
 
     
     @Override
-    public void setDefault(Object[] kuljetin) {
+    public void setDefault(Object[] tiedot) {
+        kuljetin = tiedot;
         Pepe pepe = (Pepe) kuljetin[0];
         Peli peli = (Peli) kuljetin[1];
         Nimike nimike = (Nimike) kuljetin[2];
         Alusta alusta = (Alusta) kuljetin[3];
         alustat = pepe.annaAlustat();
-        naytaPeli(peli, nimike, alusta);
+        kuntoluokitukset = pepe.annaKuntoluokitukset();
+        naytaPeli(pepe, peli, nimike, alusta);
     }
     
 
     /**
      * Näytetään pelin tiedot UI-komponentteihin
+     * @param pepe Pepe
      * @param peli Peli
      * @param nimike Pelin nimike
      * @param alusta Pelin alusta
      */
-    public void naytaPeli(Peli peli, Nimike nimike, Alusta alusta) {
+    public void naytaPeli(Pepe pepe, Peli peli, Nimike nimike, Alusta alusta) {
         if (peli == null) return;
             peliNimike.setText(nimike.getNimi());
             peliAlusta.getItems().addAll(alustat);
@@ -107,8 +112,10 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
             peliHankintavuosi.setText(peli.getHankintavuosi() + "");
             peliLisatiedot.setText(peli.getLisatiedot());
             peliKuntoLevy.getItems().addAll(kuntoluokitukset);
-            peliKuntoLevy.getSelectionModel().select(kunto.annaKunto(peli.getLevy()));
-            peliKuntoOhje.getSelectionModel().select(kunto.annaKunto(peli.getOhje()));
-            peliKuntoKotelo.getSelectionModel().select(kunto.annaKunto(peli.getKotelo()));
+            peliKuntoLevy.getSelectionModel().select(pepe.haeLuokitus(peli.getLevy()));
+            peliKuntoOhje.getItems().addAll(kuntoluokitukset);
+            peliKuntoOhje.getSelectionModel().select(pepe.haeLuokitus(peli.getOhje()));
+            peliKuntoKotelo.getItems().addAll(kuntoluokitukset);
+            peliKuntoKotelo.getSelectionModel().select(pepe.haeLuokitus(peli.getKotelo()));
     }
 }

@@ -54,6 +54,7 @@ public class PepeGUIController implements Initializable {
      
     }
     
+    
     @FXML private void handleHakuehto() {
         String hakukentta = hakuehto.getSelectedText();
         String ehto = hakuehto.getText(); 
@@ -63,12 +64,14 @@ public class PepeGUIController implements Initializable {
             naytaIlmoitus("Ei osata vielä hakea " + hakukentta + ": " + ehto);
     }
     
+    
     /**
      * Avataan info-ikkuna
      */
     @FXML void handleInfo() {
         avustus();
     }
+    
     
     /**
      * Järjestetään pelilista valitun sarakkeen mukaan laskevaan järjestykseen
@@ -78,12 +81,14 @@ public class PepeGUIController implements Initializable {
         Dialogs.showMessageDialog("Lista laskeva! Ei toimi vielä!");
     }
     
+    
     /**
      * Järjestetään pelilista valitun sarakkeen mukaan nousevaan järjestykseen
      */
     @FXML void handleListaNouseva() {
         Dialogs.showMessageDialog("Lista nouseva! Ei toimi vielä!");
     }
+    
     
     /**
      * Avaa suodatusvaihtoehdot
@@ -92,12 +97,14 @@ public class PepeGUIController implements Initializable {
         Dialogs.showMessageDialog("Suodata lista! Ei toimi vielä!");
     }
     
+    
     /**
      * Avaa pelinlisäysikkunan
      */
     @FXML void handlePeliLisaa() {
         uusiPeliTestiPeli();
     }
+    
     
     /**
      * Lisätään peli
@@ -106,17 +113,22 @@ public class PepeGUIController implements Initializable {
         Dialogs.showMessageDialog("Suorita pelin lisäys! Ei toimi vielä!");
     }
     
+    
     /**
      * Avataan muokkausikkuna listasta valistusta pelistä
      */
     @FXML void handlePeliMuokkaa() {
+        Peli peli = peliValittu;
         kuljetin[0] = pepe;
-        kuljetin[1] = peliValittu;
-        kuljetin[2] = pepe.annaNimike(peliValittu);
-        kuljetin[3] = pepe.annaAlusta(peliValittu);
-        ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, kuljetin);
-        
+        kuljetin[1] = peli;
+        kuljetin[2] = pepe.annaNimike(peli);
+        kuljetin[3] = pepe.annaAlusta(peli);
+        kuljetin = ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, kuljetin);
+        //if (kuljetin[1] == null) return;
+        //peliValittu.asetaMuutokset(peli.getJulkaisuvuosi());
+        hae();
     }
+    
     
     /**
      * Poistetaann valittu peli
@@ -125,12 +137,14 @@ public class PepeGUIController implements Initializable {
         poistaPeli();
     }
     
+    
     /**
      * Avataan resurssihallinta, josta voidaan avata peli
      */
     @FXML void handleRekisteriAvaa() {
         Dialogs.showMessageDialog("Avaa rekisteri! Ei toimi vielä!");
     }
+    
     
     /**
      * Tallennetaan pelirekisteri
@@ -139,6 +153,7 @@ public class PepeGUIController implements Initializable {
     @FXML void handleRekisteriTallenna() throws SailoException {
         tallenna();
     }
+    
     
     /**
      * Lopetetaan ohjelma
@@ -170,8 +185,8 @@ public class PepeGUIController implements Initializable {
         panelPeli.setFitToHeight(true);
         panelPeli.setFitToWidth(true);
         
-        chooserPelit.clear();
-        chooserPelit.addSelectionListener(e -> naytaPeli());
+        //chooserPelit.clear();
+        //chooserPelit.addSelectionListener(e -> naytaPeli());
         
         gridPelit.clear();
         
@@ -195,7 +210,6 @@ public class PepeGUIController implements Initializable {
     protected void lueTiedosto() {
         try {
             pepe.lueTiedostosta();
-            hae();
             naytaIlmoitus("Pelit haettu onnistuneesti!");
         } catch (SailoException e) {
             e.printStackTrace();
@@ -245,18 +259,6 @@ public class PepeGUIController implements Initializable {
         }
     }
     
-    
-    /**
-     * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
-     */
-    protected void naytaPeli() {
-        peliValittu = chooserPelit.getSelectedObject();
-        if (peliValittu == null) return;
-        areaPeli.setText("");
-        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPeli)) {
-            peliValittu.tulosta(os);   
-        }
-    }
     
     /**
      * 
@@ -320,8 +322,8 @@ public class PepeGUIController implements Initializable {
      */
     public void setPepe(Pepe pepe) {
         this.pepe = pepe;
-        naytaPeli();
         lueTiedosto();
+        hae();
     }
 
     

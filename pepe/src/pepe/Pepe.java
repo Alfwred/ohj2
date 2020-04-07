@@ -15,6 +15,7 @@ public class Pepe {
     private Pelit pelit = new Pelit();
     private Nimikkeet nimikkeet = new Nimikkeet();
     private Alustat alustat = new Alustat();
+    private Kunto kunto = new Kunto();
 
 
     /**
@@ -133,6 +134,23 @@ public class Pepe {
         return alustat.annaAlustat();
     }
     
+    /**
+     * @return Lista kuntoluokituksista
+     */
+    public List<Kuntoluokitus> annaKuntoluokitukset() {
+        return kunto.annaKuntoluokitukset();
+    }
+    
+    
+    /**
+     * Hakee luokitusta vastaavan kuvaavan Kunto-olion
+     * @param arvo Peliin sidottu kunnon arvo
+     * @return kuntoa vastaava Kunto-olio
+     */
+    public Kuntoluokitus haeLuokitus(int arvo) {
+        return kunto.haeLuokitus(arvo);
+    }
+    
     
     /**
      * Paluttaa pelille kuuluvan nimikkeen
@@ -187,14 +205,14 @@ public class Pepe {
      */
     public String[] getKenttia(Peli peli) {
         String[] t = {
-                Integer.toString(peli.getTunniste()),
+                peli.getTunniste() + "",
                 annaNimike(peli).getNimi(),
                 annaAlusta(peli).getNimi(),
-                Integer.toString(peli.getJulkaisuvuosi()),
-                Integer.toString(peli.getHankintavuosi()),
-                Integer.toString(peli.getLevy()),
-                Integer.toString(peli.getKotelo()),
-                Integer.toString(peli.getOhje()),
+                peli.getJulkaisuvuosi() + "",
+                peli.getHankintavuosi() + "",
+                kunto.haeLuokitus(peli.getLevy()).toString(),
+                kunto.haeLuokitus(peli.getOhje()).toString(),
+                kunto.haeLuokitus(peli.getKotelo()).toString(),
                 peli.getLisatiedot()};
         return t;
     }
