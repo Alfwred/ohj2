@@ -1,6 +1,7 @@
 package fxPepe;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.Dialogs;
@@ -26,10 +27,16 @@ import pepe.*;
  */
 public class PepeMuokkaaController implements ModalControllerInterface<Object[]>, Initializable  {
     
-    static Peli apupeli;
+    static List<Alusta> alustat;
+    static Kunto levy;
+    static Kunto ohjekirja;
+    static Kunto kunto;
 
     @FXML
     private TextField peliNimike;
+    
+    @FXML
+    private ComboBox<Alusta> peliAlusta;
 
     @FXML
     private TextField peliJulkaisuvuosi;
@@ -38,13 +45,13 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
     private TextField peliHankintavuosi;
     
     @FXML
-    private ComboBox<?> peliKuntoPelilevy;
+    private ComboBox<Kunto> peliKuntoLevy;
 
     @FXML
-    private ComboBox<?> peliKuntoOhjekirja;
+    private ComboBox<Kunto> peliKuntoOhjekirja;
 
     @FXML
-    private ComboBox<?> peliKuntoKotelo;
+    private ComboBox<Kunto> peliKuntoKotelo;
 
     @FXML
     private TextField peliLisatiedot;
@@ -53,17 +60,20 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
     void handlePeliMuokkaaSuorita() {
         //
     }
+    
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         //
     }
+    
 
     @Override
     public Object[] getResult() {
         // TODO Auto-generated method stub
         return null;
     }
+    
 
     @Override
     public void handleShown() {
@@ -71,14 +81,18 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
         
     }
 
+    
     @Override
-    public void setDefault(Object[] madonreika) {
-        Peli peli = (Peli) madonreika[0];
-        Nimike nimike = (Nimike) madonreika[1];
-        Alusta alusta = (Alusta) madonreika[2];
+    public void setDefault(Object[] kuljetin) {
+        Pepe pepe = (Pepe) kuljetin[0];
+        Peli peli = (Peli) kuljetin[1];
+        Nimike nimike = (Nimike) kuljetin[2];
+        Alusta alusta = (Alusta) kuljetin[3];
+        alustat = pepe.annaAlustat();
         naytaPeli(peli, nimike, alusta);
     }
     
+
     /**
      * Näytetään pelin tiedot UI-komponentteihin
      * @param peli Peli
@@ -88,10 +102,11 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
     public void naytaPeli(Peli peli, Nimike nimike, Alusta alusta) {
         if (peli == null) return;
             peliNimike.setText(nimike.getNimi());
+            peliAlusta.getItems().addAll(alustat);
+            peliAlusta.getSelectionModel().select(alusta);
             peliJulkaisuvuosi.setText(peli.getJulkaisuvuosi() + "");
             peliHankintavuosi.setText(peli.getHankintavuosi() + "");
             peliLisatiedot.setText(peli.getLisatiedot());
-            //peliKuntoPelilevy
     }
 
     

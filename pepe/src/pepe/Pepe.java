@@ -127,6 +127,14 @@ public class Pepe {
     
     
     /**
+     * @return Lista alustoista
+     */
+    public List<Alusta> annaAlustat() {
+        return alustat.annaAlustat();
+    }
+    
+    
+    /**
      * Paluttaa pelille kuuluvan nimikkeen
      * @param peli Peli, jonka nimikettä haetaan
      * @return Pelin nimike

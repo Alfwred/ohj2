@@ -154,6 +154,14 @@ public class Alustat implements Iterable<Alusta> {
             if (alusta.getTunniste() == tunniste) return alusta;
         return null;
     }
+    
+    
+    /**
+     * @return Lista alustoista
+     */
+    public List<Alusta> annaAlustat() {
+        return alkiot;
+    }
 
 
     /**

@@ -110,10 +110,11 @@ public class PepeGUIController implements Initializable {
      * Avataan muokkausikkuna listasta valistusta pelistä
      */
     @FXML void handlePeliMuokkaa() {
-        madonreika[0] = peliValittu;
-        madonreika[1] = pepe.annaNimike(peliValittu);
-        madonreika[2] = pepe.annaAlusta(peliValittu);
-        ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, madonreika);
+        kuljetin[0] = pepe;
+        kuljetin[1] = peliValittu;
+        kuljetin[2] = pepe.annaNimike(peliValittu);
+        kuljetin[3] = pepe.annaAlusta(peliValittu);
+        ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, kuljetin);
         
     }
     
@@ -154,7 +155,7 @@ public class PepeGUIController implements Initializable {
     
     private Pepe pepe;
     private Peli peliValittu;
-    private Object[] madonreika = new Object[3];
+    private Object[] kuljetin = new Object[4];
 
     
     

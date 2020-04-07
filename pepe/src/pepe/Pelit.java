@@ -20,7 +20,7 @@ import fxPepe.SailoException;
 public class Pelit implements Iterable<Peli> {
     
     
-    /** Taulukko PeliTiedoista */
+    /** Taulukko peleistä */
     private final List<Peli> alkiot = new ArrayList<Peli>();
 
 
@@ -144,6 +144,7 @@ public class Pelit implements Iterable<Peli> {
     public List<Peli> annaPelit() {
         return alkiot;
     }
+    
     
     /**
      * Palauttaa pelin tunnisteen perusteella

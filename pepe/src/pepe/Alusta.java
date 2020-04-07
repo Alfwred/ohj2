@@ -92,7 +92,7 @@ public class Alusta {
     
     @Override
     public String toString() {
-        return this.aTunniste + "|" + this.lyhenne + "|" + this.nimi;
+        return this.lyhenne;
     }
     
     /**
