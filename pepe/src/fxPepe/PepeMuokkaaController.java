@@ -89,15 +89,9 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
 
     
     @Override
-    public void setDefault(Object[] tiedot) {
-        kuljetin = tiedot;
-        Pepe pepe = (Pepe) kuljetin[0];
-        Peli peli = (Peli) kuljetin[1];
-        Nimike nimike = (Nimike) kuljetin[2];
-        Alusta alusta = (Alusta) kuljetin[3];
-        alustat = pepe.annaAlustat();
-        kuntoluokitukset = pepe.annaKuntoluokitukset();
-        naytaPeli(pepe, peli, nimike, alusta);
+    public void setDefault(Object[] oliot) {
+        kuljetin = oliot;
+        naytaPeli((Pepe) kuljetin[0], (Peli) kuljetin[1]);
     }
     
 
@@ -105,22 +99,23 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
      * Näytetään pelin tiedot UI-komponentteihin
      * @param pepe Pepe
      * @param peli Peli
-     * @param nimike Pelin nimike
-     * @param alusta Pelin alusta
      */
-    public void naytaPeli(Pepe pepe, Peli peli, Nimike nimike, Alusta alusta) {
+    public void naytaPeli(Pepe pepe, Peli peli) {
         if (peli == null) return;
-            peliNimike.setText(nimike.getNimi());
-            peliAlusta.getItems().addAll(alustat);
-            peliAlusta.getSelectionModel().select(alusta);
-            peliJulkaisuvuosi.setText(peli.getJulkaisuvuosi() + "");
-            peliHankintavuosi.setText(peli.getHankintavuosi() + "");
-            peliLisatiedot.setText(peli.getLisatiedot());
-            peliKuntoLevy.getItems().addAll(kuntoluokitukset);
-            peliKuntoLevy.getSelectionModel().select(pepe.haeLuokitus(peli.getLevy()));
-            peliKuntoOhje.getItems().addAll(kuntoluokitukset);
-            peliKuntoOhje.getSelectionModel().select(pepe.haeLuokitus(peli.getOhje()));
-            peliKuntoKotelo.getItems().addAll(kuntoluokitukset);
-            peliKuntoKotelo.getSelectionModel().select(pepe.haeLuokitus(peli.getKotelo()));
+        alustat = pepe.annaAlustat();
+        kuntoluokitukset = pepe.annaKuntoluokitukset();
+        
+        peliNimike.setText(pepe.annaNimike(peli).getNimi());
+        peliAlusta.getItems().addAll(alustat);
+        peliAlusta.getSelectionModel().select(pepe.annaAlusta(peli));
+        peliJulkaisuvuosi.setText(peli.getJulkaisuvuosi() + "");
+        peliHankintavuosi.setText(peli.getHankintavuosi() + "");
+        peliLisatiedot.setText(peli.getLisatiedot());
+        peliKuntoLevy.getItems().addAll(kuntoluokitukset);
+        peliKuntoLevy.getSelectionModel().select(pepe.haeLuokitus(peli.getLevy()));
+        peliKuntoOhje.getItems().addAll(kuntoluokitukset);
+        peliKuntoOhje.getSelectionModel().select(pepe.haeLuokitus(peli.getOhje()));
+        peliKuntoKotelo.getItems().addAll(kuntoluokitukset);
+        peliKuntoKotelo.getSelectionModel().select(pepe.haeLuokitus(peli.getKotelo()));
     }
 }

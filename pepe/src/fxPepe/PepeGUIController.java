@@ -118,16 +118,11 @@ public class PepeGUIController implements Initializable {
      * Avataan muokkausikkuna listasta valistusta pelistä
      */
     @FXML void handlePeliMuokkaa() {
-        kuljetin[0] = pepe;
-        kuljetin[1] = peliValittu;
-        kuljetin[2] = pepe.annaNimike(peliValittu);
-        kuljetin[3] = pepe.annaAlusta(peliValittu);
-        ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, kuljetin);
-        hae();
+        muokkaaPeli();
     }
     
-    
-    /**
+
+    /**00
      * Poistetaann valittu peli
      */
     @FXML void handlePeliPoista() {
@@ -167,7 +162,7 @@ public class PepeGUIController implements Initializable {
     
     private Pepe pepe;
     private Peli peliValittu;
-    private Object[] kuljetin = new Object[4];
+    private Object[] kuljetin = new Object[2];
 
     
     
@@ -180,11 +175,7 @@ public class PepeGUIController implements Initializable {
         panelPeli.setContent(areaPeli);
         areaPeli.setFont(new Font("Courier New", 12));
         panelPeli.setFitToHeight(true);
-        panelPeli.setFitToWidth(true);
-        
-        //chooserPelit.clear();
-        //chooserPelit.addSelectionListener(e -> naytaPeli());
-        
+        panelPeli.setFitToWidth(true);        
         gridPelit.clear();
         
     }
@@ -240,12 +231,8 @@ public class PepeGUIController implements Initializable {
      */
     private void naytaGridinValinta() {
         areaPeli.setText("");
-        peliValittu = gridPelit.getObject();
-        
-        if (peliValittu == null) {
-            areaPeli.setText("null");
-            return;
-        }
+        peliValittu = gridPelit.getObject();    
+        if (peliValittu == null) return;
 
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPeli)) {
             
@@ -267,6 +254,17 @@ public class PepeGUIController implements Initializable {
         pepe.poista(peliValittu);
         naytaIlmoitus("Poisto onnistui");
         hae();
+    }
+    
+    /**
+     * Pakkaa tarvittavat oliot, lähettää ja avaa ne muokkausdialogissa
+     */
+    private void muokkaaPeli() {
+        kuljetin[0] = pepe;
+        kuljetin[1] = peliValittu;
+        ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, kuljetin);
+        naytaIlmoitus("Peli muokattu onnistuneesti!");
+        hae(); 
     }
     
     

@@ -23,9 +23,9 @@ public class Kunto implements Iterable<Kuntoluokitus> {
      * Kuntoluokitusten luonti
      */
     public Kunto() {
-        this.alkiot.add(new Kuntoluokitus(1, "Heikko"));
-        this.alkiot.add(new Kuntoluokitus(2, "Tyydyttävä"));
-        this.alkiot.add(new Kuntoluokitus(3, "Hyvä"));
+        this.alkiot.add(new Kuntoluokitus(3, "MINT"));
+        this.alkiot.add(new Kuntoluokitus(2, "OK"));
+        this.alkiot.add(new Kuntoluokitus(1, "HUONO"));
     }
 
 
