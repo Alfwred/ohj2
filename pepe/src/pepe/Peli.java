@@ -238,8 +238,14 @@ public class Peli {
         return this.lisatiedot;
     }
     
+    
     public void setJulkaisuvuosi(int vuosi) {
         this.julkaisuvuosi = vuosi;
+    }
+    
+    
+    public void setHankintavuosi(int vuosi) {
+        this.hankintavuosi = vuosi;
     }
     
     
@@ -251,6 +257,18 @@ public class Peli {
     public void setAlusta(int alusta) {
         this.aTunniste = alusta;
     }
+    
+    
+    public void setLisatiedot(String lisatiedot) {
+        this.lisatiedot = lisatiedot;
+    }
+    
+    public void setKunto(String kunto) {
+        this.levy = Integer.parseInt(kunto, 0, 1, 10);
+        this.ohje = Integer.parseInt(kunto, 1, 2, 10);
+        this.kotelo  = Integer.parseInt(kunto, 2, 3, 10);
+    }
+    
     
     @Override
     public String toString() {
@@ -272,7 +290,7 @@ public class Peli {
         p2.taytaPeliTiedoilla();
         p1.tulosta(System.out);
         p2.tulosta(System.out);  
-        Integer.toString(p1.getTunniste()); 
+        Integer.toString(p1.getTunniste());
     }
 
 }

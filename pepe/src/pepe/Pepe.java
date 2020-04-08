@@ -248,7 +248,7 @@ public class Pepe {
                     e.printStackTrace();
                 }
                 peli.setNimike(uusi.getTunniste());
-                return "EI NIMIKETTÄ";
+                return "UUSI NIMIKE LUOTU";
             }
             peli.setNimike(this.annaNimike(merkkijono).getTunniste());
             return "NIMIKE OK";
@@ -258,10 +258,19 @@ public class Pepe {
         case "julkaisuvuosi":
             peli.setJulkaisuvuosi(Integer.parseInt(merkkijono));
             return "JULKAISUVUOSI OK";
+        case "hankintavuosi":
+            peli.setHankintavuosi(Integer.parseInt(merkkijono));
+            return "HANKINTAVUOSI OK";
+        case "kunto":
+            peli.setKunto(merkkijono);
+            return "KUNTO OK";
+        case "lisatiedot":
+            peli.setLisatiedot(merkkijono);
+            return "LISATIEDOT OK";
         default:
             break;
         }
-        return "ok";
+        return "VIRHE";
         
     }
     
