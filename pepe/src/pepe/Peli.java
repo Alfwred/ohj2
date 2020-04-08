@@ -238,23 +238,18 @@ public class Peli {
         return this.lisatiedot;
     }
     
+    public void setJulkaisuvuosi(int vuosi) {
+        this.julkaisuvuosi = vuosi;
+    }
     
-    /**
-     * Asettaa parametrina tuodun kentän arvon
-     * @param muutos Muutoksen tyyppi
-     * @param merkkijono Muutos merkkijonona
-     * @return Ok tai virheilmoitus
-     */
-    public String asetaMuutokset(String muutos, String merkkijono) {
-        switch (muutos) {
-        case "julkaisuvuosi":
-            this.julkaisuvuosi = Integer.parseInt(merkkijono);
-            break;
-        default:
-            break;
-        }
-        return "ok";
-        
+    
+    public void setNimike(int nimike) {
+        this.nTunniste = nimike;
+    }
+    
+    
+    public void setAlusta(int alusta) {
+        this.aTunniste = alusta;
     }
     
     @Override

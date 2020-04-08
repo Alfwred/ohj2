@@ -155,6 +155,17 @@ public class Pepe {
     /**
      * Paluttaa pelille kuuluvan nimikkeen
      * @param peli Peli, jonka nimikettä haetaan
+     * @return Pelin Nimike-olio
+     * @throws IndexOutOfBoundsException jos i väärin
+     */
+    public Nimike annaNimike(String merkkijono) throws IndexOutOfBoundsException {
+        return nimikkeet.annaNimike(merkkijono);
+    }
+    
+    
+    /**
+     * Paluttaa pelille kuuluvan nimikkeen
+     * @param peli Peli, jonka nimikettä haetaan
      * @return Pelin nimike
      * @throws IndexOutOfBoundsException jos i väärin
      */
@@ -215,6 +226,43 @@ public class Pepe {
                 kunto.haeLuokitus(peli.getKotelo()).toString(),
                 peli.getLisatiedot()};
         return t;
+    }
+    
+    
+    /**
+     * Asettaa parametrina tuodun kentän arvon
+     * @param muutos Muutoksen tyyppi
+     * @param merkkijono Muutos merkkijonona
+     * @return Ok tai virheilmoitus
+     */
+    public String asetaMuutokset(Peli peli, String muutos, String merkkijono) {
+        switch (muutos) {
+        case "nimike":
+            if (this.annaNimike(merkkijono) == null) {
+                Nimike uusi = new Nimike(merkkijono);
+                uusi.rekisteroi();
+                try {
+                    this.lisaa(uusi);
+                } catch (SailoException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                peli.setNimike(uusi.getTunniste());
+                return "EI NIMIKETTÄ";
+            }
+            peli.setNimike(this.annaNimike(merkkijono).getTunniste());
+            return "NIMIKE OK";
+        case "alusta":
+            peli.setAlusta(Integer.parseInt(merkkijono));
+            return "ALUSTA OK";
+        case "julkaisuvuosi":
+            peli.setJulkaisuvuosi(Integer.parseInt(merkkijono));
+            return "JULKAISUVUOSI OK";
+        default:
+            break;
+        }
+        return "ok";
+        
     }
     
     

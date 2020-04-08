@@ -106,6 +106,30 @@ public class Nimikkeet {
     
     
     /**
+     * Palauttaa viitteen pelin nimikkeeseen
+     * @param tunniste Pelin tietoihin sidottu tunniste, jonka mukaan nimikettä haetaan
+     * @return viite nimikkeeseen
+     */
+    public Nimike annaNimike(String merkkijono) {
+        for (Nimike nimike : alkiot) {
+            if (nimike.getNimi().equalsIgnoreCase(merkkijono)) return nimike;
+        }
+        return null;
+    }
+
+    
+    /**
+     * Etsii merkkijonoa vastaavan nimikkeen
+     * @param merkkijono Merkkijono, jota verrataan Pepen nimikkeisiin
+     * @return Nimike-olio
+     */
+    public Nimike vertaaNimike(String merkkijono) {
+        for (Nimike nimike : alkiot) if (nimike.getNimi().equalsIgnoreCase(merkkijono)) return nimike;
+        return null;
+    }
+    
+    
+    /**
      * Luetaan nimikkeet tiedostosta
      * @throws SailoException Virhe, jos ongelma
      */

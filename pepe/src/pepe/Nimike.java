@@ -38,8 +38,16 @@ public class Nimike {
     /**
      *  Parametriton
      */
-    public Nimike () {
-        // Parametriton
+    public Nimike() {
+        //
+    }
+    
+    
+    /**
+     *  Parametriton
+     */
+    public Nimike(String nimi) {
+        this.nimi = nimi;
     }
     
     
