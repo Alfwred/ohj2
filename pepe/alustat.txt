@@ -1,3 +1,4 @@
+;id |alustan lyhenne |alustan nimi
 0|PC|Personal Computer
 1|PS1|PlayStation 1
 2|PS2|PlayStation 2
@@ -11,13 +12,3 @@
 10|Xbox|Xbox
 11|Xbox360|Xbox 360
 12|XboxOne|Xbox One
-13|TESTI|Testialusta
-14|TESTI|Testialusta
-15|TESTI|Testialusta
-16|TESTI|Testialusta
-17|TESTI|Testialusta
-18|TESTI|Testialusta
-19|TESTI|Testialusta
-20|TESTI|Testialusta
-21|TESTI|Testialusta
-22|TESTI|Testialusta

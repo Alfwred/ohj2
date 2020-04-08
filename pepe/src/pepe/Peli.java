@@ -91,7 +91,7 @@ public class Peli {
      */
     public void parsiPeli(String merkkijono) {
         // https://regex101.com/r/YgveGF/1/
-        Pattern esiintyma = Pattern.compile("^(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(.+|)\\|$");
+        Pattern esiintyma = Pattern.compile("^(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(.+|)$");
         Matcher etsija = esiintyma.matcher(merkkijono);
 
         if (etsija.find()) {

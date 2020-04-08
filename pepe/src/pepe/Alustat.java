@@ -71,7 +71,7 @@ public class Alustat implements Iterable<Alusta> {
     public void tallenna() throws SailoException {
         try (PrintWriter pw = new PrintWriter(new FileOutputStream("alustat.txt", false))) {
             for (Alusta alusta : this) {
-                pw.println(alusta.toString());
+                pw.println(alusta.annaTallennusMuoto());
             }
         } catch (IOException ex) {
             System.err.println("Virhe luettaessa tiedostoa! " + ex.getMessage());

@@ -66,7 +66,7 @@ public class Alusta {
         Matcher etsija = esiintyma.matcher(merkkijono);
 
         if (etsija.find()) {
-            setTunniste(Integer.parseInt(etsija.group(1))); // Koska syö leading zeroes
+            setTunniste(Integer.parseInt(etsija.group(1)));
             this.lyhenne = etsija.group(2);
             this.nimi = etsija.group(3);
         }
@@ -143,6 +143,15 @@ public class Alusta {
      */
     public String getNimi() {
         return this.lyhenne;
+    }
+    
+    
+    /**
+     * Tuloste olion tallentamista varten
+     * @return Merkkijono oliosta
+     */
+    public String annaTallennusMuoto() {
+        return this.aTunniste + "|" + this.lyhenne + "|" + this.nimi + "|";
     }
     
       
