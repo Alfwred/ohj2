@@ -107,8 +107,8 @@ public class Nimikkeet {
     
     /**
      * Palauttaa viitteen pelin nimikkeeseen
-     * @param tunniste Pelin tietoihin sidottu tunniste, jonka mukaan nimikettä haetaan
-     * @return viite nimikkeeseen
+     * @param merkkijono Nimikkeen haku nimikkeen nimen mukaan
+     * @return Olioviite nimikkeeseen
      */
     public Nimike annaNimike(String merkkijono) {
         for (Nimike nimike : alkiot) {

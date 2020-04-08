@@ -239,30 +239,55 @@ public class Peli {
     }
     
     
+    /**
+     * Asettaa pelille julkaisuvuoden
+     * @param vuosi Vuosiluku
+     */
     public void setJulkaisuvuosi(int vuosi) {
         this.julkaisuvuosi = vuosi;
     }
     
     
+    /**
+     * Asettaa pelille hankintavuoden
+     * @param vuosi Vuosiluku
+     */
     public void setHankintavuosi(int vuosi) {
         this.hankintavuosi = vuosi;
     }
     
     
-    public void setNimike(int nimike) {
-        this.nTunniste = nimike;
+    /**
+     * Asettaa pelille nimikkeen tunnisteen perusteella
+     * @param tunniste Nimikkeen tunniste
+     */
+    public void setNimike(int tunniste) {
+        this.nTunniste = tunniste;
     }
     
     
-    public void setAlusta(int alusta) {
-        this.aTunniste = alusta;
+    /**
+     * Asettaa pelille alustan tunnisteen perusteella
+     * @param tunniste Alustan tunniste
+     */
+    public void setAlusta(int tunniste) {
+        this.aTunniste = tunniste;
     }
     
     
-    public void setLisatiedot(String lisatiedot) {
-        this.lisatiedot = lisatiedot;
+    /**
+     * Asettaa pelille lisätiedo
+     * @param merkkijono Lisätiedot
+     */
+    public void setLisatiedot(String merkkijono) {
+        this.lisatiedot = merkkijono;
     }
     
+    
+    /**
+     * Parsii pelille kuntopisteet merkkijonosta
+     * @param kunto Merkkijono
+     */
     public void setKunto(String kunto) {
         this.levy = Integer.parseInt(kunto, 0, 1, 10);
         this.ohje = Integer.parseInt(kunto, 1, 2, 10);

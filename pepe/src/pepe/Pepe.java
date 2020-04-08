@@ -154,7 +154,7 @@ public class Pepe {
     
     /**
      * Paluttaa pelille kuuluvan nimikkeen
-     * @param peli Peli, jonka nimikettä haetaan
+     * @param merkkijono Peli (tunniste), jonka nimikettä haetaan
      * @return Pelin Nimike-olio
      * @throws IndexOutOfBoundsException jos i väärin
      */
@@ -231,9 +231,10 @@ public class Pepe {
     
     /**
      * Asettaa parametrina tuodun kentän arvon
-     * @param muutos Muutoksen tyyppi
+     * @param peli Peli, minkä tietoja muutetaan
+     * @param muutos Muutoksen tyyppi case-rakenteessa
      * @param merkkijono Muutos merkkijonona
-     * @return Ok tai virheilmoitus
+     * @return OK tai virheilmoitus
      */
     public String asetaMuutokset(Peli peli, String muutos, String merkkijono) {
         switch (muutos) {

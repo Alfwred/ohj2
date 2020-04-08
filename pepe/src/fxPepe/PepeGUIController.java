@@ -122,9 +122,7 @@ public class PepeGUIController implements Initializable {
         kuljetin[1] = peliValittu;
         kuljetin[2] = pepe.annaNimike(peliValittu);
         kuljetin[3] = pepe.annaAlusta(peliValittu);
-        kuljetin = ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, kuljetin);
-        //if (kuljetin[1] == null) return;
-        //peliValittu.asetaMuutokset(peli.getJulkaisuvuosi());
+        ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, kuljetin);
         hae();
     }
     

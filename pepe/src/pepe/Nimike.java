@@ -44,7 +44,8 @@ public class Nimike {
     
     
     /**
-     *  Parametriton
+     *  Muodostaa nimikkeen annetulla nimellä
+     * @param nimi Nimikkeen (pelin) nimi
      */
     public Nimike(String nimi) {
         this.nimi = nimi;
