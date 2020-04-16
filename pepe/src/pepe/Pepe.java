@@ -85,7 +85,7 @@ public class Pepe {
         int lkm = 0;
         for (Peli loydetty : pelit)
             if (loydetty.getNimike() == peli.getNimike()) lkm++;;
-            System.out.println(lkm);
+            System.out.println("PEPE: Samoja nimikkeitä jäljellä: " + lkm);
         return lkm;
     }
    

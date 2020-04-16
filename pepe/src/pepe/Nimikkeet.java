@@ -73,8 +73,10 @@ public class Nimikkeet {
      * @param tunniste Nimikkeen nTunniste
      */
     public void poista(int tunniste) { 
-        for (int i = 0; i < lkm; i++) 
+        for (int i = 0; i < lkm; i++) {
+            if (alkiot[i] == null) return;
             if (tunniste == alkiot[i].getTunniste()) alkiot[i] = null;
+        }
         lkm--;
     }
 
@@ -99,9 +101,12 @@ public class Nimikkeet {
      */
     public Nimike annaNimike(int tunniste) {
         for (Nimike nimike : alkiot) {
+            // Continue sen takia, koska rakenteessa on välissä NULL-alkioita ja
+            // ne fakuppaa tuon alemman nimikkeen etsinnän. Purkka?
+            if (nimike == null) continue;
             if (nimike.getTunniste() == tunniste) return nimike;
         }
-        return alkiot[0]; // Ei löydy exception tai joku muu myöhemmin
+        return null;
     }
     
     
@@ -112,6 +117,9 @@ public class Nimikkeet {
      */
     public Nimike annaNimike(String merkkijono) {
         for (Nimike nimike : alkiot) {
+            // Continue sen takia, koska rakenteessa on välissä NULL-alkioita ja
+            // ne fakuppaa tuon alemman nimikkeen etsinnän. Purkka?
+            if (nimike == null) continue;
             if (nimike.getNimi().equalsIgnoreCase(merkkijono)) return nimike;
         }
         return null;
