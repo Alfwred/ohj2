@@ -32,18 +32,26 @@ public class Peli {
      * Parametriton
      */
     public Peli() {
-        
+        // Parametriton
     }
     
+    
     /**
-     * Alustetaan tietty peli
-     * @param nTunniste Nimikkeeseen viittaava tunniste
-     * @param aTunniste Alustaan viittaava tunniste
+     * Alustetaan peli oletusarvoilla
+     * @param nt Pelin nimikkeen tunniste
+     * @param at Pelin alustan tunniste
      */
-    public Peli(int nTunniste, int aTunniste) {
-        this.nTunniste = nTunniste;
-        this.aTunniste = aTunniste;
+    public Peli(int nt, int at) {
+        this.nTunniste = nt;
+        this.aTunniste = at;
+        this.julkaisuvuosi = 2020;
+        this.hankintavuosi = 2020;
+        this.levy = 2;
+        this.kotelo = 2;
+        this.ohje = 2;
+        this.lisatiedot = "";
     }
+    
     
     /**
      * Alustetaan tietty peli syötetyllä tunnisteella

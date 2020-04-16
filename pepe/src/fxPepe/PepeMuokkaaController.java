@@ -66,6 +66,10 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
         pepe.asetaMuutokset(peli, "hankintavuosi", peliHankintavuosi.getText());
         pepe.asetaMuutokset(peli, "kunto", peliKuntoLevy.getValue().getLuokitus() + "" + peliKuntoOhje.getValue().getLuokitus() + "" + peliKuntoKotelo.getValue().getLuokitus());
         pepe.asetaMuutokset(peli, "lisatiedot", peliLisatiedot.getText());
+        
+        // Peliin tehty muutoksia ja muutokset ok
+        kuljetin[2] = true;
+        ModalController.closeStage(peliNimike);
     }
     
 
@@ -83,7 +87,8 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
 
     @Override
     public void handleShown() {
-        // TODO Auto-generated method stub
+        // Fokus pelinNimike-tekstikenttään
+        peliNimike.requestFocus();
         
     }
 

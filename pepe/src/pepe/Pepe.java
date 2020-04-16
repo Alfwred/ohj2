@@ -85,7 +85,7 @@ public class Pepe {
         int lkm = 0;
         for (Peli loydetty : pelit)
             if (loydetty.getNimike() == peli.getNimike()) lkm++;;
-            System.out.println("PEPE: Samoja nimikkeitä jäljellä: " + lkm);
+            System.out.println("PEPE: Samoja nimikkeitä jäljellä: " + (lkm - 1));
         return lkm;
     }
    
@@ -238,41 +238,50 @@ public class Pepe {
      */
     public String asetaMuutokset(Peli peli, String muutos, String merkkijono) {
         switch (muutos) {
-        case "nimike":
+        case "nimike":   
             if (this.annaNimike(merkkijono) == null) {
                 Nimike uusi = new Nimike(merkkijono);
                 uusi.rekisteroi();
                 try {
                     this.lisaa(uusi);
                 } catch (SailoException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+                // Poistetaan aikaisempi nimike, jos se ei ole muiden pelien käytössä
+                int lkm = annaSamatNimikkeet(peli);
+                if (lkm <= 1) nimikkeet.poista(peli.getNimike());
+                
+                // Lisätään nimike
                 peli.setNimike(uusi.getTunniste());
-                return "UUSI NIMIKE LUOTU";
+                return "UUSI NIMIKE OK";
             }
             peli.setNimike(this.annaNimike(merkkijono).getTunniste());
             return "NIMIKE OK";
+            
         case "alusta":
             peli.setAlusta(Integer.parseInt(merkkijono));
             return "ALUSTA OK";
+            
         case "julkaisuvuosi":
             peli.setJulkaisuvuosi(Integer.parseInt(merkkijono));
             return "JULKAISUVUOSI OK";
+            
         case "hankintavuosi":
             peli.setHankintavuosi(Integer.parseInt(merkkijono));
             return "HANKINTAVUOSI OK";
+            
         case "kunto":
             peli.setKunto(merkkijono);
             return "KUNTO OK";
+            
         case "lisatiedot":
             peli.setLisatiedot(merkkijono);
             return "LISATIEDOT OK";
+            
         default:
             break;
         }
-        return "VIRHE";
-        
+        return "VIRHE"; 
     }
     
     

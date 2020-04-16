@@ -102,7 +102,7 @@ public class PepeGUIController implements Initializable {
      * Avaa pelinlisäysikkunan
      */
     @FXML void handlePeliLisaa() {
-        uusiPeliTestiPeli();
+        uusiPeli();
     }
     
     
@@ -162,7 +162,7 @@ public class PepeGUIController implements Initializable {
     
     private Pepe pepe;
     private Peli peliValittu;
-    private Object[] kuljetin = new Object[2];
+    private Object[] kuljetin = new Object[3];
 
     
     
@@ -283,31 +283,34 @@ public class PepeGUIController implements Initializable {
     /**
      * Luo uuden pelin, jota aletaan editoimaan
      */
-    protected void uusiPeliTestiPeli() {
+    protected void uusiPeli() {
         
-        // Alustojen testiluonti
-        Alusta alusta = new Alusta();
-        alusta.rekisteroi();
-        alusta.taytaAlustaTiedoilla();
-         
-        // Nimikkeiden testiluonti
-        Nimike nimike = new Nimike();
+        // Nimikkeen luonti
+        Nimike nimike = new Nimike("Uusi peli");
         nimike.rekisteroi();
-        nimike.taytaNimikeTiedoilla();
             
-        // Pelien luonti, nimikkeiden ja alustojen sitominen
-        Peli uusi = new Peli(0);
+        // Pelien luonti ja nimikkeen sitominen
+        Peli uusi = new Peli(nimike.getTunniste(), 0);
         uusi.rekisteroi();
-        uusi.taytaTestiPeliTiedoilla(nimike.getTunniste(), alusta.getTunniste());
         
         try {
-            pepe.lisaa(alusta);
             pepe.lisaa(nimike);
             pepe.lisaa(uusi);
         } catch (SailoException e) {
-            Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
+            Dialogs.showMessageDialog("Ongelmia uuden pelin luomisessa " + e.getMessage());
             return;
         }
+        
+        // Tarvittavat oliot kuljettimeen
+        kuljetin[0] = pepe;
+        kuljetin[1] = uusi;
+        kuljetin[2] = false;
+        
+        // Siirrytään muokkausikkunaan ja viedään tiedot kuljettimessa
+        ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, kuljetin);
+        
+        // Poistetaan juuri luotu peli, jos muokkausvaihe perutetaan
+        if ((boolean)kuljetin[2] == false) pepe.poista(uusi);
         hae();
     }
     

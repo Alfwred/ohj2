@@ -73,7 +73,7 @@
                         <Insets bottom="15.0" left="15.0" right="15.0" top="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" onAction="#handlePeliMuokkaaSuorita" prefHeight="23.0" prefWidth="156.0" text="Muokkaa">
+                  <Button mnemonicParsing="false" onAction="#handlePeliMuokkaaSuorita" prefHeight="23.0" prefWidth="156.0" text="OK">
                      <HBox.margin>
                         <Insets top="9.0" />
                      </HBox.margin>

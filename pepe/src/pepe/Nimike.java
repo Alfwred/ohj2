@@ -36,14 +36,6 @@ public class Nimike {
     
     
     /**
-     *  Parametriton
-     */
-    public Nimike() {
-        //
-    }
-    
-    
-    /**
      *  Muodostaa nimikkeen annetulla nimellä
      * @param nimi Nimikkeen (pelin) nimi
      */
@@ -53,20 +45,18 @@ public class Nimike {
     
     
     /**
-     * Apumetodi, jolla saadaan täytettyä testiarvot nimikkeelle
+     *  Parametriton
      */
-    public void taytaTestiNimikeTiedoilla() {
-            nimi = "Testipelin nimi";
+    public Nimike() {
+        // Parametriton
     }
     
     
     /**
-    * Apumetodi, jolla saadaan täytettyä testiarvot pelille
-    * Tunniste arvotaan, jotta kahdella pelillä ei olisi
-    * samoja tietoja.
-    */
-    public void taytaNimikeTiedoilla() {
-        taytaTestiNimikeTiedoilla();
+     * Apumetodi, jolla saadaan täytettyä testiarvot nimikkeelle
+     */
+    public void taytaTestiNimikeTiedoilla() {
+            nimi = "Testipelin nimi";
     }
     
     
@@ -175,8 +165,8 @@ public class Nimike {
         nimi2.rekisteroi();
         nimi1.tulosta(System.out);
         nimi2.tulosta(System.out);
-        nimi1.taytaNimikeTiedoilla();
-        nimi2.taytaNimikeTiedoilla();
+        nimi1.taytaTestiNimikeTiedoilla();
+        nimi2.taytaTestiNimikeTiedoilla();
         nimi1.tulosta(System.out);
         nimi2.tulosta(System.out);
     }
