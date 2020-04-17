@@ -76,9 +76,7 @@ public class PepeGUIController implements Initializable {
     
     @FXML void handlePeliPoista() { poistaPeli(); }
     
-    @FXML void handleAlustaLisaa() { uusiAlusta(); }
-    
-    @FXML void handleAlustaPoista() { uusiAlusta(); }
+    @FXML void handleAlustaMuokkaa() { uusiAlusta(); }
     
     @FXML void handleRekisteriAvaa() { Dialogs.showMessageDialog("Ei toimi"); }
     
@@ -151,7 +149,7 @@ public class PepeGUIController implements Initializable {
         tallenna();
         return true;
     }
-    
+
     
     /**
      * Näyttää listasta valitun pelin tiedot, tilapäisesti yhteen isoon edit-kenttään
@@ -165,8 +163,8 @@ public class PepeGUIController implements Initializable {
             
             peliValittu.tulosta(os);
             pepe.annaNimike(peliValittu).tulosta(os);
-            pepe.annaAlusta(peliValittu).tulosta(os);
-            
+            // Ei hae alustaa, jos alustaa ei löydy
+            if (pepe.annaAlusta(peliValittu) != null) pepe.annaAlusta(peliValittu).tulosta(os);
         }
     }
     
@@ -175,12 +173,19 @@ public class PepeGUIController implements Initializable {
      * 
      */
     protected void poistaPeli() {
+        
         peliValittu = gridPelit.getObject();
-        if (peliValittu == null) return;
+        
+        // Ei muokata, jos ei ole valittu peliä
+        if (peliValittu == null) {
+            naytaIlmoitus("Valitse listasta peli, jonka haluat poistaa!");
+            return;
+        }
         
         naytaIlmoitus("Peli poistettu! " + pepe.annaNimike(peliValittu).getNimi());
         pepe.poista(peliValittu);
 
+        // Päivitetään pelilista
         hae();
     }
     
@@ -188,6 +193,14 @@ public class PepeGUIController implements Initializable {
      * Pakkaa tarvittavat oliot, lähettää ja avaa ne muokkausdialogissa
      */
     private void muokkaaPeli() {
+        
+        peliValittu = gridPelit.getObject();
+        
+        // Ei muokata, jos ei ole valittu peliä
+        if (peliValittu == null) {
+            naytaIlmoitus("Valitse listasta peli, jota haluat muokata!");
+            return;
+        }
         
         // Tarvittavat oliot kuljettimeen
         kuljetin[0] = pepe;
@@ -250,7 +263,7 @@ public class PepeGUIController implements Initializable {
             naytaIlmoitus("Pelin luonti peruutettu!");
             pepe.poista(uusi);
         }
-        else naytaIlmoitus("Uusi peli luotu! " + pepe.annaNimike(uusi).getNimi());
+        else naytaIlmoitus("Uusi peli luotu: " + pepe.annaNimike(uusi).getNimi());
         
         // Päivitetään pelilista
         hae();
@@ -261,24 +274,15 @@ public class PepeGUIController implements Initializable {
      * Lisätään uusi alusta
      */
     protected void uusiAlusta() {
-        Alusta uusi = new Alusta("UUSI", "Uusi Alusta");
-        uusi.rekisteroi();
-        pepe.lisaa(uusi);
-        
+
         // Tarvittavat oliot kuljettimeen
         kuljetin[0] = pepe;
-        kuljetin[1] = uusi;
-        kuljetin[2] = false;
         
         // Siirrytään muokkausikkunaan ja viedään tiedot kuljettimessa
         ModalController.showModal(PepeGUIController.class.getResource("PepeAlustaView.fxml"), "Muokkaa alustaa", null, kuljetin);
-    
-        // Poistetaan juuri luotu alusta, jos muokkausvaihe perutetaan
-        if ((boolean)kuljetin[2] == false) {
-            naytaIlmoitus("Alustan luonti peruutettu!");
-            pepe.poista(uusi);
-        }
-        else naytaIlmoitus("Uusi alusta luotu! " + uusi.getLyhenne());
+        
+        // Päivitetään pelilista
+        hae();
     }
     
 

@@ -35,18 +35,33 @@ public class PepeAlustaController implements ModalControllerInterface<Object[]>,
     @FXML private TextField alustaLyhenne;
     @FXML private Button handleOK;
     @FXML private StringGrid<Alusta> gridAlustat;
+    private Alusta alustaValittu;
     
-    @FXML void handleAlustaOK() { 
+    @FXML void handleUUSI() { 
         Pepe pepe = (Pepe) kuljetin[0];
-        Alusta alusta = (Alusta) kuljetin[1];
+        
+        Alusta uusi = new Alusta("UUDEN ALUSTAN LYHENNE", "Uuden alustan nimi");
+        uusi.rekisteroi();
+        pepe.lisaa(uusi);
         
         // Muutokset
-        pepe.asetaMuutokset(alusta, "lyhenne", alustaLyhenne.getText());
-        pepe.asetaMuutokset(alusta, "nimi", alustaNimi.getText());
-        
-        // Alustaan tehty muutoksia ja muutokset ok
+        pepe.asetaMuutokset(uusi, "lyhenne", alustaLyhenne.getText());
+        pepe.asetaMuutokset(uusi, "nimi", alustaNimi.getText());
+    }
+    
+    
+    @FXML void handlePOISTA() {
+        Pepe pepe = (Pepe) kuljetin[0];
+        alustaValittu = gridAlustat.getObject();
+        pepe.poista(alustaValittu);
+        hae();
+    }
+    
+    
+    @FXML void handleOK() {
+        // Alustoihin tehty muutoksia ja muutokset ok
         kuljetin[2] = true;
-        ModalController.closeStage(alustaLyhenne);
+        ModalController.closeStage(alustaNimi);
     }
     
 
@@ -72,7 +87,7 @@ public class PepeAlustaController implements ModalControllerInterface<Object[]>,
     @Override
     public void setDefault(Object[] oliot) {
         kuljetin = oliot;
-        naytaAlusta((Pepe) kuljetin[0], (Alusta) kuljetin[1]);
+        //naytaAlusta((Pepe) kuljetin[0]);
         hae();
     }
     
@@ -94,7 +109,7 @@ public class PepeAlustaController implements ModalControllerInterface<Object[]>,
      * @param alusta Alusta
      */
     public void naytaAlusta(Pepe pepe, Alusta alusta) {
-        alustaLyhenne.setText(alusta.getLyhenne());
-        alustaNimi.setText(alusta.getNimi());
+        //alustaLyhenne.setText(alusta.getLyhenne());
+        //alustaNimi.setText(alusta.getNimi());
     }
 }

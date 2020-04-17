@@ -34,11 +34,10 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Muokkaa">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handlePeliLisaa" text="Lisää peli" />
-                  <MenuItem mnemonicParsing="false" onAction="#handlePeliMuokkaa" text="Muokkaa peliä" />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePeliLisaa" text="Lisää peli..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePeliMuokkaa" text="Muokkaa peliä..." />
               <MenuItem mnemonicParsing="false" onAction="#handlePeliPoista" text="Poista peli" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleAlustaLisaa" text="Lisää alusta" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleAlustaPoista" text="Poista alusta" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleAlustaMuokkaa" text="Muokkaa alustoja..." />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Apua!">

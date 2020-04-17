@@ -305,9 +305,15 @@ public class Peli {
     
     @Override
     public String toString() {
-        return this.getTunniste() + "|" + this.getNimike() + "|" + this.getAlusta() +
-                "|" + this.julkaisuvuosi + "|" + this.hankintavuosi + "|" + this.levy +
-                "|" + this.kotelo + "|" + this.ohje + "|" + this.lisatiedot +"|";
+        return this.getTunniste() + "|" + 
+               this.getNimike() + "|" + 
+               this.getAlusta() + "|" + 
+               this.julkaisuvuosi + "|" + 
+               this.hankintavuosi + "|" + 
+               this.levy + "|" + 
+               this.kotelo + "|" + 
+               this.ohje + "|" + 
+               this.lisatiedot +"|";
     }
     
     

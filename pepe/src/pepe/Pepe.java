@@ -80,8 +80,6 @@ public class Pepe {
      * @param alusta Poistettava alusta
      */
     public void poista(Alusta alusta) {
-        //int lkm = annaSamatNimikkeet(peli);
-        //if (lkm <= 1) nimikkeet.poista(peli.getNimike());
         alustat.poista(alusta);
     }
     
@@ -225,10 +223,13 @@ public class Pepe {
      * @return String[] pelin tiedoista
      */
     public String[] haeKentat(Peli peli) {
+        String alusta = "";
+        if (annaAlusta(peli) != null) alusta = annaAlusta(peli).getLyhenne();
+        
         String[] t = {
                 peli.getTunniste() + "",
                 annaNimike(peli).getNimi(),
-                annaAlusta(peli).getLyhenne(),
+                alusta,
                 peli.getJulkaisuvuosi() + "",
                 peli.getHankintavuosi() + "",
                 kunto.haeLuokitus(peli.getLevy()).toString(),
