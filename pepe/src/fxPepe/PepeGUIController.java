@@ -42,8 +42,7 @@ public class PepeGUIController implements Initializable {
     @FXML private ScrollPane panelPeli;
     @FXML private ListChooser<Peli> chooserPelit;
     @FXML private StringGrid<Peli> gridPelit;
-    
-    private TextArea areaPeli = new TextArea();
+    @FXML private TextArea areaPeli = new TextArea();
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
@@ -54,7 +53,6 @@ public class PepeGUIController implements Initializable {
      
     }
     
-    
     @FXML private void handleHakuehto() {
         String hakukentta = hakuehto.getSelectedText();
         String ehto = hakuehto.getText(); 
@@ -64,107 +62,36 @@ public class PepeGUIController implements Initializable {
             naytaIlmoitus("Ei osata vielä hakea " + hakukentta + ": " + ehto);
     }
     
+    @FXML void handleInfo() { avustus(); }
     
-    /**
-     * Avataan info-ikkuna
-     */
-    @FXML void handleInfo() {
-        avustus();
-    }
+    @FXML void handleListaLaskeva() { Dialogs.showMessageDialog("Lista laskeva! Ei toimi vielä!"); }
     
-    
-    /**
-     * Järjestetään pelilista valitun sarakkeen mukaan laskevaan järjestykseen
-     */
-    @FXML
-    void handleListaLaskeva() {
-        Dialogs.showMessageDialog("Lista laskeva! Ei toimi vielä!");
-    }
-    
-    
-    /**
-     * Järjestetään pelilista valitun sarakkeen mukaan nousevaan järjestykseen
-     */
-    @FXML void handleListaNouseva() {
-        Dialogs.showMessageDialog("Lista nouseva! Ei toimi vielä!");
-    }
-    
-    
-    /**
-     * Avaa suodatusvaihtoehdot
-     */
-    @FXML void handleListaSuodata() {
-        Dialogs.showMessageDialog("Suodata lista! Ei toimi vielä!");
-    }
-    
-    
-    /**
-     * Avaa pelinlisäysikkunan
-     */
-    @FXML void handlePeliLisaa() {
-        uusiPeli();
-    }
-    
-    
-    /**
-     * Lisätään peli
-     */
-    @FXML void handlePeliLisaaSuorita() {
-        Dialogs.showMessageDialog("Suorita pelin lisäys! Ei toimi vielä!");
-    }
-    
-    
-    /**
-     * Avataan muokkausikkuna listasta valistusta pelistä
-     */
-    @FXML void handlePeliMuokkaa() {
-        muokkaaPeli();
-    }
-    
+    @FXML void handleListaNouseva() { Dialogs.showMessageDialog("Lista nouseva! Ei toimi vielä!"); }
 
-    /**00
-     * Poistetaann valittu peli
-     */
-    @FXML void handlePeliPoista() {
-        poistaPeli();
-    }
+    @FXML void handleListaSuodata() { Dialogs.showMessageDialog("Suodata lista! Ei toimi vielä!"); }
     
+    @FXML void handlePeliLisaa() { uusiPeli(); }
     
-    /**
-     * Avataan resurssihallinta, josta voidaan avata peli
-     */
-    @FXML void handleRekisteriAvaa() {
-        Dialogs.showMessageDialog("Avaa rekisteri! Ei toimi vielä!");
-    }
+    @FXML void handlePeliMuokkaa() { muokkaaPeli(); }
     
+    @FXML void handlePeliPoista() { poistaPeli(); }
     
-    /**
-     * Tallennetaan pelirekisteri
-     * @throws SailoException Virhe
-     */
-    @FXML void handleRekisteriTallenna() throws SailoException {
-        tallenna();
-    }
+    @FXML void handleAlustaLisaa() { uusiAlusta(); }
     
+    @FXML void handleAlustaPoista() { uusiAlusta(); }
     
-    /**
-     * Lopetetaan ohjelma
-     * @throws SailoException 
-     */
-    @FXML private void handleLopeta() throws SailoException {
-        tallenna();
-        Platform.exit();
-    }
+    @FXML void handleRekisteriAvaa() { Dialogs.showMessageDialog("Ei toimi"); }
     
+    @FXML void handleRekisteriTallenna() throws SailoException { tallenna(); }
     
-//===========================================================================================    
-// Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia
+    @FXML private void handleLopeta() throws SailoException { tallenna(); Platform.exit(); }
+    
+//===========================================================================================
     
     private Pepe pepe;
     private Peli peliValittu;
     private Object[] kuljetin = new Object[3];
 
-    
     
     /**
      * Tekee tarvittavat muut alustukset, nyt vaihdetaan GridPanen tilalle
@@ -198,7 +125,7 @@ public class PepeGUIController implements Initializable {
     protected void lueTiedosto() {
         try {
             pepe.lueTiedostosta();
-            naytaIlmoitus("Pelit haettu onnistuneesti!");
+            naytaIlmoitus("Pelikanta luettu!");
         } catch (SailoException e) {
             e.printStackTrace();
         }
@@ -211,7 +138,7 @@ public class PepeGUIController implements Initializable {
      */
     private void tallenna() throws SailoException {
         pepe.tallenna();
-        naytaIlmoitus("Tallennettu!");
+        naytaIlmoitus("Pelikanta tallennettu!");
     }
 
 
@@ -251,8 +178,9 @@ public class PepeGUIController implements Initializable {
         peliValittu = gridPelit.getObject();
         if (peliValittu == null) return;
         
+        naytaIlmoitus("Peli poistettu! " + pepe.annaNimike(peliValittu).getNimi());
         pepe.poista(peliValittu);
-        naytaIlmoitus("Poisto onnistui");
+
         hae();
     }
     
@@ -260,10 +188,20 @@ public class PepeGUIController implements Initializable {
      * Pakkaa tarvittavat oliot, lähettää ja avaa ne muokkausdialogissa
      */
     private void muokkaaPeli() {
+        
+        // Tarvittavat oliot kuljettimeen
         kuljetin[0] = pepe;
         kuljetin[1] = peliValittu;
-        ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, kuljetin);
-        naytaIlmoitus("Peli muokattu onnistuneesti!");
+        kuljetin[2] = false;
+        
+        // Siirrytään muokkausikkunaan ja viedään tiedot kuljettimessa
+        ModalController.showModal(PepeGUIController.class.getResource("PepePeliView.fxml"), "Muokkaa peliä", null, kuljetin);
+        
+        // Mitä muokkaamisen jälkeen
+        if ((boolean)kuljetin[2] == false) naytaIlmoitus("Pelin muokkaus peruutettu!");
+        else naytaIlmoitus("Peli muokattu onnistuneesti!");
+        
+        // Päivitetään pelilista
         hae(); 
     }
     
@@ -272,11 +210,9 @@ public class PepeGUIController implements Initializable {
      * Hakee pelien tiedot StrinGridiin
      */
     protected void hae() {
-            gridPelit.clear();        
-            List<Peli> pelit = pepe.annaPelit();
-            for (Peli peli : pelit) {
-                gridPelit.add(peli, pepe.getKenttia(peli));
-            }
+        gridPelit.clear();        
+        List<Peli> pelit = pepe.annaPelit();
+        for (Peli peli : pelit) gridPelit.add(peli, pepe.haeKentat(peli));
     }
 
 
@@ -297,7 +233,7 @@ public class PepeGUIController implements Initializable {
             pepe.lisaa(nimike);
             pepe.lisaa(uusi);
         } catch (SailoException e) {
-            Dialogs.showMessageDialog("Ongelmia uuden pelin luomisessa " + e.getMessage());
+            naytaIlmoitus("Virhe pelin luonnissa! " + e.getMessage());
             return;
         }
         
@@ -307,11 +243,35 @@ public class PepeGUIController implements Initializable {
         kuljetin[2] = false;
         
         // Siirrytään muokkausikkunaan ja viedään tiedot kuljettimessa
-        ModalController.showModal(PepeGUIController.class.getResource("PepeMuokkaaView.fxml"), "Muokkaa", null, kuljetin);
+        ModalController.showModal(PepeGUIController.class.getResource("PepePeliView.fxml"), "Lisää peli", null, kuljetin);
         
         // Poistetaan juuri luotu peli, jos muokkausvaihe perutetaan
-        if ((boolean)kuljetin[2] == false) pepe.poista(uusi);
+        if ((boolean)kuljetin[2] == false) {
+            naytaIlmoitus("Pelin luonti peruutettu!");
+            pepe.poista(uusi);
+        }
+        else naytaIlmoitus("Uusi peli luotu! " + pepe.annaNimike(uusi).getNimi());
+        
+        // Päivitetään pelilista
         hae();
+    }
+    
+    
+    /**
+     * Lisätään uusi alusta
+     */
+    protected void uusiAlusta() {
+        Alusta uusi = new Alusta("UUSI", "Uusi Alusta");
+        uusi.rekisteroi();
+        pepe.lisaa(uusi);
+        
+        // Tarvittavat oliot kuljettimeen
+        kuljetin[0] = pepe;
+        kuljetin[1] = uusi;
+        kuljetin[2] = false;
+        
+        // Siirrytään muokkausikkunaan ja viedään tiedot kuljettimessa
+        ModalController.showModal(PepeGUIController.class.getResource("PepeAlustaView.fxml"), "Muokkaa alustaa", null, kuljetin);
     }
     
 

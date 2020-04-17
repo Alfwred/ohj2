@@ -26,7 +26,7 @@ import pepe.*;
  * @version 6 Apr 2020
  *
  */
-public class PepeMuokkaaController implements ModalControllerInterface<Object[]>, Initializable  {
+public class PepePeliController implements ModalControllerInterface<Object[]>, Initializable  {
     
     static List<Alusta> alustat;
     static List<Kuntoluokitus> kuntoluokitukset;
@@ -57,7 +57,7 @@ public class PepeMuokkaaController implements ModalControllerInterface<Object[]>
     private TextField peliLisatiedot;
 
     @FXML
-    void handlePeliMuokkaaSuorita() {
+    void handlePeliOK() {
         Pepe pepe = (Pepe) kuljetin[0];
         Peli peli = (Peli) kuljetin[1];
         pepe.asetaMuutokset(peli, "nimike", peliNimike.getText());

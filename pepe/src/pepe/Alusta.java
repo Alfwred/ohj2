@@ -30,6 +30,17 @@ public class Alusta {
     
     /**
      * Alustetaan alusta
+     * @param lyhenne Alustan lyhenne
+     * @param nimi Alustan nimi
+     */
+    public Alusta(String lyhenne, String nimi) {
+        this.lyhenne = lyhenne;
+        this.nimi = nimi;
+    }
+    
+    
+    /**
+     * Alustetaan alusta
      * @param aTunniste alustan tunniste
      */
     public Alusta(int aTunniste) {
@@ -142,6 +153,15 @@ public class Alusta {
      * @return Alustan nimi
      */
     public String getNimi() {
+        return this.nimi;
+    }
+    
+    
+    /**
+     * Palauttaa alustan nimen
+     * @return Alustan lyhenne
+     */
+    public String getLyhenne() {
         return this.lyhenne;
     }
     

@@ -12,7 +12,6 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Text?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxPepe.PepeGUIController">
    <top>
@@ -38,6 +37,8 @@
                   <MenuItem mnemonicParsing="false" onAction="#handlePeliLisaa" text="Lisää peli" />
                   <MenuItem mnemonicParsing="false" onAction="#handlePeliMuokkaa" text="Muokkaa peliä" />
               <MenuItem mnemonicParsing="false" onAction="#handlePeliPoista" text="Poista peli" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleAlustaLisaa" text="Lisää alusta" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleAlustaPoista" text="Poista alusta" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Apua!">
@@ -72,10 +73,7 @@
                         </HBox>
                      </bottom>
                      <top>
-                        <ScrollPane fx:id="panelPeli" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <content>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Yläpuolella: chooserPelit           Alapuolella: PanelPeli" />
-                           </content></ScrollPane>
+                        <ScrollPane fx:id="panelPeli" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                      </top>
                   </BorderPane>
                </center>

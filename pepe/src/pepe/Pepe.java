@@ -210,21 +210,35 @@ public class Pepe {
     
     
     /**
-     * StringGridiin lisaysta varten metodi, joka luo String[] pelistä
+     * Luo String[] pelistä StringGridia varten
      * @param peli Peli
      * @return String[] pelin tiedoista
      */
-    public String[] getKenttia(Peli peli) {
+    public String[] haeKentat(Peli peli) {
         String[] t = {
                 peli.getTunniste() + "",
                 annaNimike(peli).getNimi(),
-                annaAlusta(peli).getNimi(),
+                annaAlusta(peli).getLyhenne(),
                 peli.getJulkaisuvuosi() + "",
                 peli.getHankintavuosi() + "",
                 kunto.haeLuokitus(peli.getLevy()).toString(),
                 kunto.haeLuokitus(peli.getOhje()).toString(),
                 kunto.haeLuokitus(peli.getKotelo()).toString(),
                 peli.getLisatiedot()};
+        return t;
+    }
+    
+    
+    /**
+     * Luo String[] alustasta StringGridia varten
+     * @param alusta Alusta
+     * @return String[] alustan tiedoista
+     */
+    public String[] haeKentat(Alusta alusta) {
+        String[] t = {
+                alusta.getTunniste() + "",
+                alusta.getLyhenne(),
+                alusta.getNimi()};
         return t;
     }
     
