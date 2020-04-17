@@ -75,6 +75,16 @@ public class Pepe {
         pelit.poista(peli);
     }
     
+    /**
+     * Poistaa alustan
+     * @param alusta Poistettava alusta
+     */
+    public void poista(Alusta alusta) {
+        //int lkm = annaSamatNimikkeet(peli);
+        //if (lkm <= 1) nimikkeet.poista(peli.getNimike());
+        alustat.poista(alusta);
+    }
+    
     
     /**
      * Etsii kuinka monessa pelissä on sama nimike
@@ -291,6 +301,31 @@ public class Pepe {
         case "lisatiedot":
             peli.setLisatiedot(merkkijono);
             return "LISATIEDOT OK";
+            
+        default:
+            break;
+        }
+        return "VIRHE"; 
+    }
+    
+    
+    /**
+     * Asettaa parametrina tuodun kentän arvon
+     * @param alusta Alusta, minkä tietoja muutetaan
+     * @param muutos Muutoksen tyyppi case-rakenteessa
+     * @param merkkijono Muutos merkkijonona
+     * @return OK tai virheilmoitus
+     */
+    public String asetaMuutokset(Alusta alusta, String muutos, String merkkijono) {
+        switch (muutos) {
+        
+        case "lyhenne":
+            alusta.setLyhenne(merkkijono);
+            return "LYHENNE OK";
+            
+        case "nimi":
+            alusta.setNimi(merkkijono);
+            return "NIMI OK";
             
         default:
             break;

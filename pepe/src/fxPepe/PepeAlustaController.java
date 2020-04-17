@@ -37,7 +37,16 @@ public class PepeAlustaController implements ModalControllerInterface<Object[]>,
     @FXML private StringGrid<Alusta> gridAlustat;
     
     @FXML void handleAlustaOK() { 
-        // PASKAA
+        Pepe pepe = (Pepe) kuljetin[0];
+        Alusta alusta = (Alusta) kuljetin[1];
+        
+        // Muutokset
+        pepe.asetaMuutokset(alusta, "lyhenne", alustaLyhenne.getText());
+        pepe.asetaMuutokset(alusta, "nimi", alustaNimi.getText());
+        
+        // Alustaan tehty muutoksia ja muutokset ok
+        kuljetin[2] = true;
+        ModalController.closeStage(alustaLyhenne);
     }
     
 

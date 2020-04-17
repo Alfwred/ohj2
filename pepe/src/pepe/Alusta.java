@@ -167,6 +167,24 @@ public class Alusta {
     
     
     /**
+     * Asettaa alustan lyhenteen
+     * @param merkkijono Lyhenne
+     */
+    public void setLyhenne(String merkkijono) {
+        this.lyhenne = merkkijono;
+    }
+    
+    
+    /**
+     * Asettaa alustan nimen
+     * @param merkkijono Lyhenne
+     */
+    public void setNimi(String merkkijono) {
+        this.nimi = merkkijono;
+    }
+    
+    
+    /**
      * Tuloste olion tallentamista varten
      * @return Merkkijono oliosta
      */

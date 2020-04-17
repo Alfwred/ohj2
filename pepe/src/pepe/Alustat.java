@@ -41,6 +41,17 @@ public class Alustat implements Iterable<Alusta> {
     public void lisaa(Alusta alusta) {
         alkiot.add(alusta);
     }
+    
+    
+    /**
+     * Poistaa alustan
+     * @param alusta Poistettava alusta
+     * @return tosi jos löytyi poistettava alusta
+     */
+    public boolean poista(Alusta alusta) {
+        boolean poistettu = alkiot.remove(alusta);
+        return poistettu;
+    }
 
 
     /**

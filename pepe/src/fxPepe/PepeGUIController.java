@@ -272,6 +272,13 @@ public class PepeGUIController implements Initializable {
         
         // Siirrytään muokkausikkunaan ja viedään tiedot kuljettimessa
         ModalController.showModal(PepeGUIController.class.getResource("PepeAlustaView.fxml"), "Muokkaa alustaa", null, kuljetin);
+    
+        // Poistetaan juuri luotu alusta, jos muokkausvaihe perutetaan
+        if ((boolean)kuljetin[2] == false) {
+            naytaIlmoitus("Alustan luonti peruutettu!");
+            pepe.poista(uusi);
+        }
+        else naytaIlmoitus("Uusi alusta luotu! " + uusi.getLyhenne());
     }
     
 
