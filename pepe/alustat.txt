@@ -1,4 +1,4 @@
-;id |alustan lyhenne |alustan nimi
+;id |alustan lyhenne |alustan nimi|
 0|PC|Personal Computer
 1|PS1|PlayStation 1
 2|PS2|PlayStation 2
@@ -12,3 +12,4 @@
 10|Xbox|Xbox
 11|Xbox360|Xbox 360
 12|XboxOne|Xbox One
+13|PS5|SplashSpeed Pro 5 WIFI-router

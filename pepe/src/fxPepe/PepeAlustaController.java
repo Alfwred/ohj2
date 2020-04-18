@@ -28,18 +28,20 @@ import pepe.*;
  * @version 6 Apr 2020
  *
  */
-public class PepeAlustaController implements ModalControllerInterface<Object[]>, Initializable  {
+public class PepeAlustaController implements ModalControllerInterface<Pepe>, Initializable  {
     
-    static Object[] kuljetin;
-    @FXML private TextField alustaNimi;
-    @FXML private TextField alustaLyhenne;
-    @FXML private Button handleOK;
-    @FXML private StringGrid<Alusta> gridAlustat;
+    private Pepe pepe;
     private Alusta alustaValittu;
     
+    @FXML private TextField alustaNimi;
+    @FXML private TextField alustaLyhenne;
+    @FXML private Button handleUUSI;
+    @FXML private Button handlePOISTA;
+    @FXML private Button handleOK;
+    @FXML private StringGrid<Alusta> gridAlustat;
+    
+
     @FXML void handleUUSI() { 
-        Pepe pepe = (Pepe) kuljetin[0];
-        
         Alusta uusi = new Alusta("UUDEN ALUSTAN LYHENNE", "Uuden alustan nimi");
         uusi.rekisteroi();
         pepe.lisaa(uusi);
@@ -47,69 +49,57 @@ public class PepeAlustaController implements ModalControllerInterface<Object[]>,
         // Muutokset
         pepe.asetaMuutokset(uusi, "lyhenne", alustaLyhenne.getText());
         pepe.asetaMuutokset(uusi, "nimi", alustaNimi.getText());
+        
+        // Päivitetään listaus
+        hae();
     }
     
     
     @FXML void handlePOISTA() {
-        Pepe pepe = (Pepe) kuljetin[0];
         alustaValittu = gridAlustat.getObject();
         pepe.poista(alustaValittu);
+        
+        // Päivitetään listaus
         hae();
     }
     
     
     @FXML void handleOK() {
-        // Alustoihin tehty muutoksia ja muutokset ok
-        kuljetin[2] = true;
         ModalController.closeStage(alustaNimi);
     }
     
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
-        // PASKAA
+        // Kommentti
     }
     
 
     @Override
-    public Object[] getResult() {
-        return kuljetin;
+    public Pepe getResult() {
+        return pepe;
     }
     
 
     @Override
     public void handleShown() {
-        // Fokus pelinNimike-tekstikenttään
-        alustaNimi.requestFocus();
+        // Kommentti
     }
 
     
     @Override
-    public void setDefault(Object[] oliot) {
-        kuljetin = oliot;
-        //naytaAlusta((Pepe) kuljetin[0]);
+    public void setDefault(Pepe pepe) {
+        this.pepe = pepe;
         hae();
     }
     
     
     /**
-     * Hakee pelien tiedot StrinGridiin
+     * Hakee alustat StringGridiin
      */
     protected void hae() {
-        Pepe pepe = (Pepe) kuljetin[0];
         gridAlustat.clear();        
         List<Alusta> alustat = pepe.annaAlustat();
         for (Alusta alusta : alustat) gridAlustat.add(alusta, pepe.haeKentat(alusta));
-    }
-    
-
-    /**
-     * Näytetään pelin tiedot UI-komponentteihin
-     * @param pepe Pepe
-     * @param alusta Alusta
-     */
-    public void naytaAlusta(Pepe pepe, Alusta alusta) {
-        //alustaLyhenne.setText(alusta.getLyhenne());
-        //alustaNimi.setText(alusta.getNimi());
     }
 }

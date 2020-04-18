@@ -189,7 +189,7 @@ public class Alusta {
      * @return Merkkijono oliosta
      */
     public String annaTallennusMuoto() {
-        return this.aTunniste + "|" + this.lyhenne + "|" + this.nimi + "|";
+        return this.aTunniste + "|" + this.lyhenne + "|" + this.nimi;
     }
     
       

@@ -39,17 +39,14 @@ public class PepeGUIController implements Initializable {
     
     @FXML private TextField hakuehto;
     @FXML private Label labelVirhe;
-    @FXML private ScrollPane panelPeli;
-    @FXML private ListChooser<Peli> chooserPelit;
     @FXML private StringGrid<Peli> gridPelit;
-    @FXML private TextArea areaPeli = new TextArea();
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         alusta();
         
-     // Mitä tehdään kun hiirellä klikataan
-     gridPelit.setOnMouseClicked( e -> { if ( e.getClickCount() == 1 ) naytaGridinValinta(); });
+     // Mitä tehdään kun hiirellä klikataan. Tämä oli tarpeellinen, kun tulostettin pelin tiedot testikenttään.
+     //gridPelit.setOnMouseClicked( e -> { if ( e.getClickCount() == 1 ) naytaGridinValinta(); });
      
     }
     
@@ -63,32 +60,21 @@ public class PepeGUIController implements Initializable {
     }
     
     @FXML void handleInfo() { avustus(); }
-    
-    @FXML void handleListaLaskeva() { Dialogs.showMessageDialog("Lista laskeva! Ei toimi vielä!"); }
-    
-    @FXML void handleListaNouseva() { Dialogs.showMessageDialog("Lista nouseva! Ei toimi vielä!"); }
-
-    @FXML void handleListaSuodata() { Dialogs.showMessageDialog("Suodata lista! Ei toimi vielä!"); }
-    
+    @FXML void handleListaLaskeva() { naytaIlmoitus("Ei toimi vielä!"); }
+    @FXML void handleListaNouseva() { naytaIlmoitus("Ei toimi vielä!"); }
+    @FXML void handleListaSuodata() { naytaIlmoitus("Ei toimi vielä!"); }
     @FXML void handlePeliLisaa() { uusiPeli(); }
-    
     @FXML void handlePeliMuokkaa() { muokkaaPeli(); }
-    
     @FXML void handlePeliPoista() { poistaPeli(); }
-    
-    @FXML void handleAlustaMuokkaa() { uusiAlusta(); }
-    
+    @FXML void handleAlustaMuokkaa() { muokkaaAlusta(); }
     @FXML void handleRekisteriAvaa() { Dialogs.showMessageDialog("Ei toimi"); }
-    
     @FXML void handleRekisteriTallenna() throws SailoException { tallenna(); }
-    
     @FXML private void handleLopeta() throws SailoException { tallenna(); Platform.exit(); }
     
 //===========================================================================================
     
     private Pepe pepe;
     private Peli peliValittu;
-    private Object[] kuljetin = new Object[3];
 
     
     /**
@@ -97,10 +83,6 @@ public class PepeGUIController implements Initializable {
      * Alustetaan myös jäsenlistan kuuntelija 
      */
     protected void alusta() {
-        panelPeli.setContent(areaPeli);
-        areaPeli.setFont(new Font("Courier New", 12));
-        panelPeli.setFitToHeight(true);
-        panelPeli.setFitToWidth(true);        
         gridPelit.clear();
         
     }
@@ -149,39 +131,22 @@ public class PepeGUIController implements Initializable {
         tallenna();
         return true;
     }
-
-    
-    /**
-     * Näyttää listasta valitun pelin tiedot, tilapäisesti yhteen isoon edit-kenttään
-     */
-    private void naytaGridinValinta() {
-        areaPeli.setText("");
-        peliValittu = gridPelit.getObject();    
-        if (peliValittu == null) return;
-
-        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPeli)) {
-            
-            peliValittu.tulosta(os);
-            pepe.annaNimike(peliValittu).tulosta(os);
-            // Ei hae alustaa, jos alustaa ei löydy
-            if (pepe.annaAlusta(peliValittu) != null) pepe.annaAlusta(peliValittu).tulosta(os);
-        }
-    }
     
     
     /**
-     * 
+     * Poistaavalitun pelin
      */
     protected void poistaPeli() {
         
         peliValittu = gridPelit.getObject();
         
-        // Ei muokata, jos ei ole valittu peliä
+        // Ei poisteta, jos ei ole valittu peliä
         if (peliValittu == null) {
             naytaIlmoitus("Valitse listasta peli, jonka haluat poistaa!");
             return;
         }
         
+        // Poistetaan peli
         naytaIlmoitus("Peli poistettu! " + pepe.annaNimike(peliValittu).getNimi());
         pepe.poista(peliValittu);
 
@@ -189,29 +154,29 @@ public class PepeGUIController implements Initializable {
         hae();
     }
     
+    
     /**
-     * Pakkaa tarvittavat oliot, lähettää ja avaa ne muokkausdialogissa
+     * Avaa valitun pelin muokkausdialogissa
      */
     private void muokkaaPeli() {
         
-        peliValittu = gridPelit.getObject();
+        // Sijoitetaan pelin viite talteen Pepeen
+        pepe.setPeliViite(gridPelit.getObject());
         
         // Ei muokata, jos ei ole valittu peliä
-        if (peliValittu == null) {
+        if (gridPelit.getObject() == null) {
             naytaIlmoitus("Valitse listasta peli, jota haluat muokata!");
             return;
         }
         
-        // Tarvittavat oliot kuljettimeen
-        kuljetin[0] = pepe;
-        kuljetin[1] = peliValittu;
-        kuljetin[2] = false;
+        // Lipun arvon asetus, jotta voidaan alempana testa muutoksia
+        pepe.setLippu(false);
         
-        // Siirrytään muokkausikkunaan ja viedään tiedot kuljettimessa
-        ModalController.showModal(PepeGUIController.class.getResource("PepePeliView.fxml"), "Muokkaa peliä", null, kuljetin);
+        // Siirrytään muokkausikkunaan
+        ModalController.showModal(PepeGUIController.class.getResource("PepePeliView.fxml"), "Muokkaa peliä", null, pepe);
         
-        // Mitä muokkaamisen jälkeen
-        if ((boolean)kuljetin[2] == false) naytaIlmoitus("Pelin muokkaus peruutettu!");
+        // Testataan muokattiinko mitään
+        if (pepe.getLippu() == false) naytaIlmoitus("Pelin muokkaus peruutettu!");
         else naytaIlmoitus("Peli muokattu onnistuneesti!");
         
         // Päivitetään pelilista
@@ -250,18 +215,19 @@ public class PepeGUIController implements Initializable {
             return;
         }
         
-        // Tarvittavat oliot kuljettimeen
-        kuljetin[0] = pepe;
-        kuljetin[1] = uusi;
-        kuljetin[2] = false;
+        // Sijoitetaan pelin viite talteen Pepeen
+        pepe.setPeliViite(uusi);
         
-        // Siirrytään muokkausikkunaan ja viedään tiedot kuljettimessa
-        ModalController.showModal(PepeGUIController.class.getResource("PepePeliView.fxml"), "Lisää peli", null, kuljetin);
+        // Lipun arvon asetus, jotta voidaan alempana testa muutoksia
+        pepe.setLippu(false);
         
-        // Poistetaan juuri luotu peli, jos muokkausvaihe perutetaan
-        if ((boolean)kuljetin[2] == false) {
-            naytaIlmoitus("Pelin luonti peruutettu!");
+        // Siirrytään muokkausikkunaan
+        ModalController.showModal(PepeGUIController.class.getResource("PepePeliView.fxml"), "Lisää peli", null, pepe);
+        
+        // Testataan muokattiinko mitään
+        if (pepe.getLippu() == false) {
             pepe.poista(uusi);
+            naytaIlmoitus("Pelin muokkaus peruutettu!");
         }
         else naytaIlmoitus("Uusi peli luotu: " + pepe.annaNimike(uusi).getNimi());
         
@@ -271,15 +237,19 @@ public class PepeGUIController implements Initializable {
     
     
     /**
-     * Lisätään uusi alusta
+     * Avataan alusten muokkausdialogi
      */
-    protected void uusiAlusta() {
-
-        // Tarvittavat oliot kuljettimeen
-        kuljetin[0] = pepe;
+    protected void muokkaaAlusta() {
+        
+        // Lipun arvon asetus, jotta voidaan alempana testa muutoksia
+        pepe.setLippu(false);
         
         // Siirrytään muokkausikkunaan ja viedään tiedot kuljettimessa
-        ModalController.showModal(PepeGUIController.class.getResource("PepeAlustaView.fxml"), "Muokkaa alustaa", null, kuljetin);
+        ModalController.showModal(PepeGUIController.class.getResource("PepeAlustaView.fxml"), "Muokkaa alustaa", null, pepe);
+        
+        // Testataan muokattiinko mitään
+        if (pepe.getLippu() == false) naytaIlmoitus("Alustojen muokkaus peruutettu!");
+        else naytaIlmoitus("Alustojen muokkaus onnistunut!");
         
         // Päivitetään pelilista
         hae();
@@ -297,7 +267,7 @@ public class PepeGUIController implements Initializable {
 
     
     /**
-     * Näytetään ohjelman suunnitelma erillisessä selaimessa.
+     * Näytetään ohjelman suunnitelma erillisessä selaimessa
      */
     private void avustus() {
         Desktop desktop = Desktop.getDesktop();

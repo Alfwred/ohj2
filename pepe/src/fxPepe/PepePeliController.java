@@ -26,40 +26,25 @@ import pepe.*;
  * @version 6 Apr 2020
  *
  */
-public class PepePeliController implements ModalControllerInterface<Object[]>, Initializable  {
+public class PepePeliController implements ModalControllerInterface<Pepe>, Initializable  {
     
-    static List<Alusta> alustat;
-    static List<Kuntoluokitus> kuntoluokitukset;
-    static Object[] kuljetin;
+    private Pepe pepe;
+    private Peli peli;
     
-    @FXML
-    private TextField peliNimike;
+    private List<Alusta> alustat;
+    private List<Kuntoluokitus> kuntoluokitukset;
     
-    @FXML
-    private ComboBox<Alusta> peliAlusta;
-
-    @FXML
-    private TextField peliJulkaisuvuosi;
-
-    @FXML
-    private TextField peliHankintavuosi;
-    
-    @FXML
-    private ComboBox<Kuntoluokitus> peliKuntoLevy;
-
-    @FXML
-    private ComboBox<Kuntoluokitus> peliKuntoOhje;
-
-    @FXML
-    private ComboBox<Kuntoluokitus> peliKuntoKotelo;
-
-    @FXML
-    private TextField peliLisatiedot;
+    @FXML private TextField peliNimike;
+    @FXML private ComboBox<Alusta> peliAlusta;
+    @FXML private TextField peliJulkaisuvuosi;
+    @FXML private TextField peliHankintavuosi;
+    @FXML private ComboBox<Kuntoluokitus> peliKuntoLevy;
+    @FXML private ComboBox<Kuntoluokitus> peliKuntoOhje;
+    @FXML private ComboBox<Kuntoluokitus> peliKuntoKotelo;
+    @FXML private TextField peliLisatiedot;
 
     @FXML
     void handlePeliOK() {
-        Pepe pepe = (Pepe) kuljetin[0];
-        Peli peli = (Peli) kuljetin[1];
         pepe.asetaMuutokset(peli, "nimike", peliNimike.getText());
         pepe.asetaMuutokset(peli, "alusta", peliAlusta.getValue().getTunniste() + "");
         pepe.asetaMuutokset(peli, "julkaisuvuosi", peliJulkaisuvuosi.getText());
@@ -68,20 +53,20 @@ public class PepePeliController implements ModalControllerInterface<Object[]>, I
         pepe.asetaMuutokset(peli, "lisatiedot", peliLisatiedot.getText());
         
         // Peliin tehty muutoksia ja muutokset ok
-        kuljetin[2] = true;
+        pepe.setLippu(true);
         ModalController.closeStage(peliNimike);
     }
     
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
-        //
+        // Kommentti
     }
     
 
     @Override
-    public Object[] getResult() {
-        return kuljetin;
+    public Pepe getResult() {
+        return pepe;
     }
     
 
@@ -94,19 +79,17 @@ public class PepePeliController implements ModalControllerInterface<Object[]>, I
 
     
     @Override
-    public void setDefault(Object[] oliot) {
-        kuljetin = oliot;
-        naytaPeli((Pepe) kuljetin[0], (Peli) kuljetin[1]);
+    public void setDefault(Pepe pepe) {
+        this.pepe = pepe;
+        this.peli = pepe.getPeliViite();
+        naytaPeli();
     }
     
 
     /**
-     * Näytetään pelin tiedot UI-komponentteihin
-     * @param pepe Pepe
-     * @param peli Peli
+     * Näytetään valitun pelin tiedot UI-komponentteihin
      */
-    public void naytaPeli(Pepe pepe, Peli peli) {
-        if (peli == null) return;
+    public void naytaPeli() {
         alustat = pepe.annaAlustat();
         kuntoluokitukset = pepe.annaKuntoluokitukset();
         

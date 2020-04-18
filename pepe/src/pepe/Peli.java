@@ -98,7 +98,7 @@ public class Peli {
      * @param merkkijono Syote, mikä muutetaan Nimike-olioksi
      */
     public void parsiPeli(String merkkijono) {
-        // https://regex101.com/r/YgveGF/1/
+        // https://regex101.com/r/YgveGF/3/
         Pattern esiintyma = Pattern.compile("^(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(\\d+)\\|(.+|)$");
         Matcher etsija = esiintyma.matcher(merkkijono);
 
@@ -314,6 +314,23 @@ public class Peli {
                this.kotelo + "|" + 
                this.ohje + "|" + 
                this.lisatiedot +"|";
+    }
+    
+    
+    /**
+     * Tuloste olion tallentamista varten
+     * @return Merkkijono oliosta
+     */
+    public String annaTallennusMuoto() {
+        return this.getTunniste() + "|" + 
+                this.getNimike() + "|" + 
+                this.getAlusta() + "|" + 
+                this.julkaisuvuosi + "|" + 
+                this.hankintavuosi + "|" + 
+                this.levy + "|" + 
+                this.kotelo + "|" + 
+                this.ohje + "|" + 
+                this.lisatiedot;
     }
     
     

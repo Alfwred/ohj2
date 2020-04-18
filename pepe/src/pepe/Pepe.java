@@ -16,6 +16,8 @@ public class Pepe {
     private Nimikkeet nimikkeet = new Nimikkeet();
     private Alustat alustat = new Alustat();
     private Kunto kunto = new Kunto();
+    private Peli peliViite;
+    private boolean lippu;
 
 
     /**
@@ -24,6 +26,43 @@ public class Pepe {
      */
     public int getPeleja() {
         return pelit.getLkm();
+    }
+    
+    
+    /**
+     * Talletetaan viite jostain pelistä, jotta voidaan viedä se eteenpäin controllereille
+     * @param peli Viitatta peli
+     */
+    public void setPeliViite(Peli peli) {
+        this.peliViite = peli;
+    }
+    
+    /**
+     * Haetaan controlleria varten talletetun pelin viite
+     * @return Viite peliin
+     */
+    public Peli getPeliViite() {
+        return this.peliViite;
+    }
+    
+    
+    /**
+     * Asetetaan lipun totuusarvo. Lippua voi käyttää välittämään tietoa tehtävien onnistumisesta.
+     * True => Onnistui
+     * False => Epäonnistui/ei muutoksia
+     * @param totuusarvo Lipun totuusarvo
+     */
+    public void setLippu(boolean totuusarvo) {
+        this.lippu = totuusarvo;
+    }
+    
+    
+    /**
+     * Haetaan lipun totuusarvo. Lippua voi käyttää välittämään tietoa tehtävien onnistumisesta.
+     * @return Lipun totuusarvo: true => Onnistui / false => Epäonnistui/ei muutoksia
+     */
+    public boolean getLippu() {
+        return this.lippu;
     }
 
 
@@ -223,7 +262,9 @@ public class Pepe {
      * @return String[] pelin tiedoista
      */
     public String[] haeKentat(Peli peli) {
-        String alusta = "";
+        
+        // Käsittely, jos alustaa ei löydy
+        String alusta = "-";
         if (annaAlusta(peli) != null) alusta = annaAlusta(peli).getLyhenne();
         
         String[] t = {
