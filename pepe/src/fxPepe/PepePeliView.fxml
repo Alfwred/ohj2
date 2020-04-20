@@ -9,76 +9,106 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxPepe.PepePeliController">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxPepe.PepePeliController">
    <left>
       <VBox BorderPane.alignment="CENTER">
          <children>
             <HBox>
                <children>
-                  <TextField fx:id="peliNimike" prefWidth="600.0" promptText="Pelin nimi">
+                  <TextField fx:id="peliNimike" prefWidth="500.0" promptText="Pelin nimi">
                      <HBox.margin>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                        <Insets right="30.0" />
                      </HBox.margin>
                   </TextField>
-                  <ComboBox fx:id="peliAlusta" prefWidth="160.0" promptText="Alusta">
+                  <ComboBox fx:id="peliAlusta" prefWidth="120.0" promptText="Alusta">
                      <HBox.margin>
-                        <Insets bottom="15.0" right="15.0" top="15.0" />
+                        <Insets />
                      </HBox.margin>
                   </ComboBox>
                </children>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
             </HBox>
             <HBox prefWidth="200.0">
                <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Julkaisuvuosi">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Text>
                   <TextField fx:id="peliJulkaisuvuosi" prefHeight="25.0" prefWidth="159.0" promptText="Julkaisuvuosi">
                      <HBox.margin>
-                        <Insets bottom="5.0" left="15.0" top="2.0" />
+                        <Insets />
                      </HBox.margin>
                   </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hankintavuosi">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Text>
                   <TextField fx:id="peliHankintavuosi" promptText="Hankintavuosi">
                      <HBox.margin>
-                        <Insets bottom="5.0" left="15.0" right="15.0" top="2.0" />
+                        <Insets />
                      </HBox.margin>
                   </TextField>
                </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
             </HBox>
             <HBox>
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pelilevy">
                      <HBox.margin>
-                        <Insets bottom="5.0" left="20.0" right="10.0" top="5.0" />
+                        <Insets bottom="5.0" right="10.0" top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <ComboBox fx:id="peliKuntoLevy" prefWidth="160.0" promptText="Kunto" />
+                  <ComboBox fx:id="peliKuntoLevy" prefWidth="120.0" promptText="Kunto" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ohjekirja">
                      <HBox.margin>
                         <Insets bottom="5.0" left="20.0" right="10.0" top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <ComboBox fx:id="peliKuntoOhje" prefWidth="160.0" promptText="Kunto" />
+                  <ComboBox fx:id="peliKuntoOhje" prefWidth="120.0" promptText="Kunto" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kotelo">
                      <HBox.margin>
                         <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <ComboBox fx:id="peliKuntoKotelo" prefWidth="160.0" promptText="Kunto" />
+                  <ComboBox fx:id="peliKuntoKotelo" prefWidth="120.0" promptText="Kunto" />
                </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
             </HBox>
             <HBox prefWidth="200.0">
                <children>
-                  <TextField fx:id="peliLisatiedot" prefWidth="600.0" promptText="Lisatiedot">
+                  <TextField fx:id="peliLisatiedot" prefWidth="500.0" promptText="Lisatiedot">
                      <HBox.margin>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="10.0" />
+                        <Insets right="30.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" onAction="#handlePeliOK" prefHeight="23.0" prefWidth="156.0" text="OK">
+                  <Button mnemonicParsing="false" onAction="#handleOK" prefWidth="100.0" text="OK">
                      <HBox.margin>
-                        <Insets top="9.0" />
+                        <Insets />
                      </HBox.margin>
                   </Button>
                </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </HBox>
+            <HBox>
+               <children>
+                  <Text fx:id="textIlmoitus" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
             </HBox>
          </children>
       </VBox>

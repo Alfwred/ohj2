@@ -29,7 +29,7 @@ public class PepeMain extends Application {
 	    final Scene scene = new Scene(root);
 	    scene.getStylesheets().add(getClass().getResource("pepe.css").toExternalForm());
 	    primaryStage.setScene(scene);
-	    primaryStage.setTitle("Pepe");
+	    primaryStage.setTitle("PEPE");
 	    
 	    // Voiko sulkea -dialogi
 	    //primaryStage.setOnCloseRequest((event) -> {

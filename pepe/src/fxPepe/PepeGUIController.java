@@ -88,13 +88,13 @@ public class PepeGUIController implements Initializable {
     }
 
     
-    private void naytaIlmoitus(String virhe) {
-        if ( virhe == null || virhe.isEmpty() ) {
+    private void naytaIlmoitus(String merkkijono) {
+        if ( merkkijono == null || merkkijono.isEmpty() ) {
             labelVirhe.setText("");
             labelVirhe.getStyleClass().removeAll("Virhe");
             return;
         }
-        labelVirhe.setText(virhe);
+        labelVirhe.setText(merkkijono);
         labelVirhe.getStyleClass().add("Virhe");
     }
     

@@ -16,6 +16,7 @@ public class Pepe {
     private Nimikkeet nimikkeet = new Nimikkeet();
     private Alustat alustat = new Alustat();
     private Kunto kunto = new Kunto();
+    
     private Peli peliViite;
     private boolean lippu;
 
@@ -304,7 +305,8 @@ public class Pepe {
      */
     public String asetaMuutokset(Peli peli, String muutos, String merkkijono) {
         switch (muutos) {
-        case "nimike":   
+        case "nimike":
+            // Luodaan uusi, jos ei löydy aikaisempaa nimikettä
             if (this.annaNimike(merkkijono) == null) {
                 Nimike uusi = new Nimike(merkkijono);
                 uusi.rekisteroi();
@@ -313,12 +315,20 @@ public class Pepe {
                 } catch (SailoException e) {
                     e.printStackTrace();
                 }
+                
+                // Oikeellisuustarkistus
+                if (!uusi.tarkista(merkkijono)) {
+                    nimikkeet.poista(uusi.getTunniste());
+                    break;
+                }
+                
+                // Lisätään nimike
+                peli.setNimike(uusi.getTunniste());
+                
                 // Poistetaan aikaisempi nimike, jos se ei ole muiden pelien käytössä
                 int lkm = annaSamatNimikkeet(peli);
                 if (lkm <= 1) nimikkeet.poista(peli.getNimike());
                 
-                // Lisätään nimike
-                peli.setNimike(uusi.getTunniste());
                 return "UUSI NIMIKE OK";
             }
             peli.setNimike(this.annaNimike(merkkijono).getTunniste());
@@ -362,10 +372,12 @@ public class Pepe {
         switch (muutos) {
         
         case "lyhenne":
+            if (!alusta.tarkista(merkkijono)) break;
             alusta.setLyhenne(merkkijono);
             return "LYHENNE OK";
             
         case "nimi":
+            if (!alusta.tarkista(merkkijono)) break;
             alusta.setNimi(merkkijono);
             return "NIMI OK";
             

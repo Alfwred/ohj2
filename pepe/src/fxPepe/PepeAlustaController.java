@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import pepe.*;
 
@@ -31,13 +32,13 @@ import pepe.*;
 public class PepeAlustaController implements ModalControllerInterface<Pepe>, Initializable  {
     
     private Pepe pepe;
-    private Alusta alustaValittu;
     
     @FXML private TextField alustaNimi;
     @FXML private TextField alustaLyhenne;
     @FXML private Button handleUUSI;
     @FXML private Button handlePOISTA;
     @FXML private Button handleOK;
+    @FXML private Text textIlmoitus;
     @FXML private StringGrid<Alusta> gridAlustat;
     
 
@@ -47,8 +48,25 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
         pepe.lisaa(uusi);
         
         // Muutokset
-        pepe.asetaMuutokset(uusi, "lyhenne", alustaLyhenne.getText());
-        pepe.asetaMuutokset(uusi, "nimi", alustaNimi.getText());
+        String ilmoitus;
+        ilmoitus = pepe.asetaMuutokset(uusi, "lyhenne", alustaLyhenne.getText());
+        if (ilmoitus.equalsIgnoreCase("VIRHE")) {
+            alustaLyhenne.getStyleClass().add("virhe"); // Värjäys ei vielä toimi
+            naytaIlmoitus("Alustan lyhenne virheellinen!");
+            pepe.poista(uusi);
+            return;
+        }
+        
+        ilmoitus = pepe.asetaMuutokset(uusi, "nimi", alustaNimi.getText());
+        if (ilmoitus.equalsIgnoreCase("VIRHE")) {
+            alustaNimi.getStyleClass().add("virhe"); // Värjäys ei vielä toimi
+            naytaIlmoitus("Alustan nimi virheellinen!");
+            pepe.poista(uusi);
+            return;
+        }
+        
+        // Alustoihin tehty muutoksia ja muutokset ok
+        pepe.setLippu(true);
         
         // Päivitetään listaus
         hae();
@@ -56,8 +74,11 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
     
     
     @FXML void handlePOISTA() {
-        alustaValittu = gridAlustat.getObject();
-        pepe.poista(alustaValittu);
+        if (gridAlustat.getObject() == null) return;
+        pepe.poista(gridAlustat.getObject());
+        
+        // Alustoihin tehty muutoksia ja muutokset ok
+        pepe.setLippu(true);
         
         // Päivitetään listaus
         hae();
@@ -65,6 +86,7 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
     
     
     @FXML void handleOK() {
+        pepe.setLippu(true);
         ModalController.closeStage(alustaNimi);
     }
     
@@ -101,5 +123,16 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
         gridAlustat.clear();        
         List<Alusta> alustat = pepe.annaAlustat();
         for (Alusta alusta : alustat) gridAlustat.add(alusta, pepe.haeKentat(alusta));
+    }
+    
+    
+    private void naytaIlmoitus(String merkkijono) {
+        if ( merkkijono == null || merkkijono.isEmpty() ) {
+            textIlmoitus.setText("");
+            textIlmoitus.getStyleClass().removeAll("Virhe");
+            return;
+        }
+        textIlmoitus.setText(merkkijono);
+        textIlmoitus.getStyleClass().add("Virhe");
     }
 }

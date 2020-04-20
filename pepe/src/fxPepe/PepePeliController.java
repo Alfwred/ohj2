@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import pepe.*;
 
@@ -42,10 +43,18 @@ public class PepePeliController implements ModalControllerInterface<Pepe>, Initi
     @FXML private ComboBox<Kuntoluokitus> peliKuntoOhje;
     @FXML private ComboBox<Kuntoluokitus> peliKuntoKotelo;
     @FXML private TextField peliLisatiedot;
+    @FXML private Text textIlmoitus;
 
     @FXML
-    void handlePeliOK() {
-        pepe.asetaMuutokset(peli, "nimike", peliNimike.getText());
+    void handleOK() {
+        // Muutokset
+        String ilmoitus;
+        ilmoitus = pepe.asetaMuutokset(peli, "nimike", peliNimike.getText());
+        if (ilmoitus.equalsIgnoreCase("VIRHE")) {
+            peliNimike.getStyleClass().add("virhe"); // Värjäys ei vielä toimi
+            naytaIlmoitus("Virheellinen nimike!");
+            return;
+        }
         pepe.asetaMuutokset(peli, "alusta", peliAlusta.getValue().getTunniste() + "");
         pepe.asetaMuutokset(peli, "julkaisuvuosi", peliJulkaisuvuosi.getText());
         pepe.asetaMuutokset(peli, "hankintavuosi", peliHankintavuosi.getText());
@@ -74,7 +83,6 @@ public class PepePeliController implements ModalControllerInterface<Pepe>, Initi
     public void handleShown() {
         // Fokus pelinNimike-tekstikenttään
         peliNimike.requestFocus();
-        
     }
 
     
@@ -105,5 +113,15 @@ public class PepePeliController implements ModalControllerInterface<Pepe>, Initi
         peliKuntoOhje.getSelectionModel().select(pepe.haeLuokitus(peli.getOhje()));
         peliKuntoKotelo.getItems().addAll(kuntoluokitukset);
         peliKuntoKotelo.getSelectionModel().select(pepe.haeLuokitus(peli.getKotelo()));
+    }
+    
+    private void naytaIlmoitus(String merkkijono) {
+        if ( merkkijono == null || merkkijono.isEmpty() ) {
+            textIlmoitus.setText("");
+            textIlmoitus.getStyleClass().removeAll("Virhe");
+            return;
+        }
+        textIlmoitus.setText(merkkijono);
+        textIlmoitus.getStyleClass().add("Virhe");
     }
 }

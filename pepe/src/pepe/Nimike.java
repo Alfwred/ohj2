@@ -148,9 +148,28 @@ public class Nimike {
         return this.nimi;
     }
     
+    
     @Override
     public String toString() {
         return this.getTunniste() + "|" + this.getNimi();
+    }
+    
+    
+    /**
+     * Tarkistaa syötetyn merkkijonon oikeellisuuden
+     * @param merkkijono Mitä tarkastellaan
+     * @return True => oikeellinen, false => virheellinen
+     */
+    public boolean tarkista(String merkkijono) {
+        // Tyhjän merkkijonon käsittely
+        if (merkkijono.equalsIgnoreCase("")) return false;
+        
+        // Estetään, että ei voi asettaa tolppaa nimen seassa
+        Pattern esiintyma = Pattern.compile("\\|");
+        Matcher etsija = esiintyma.matcher(merkkijono);
+
+        if (etsija.find()) return false;
+        return true;
     }
     
     
