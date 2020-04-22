@@ -47,19 +47,47 @@ public class PepePeliController implements ModalControllerInterface<Pepe>, Initi
 
     @FXML
     void handleOK() {
+        
         // Muutokset
         String ilmoitus;
+        
         ilmoitus = pepe.asetaMuutokset(peli, "nimike", peliNimike.getText());
         if (ilmoitus.equalsIgnoreCase("VIRHE")) {
             peliNimike.getStyleClass().add("virhe"); // Värjäys ei vielä toimi
             naytaIlmoitus("Virheellinen nimike!");
             return;
         }
+        
+        if (peliAlusta.getValue() == null) {
+            peliAlusta.getStyleClass().add("virhe"); // Värjäys ei vielä toimi
+            naytaIlmoitus("Valitse alusta!");
+            return;
+        }     
+        
         pepe.asetaMuutokset(peli, "alusta", peliAlusta.getValue().getTunniste() + "");
-        pepe.asetaMuutokset(peli, "julkaisuvuosi", peliJulkaisuvuosi.getText());
-        pepe.asetaMuutokset(peli, "hankintavuosi", peliHankintavuosi.getText());
-        pepe.asetaMuutokset(peli, "kunto", peliKuntoLevy.getValue().getLuokitus() + "" + peliKuntoOhje.getValue().getLuokitus() + "" + peliKuntoKotelo.getValue().getLuokitus());
-        pepe.asetaMuutokset(peli, "lisatiedot", peliLisatiedot.getText());
+
+        ilmoitus = pepe.asetaMuutokset(peli, "julkaisuvuosi", peliJulkaisuvuosi.getText());
+        if (ilmoitus.equalsIgnoreCase("VIRHE")) {
+            peliJulkaisuvuosi.getStyleClass().add("virhe"); // Värjäys ei vielä toimi
+            naytaIlmoitus("Virheellinen julkaisuvuosi!");
+            return;
+        }
+
+        ilmoitus = pepe.asetaMuutokset(peli, "hankintavuosi", peliHankintavuosi.getText());
+        if (ilmoitus.equalsIgnoreCase("VIRHE")) {
+            peliHankintavuosi.getStyleClass().add("virhe"); // Värjäys ei vielä toimi
+            naytaIlmoitus("Virheellinen hankintavuosi!");
+            return;
+        }
+        
+        ilmoitus = pepe.asetaMuutokset(peli, "kunto", peliKuntoLevy.getValue().getLuokitus() + "" + peliKuntoOhje.getValue().getLuokitus() + "" + peliKuntoKotelo.getValue().getLuokitus());
+
+        ilmoitus = pepe.asetaMuutokset(peli, "lisatiedot", peliLisatiedot.getText());
+        if (ilmoitus.equalsIgnoreCase("VIRHE")) {
+            peliLisatiedot.getStyleClass().add("virhe"); // Värjäys ei vielä toimi
+            naytaIlmoitus("Virheelliset lisätiedot!");
+            return;
+        }
         
         // Peliin tehty muutoksia ja muutokset ok
         pepe.setLippu(true);

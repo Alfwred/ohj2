@@ -75,6 +75,7 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
     
     @FXML void handlePOISTA() {
         if (gridAlustat.getObject() == null) return;
+        naytaIlmoitus("Alusta " + gridAlustat.getObject() + " poistettu!");
         pepe.poista(gridAlustat.getObject());
         
         // Alustoihin tehty muutoksia ja muutokset ok

@@ -45,8 +45,8 @@ public class PepeGUIController implements Initializable {
     public void initialize(URL url, ResourceBundle bundle) {
         alusta();
         
-     // Mitä tehdään kun hiirellä klikataan. Tämä oli tarpeellinen, kun tulostettin pelin tiedot testikenttään.
-     //gridPelit.setOnMouseClicked( e -> { if ( e.getClickCount() == 1 ) naytaGridinValinta(); });
+        // Avataan muokkausikkuna, kun tuplaklikataan peliä
+        gridPelit.setOnMouseClicked( e -> { if ( e.getClickCount() == 2 ) muokkaaPeli(); });
      
     }
     

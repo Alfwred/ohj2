@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxPepe.PepeGUIController">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxPepe.PepeGUIController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -50,17 +50,17 @@
    <center>
       <BorderPane BorderPane.alignment="CENTER">
          <center>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <BorderPane BorderPane.alignment="CENTER">
                <center>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <BorderPane BorderPane.alignment="CENTER">
                      <center>
-                        <StringGrid fx:id="gridPelit" emptyStyleClass="" rivit="#|Peli|Alusta|Julkaisuvuosi|Hankintavuosi|Levy|Ohje|Kunto|Lisätietoja" BorderPane.alignment="CENTER">
+                        <StringGrid fx:id="gridPelit" emptyStyleClass="" minWidth="820.0" rivit="#|Peli|Alusta|Julkaisuvuosi|Hankintavuosi|Levy|Ohje|Kunto|Lisätietoja" scaleShape="false" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets />
                            </BorderPane.margin></StringGrid>
                      </center>
                      <bottom>
-                        <HBox prefHeight="30.0" BorderPane.alignment="CENTER">
+                        <HBox BorderPane.alignment="CENTER">
                            <children>
                               <Label fx:id="labelVirhe">
                                  <HBox.margin>

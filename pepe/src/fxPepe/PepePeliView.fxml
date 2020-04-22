@@ -15,7 +15,7 @@
          <children>
             <HBox>
                <children>
-                  <TextField fx:id="peliNimike" prefWidth="500.0" promptText="Pelin nimi">
+                  <TextField fx:id="peliNimike" prefWidth="500.0" promptText="Pelin nimike">
                      <HBox.margin>
                         <Insets right="30.0" />
                      </HBox.margin>

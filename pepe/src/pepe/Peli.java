@@ -353,6 +353,50 @@ public class Peli {
     
     
     /**
+     * Tarkistaa syötetyn vuosiluvun oikeellisuden
+     * @param merkkijono Tarkasteltava merkkijono
+     * @return True => oikeellinen, false => virheellinen
+     */
+    public boolean tarkistaJulkaisuvuosi(String merkkijono) {
+        // Estetään väärä syöte
+        // https://regex101.com/r/BQpUZC/1
+        Pattern esiintyma = Pattern.compile("^(19|20)\\d{2}$");
+        Matcher etsija = esiintyma.matcher(merkkijono);
+        if (etsija.find() && Integer.parseInt(merkkijono) < this.getHankintavuosi()) return true;
+        return false;
+    }
+    
+    
+    /**
+     * Tarkistaa syötetyn vuosiluvun oikeellisuden
+     * @param merkkijono Tarkasteltava merkkijono
+     * @return True => oikeellinen, false => virheellinen
+     */
+    public boolean tarkistaHankintavuosi(String merkkijono) {
+        // Estetään väärä syöte
+        // https://regex101.com/r/BQpUZC/1
+        Pattern esiintyma = Pattern.compile("^(19|20)\\d{2}$");
+        Matcher etsija = esiintyma.matcher(merkkijono);
+        if (etsija.find() && Integer.parseInt(merkkijono) > this.getJulkaisuvuosi()) return true;
+        return false;
+    }
+    
+    
+    /**
+     * Tarkistaa syötetyn merkkijonon oikeellisuuden
+     * @param merkkijono Mitä tarkastellaan
+     * @return True => oikeellinen, false => virheellinen
+     */
+    public boolean tarkistaLisatiedot(String merkkijono) {
+        // Estetään, että ei voi asettaa tolppaa nimen seassa
+        Pattern esiintyma = Pattern.compile("\\|");
+        Matcher etsija = esiintyma.matcher(merkkijono);
+
+        if (etsija.find()) return false;
+        return true;
+    }
+    
+    /**
      * @param args Ei käytössä
      */
     public static void main(String[] args) {

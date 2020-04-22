@@ -339,10 +339,12 @@ public class Pepe {
             return "ALUSTA OK";
             
         case "julkaisuvuosi":
+            if (!peli.tarkistaJulkaisuvuosi(merkkijono)) break;
             peli.setJulkaisuvuosi(Integer.parseInt(merkkijono));
             return "JULKAISUVUOSI OK";
             
         case "hankintavuosi":
+            if (!peli.tarkistaHankintavuosi(merkkijono)) break;
             peli.setHankintavuosi(Integer.parseInt(merkkijono));
             return "HANKINTAVUOSI OK";
             
@@ -351,6 +353,7 @@ public class Pepe {
             return "KUNTO OK";
             
         case "lisatiedot":
+            if (!peli.tarkistaLisatiedot(merkkijono)) break;
             peli.setLisatiedot(merkkijono);
             return "LISATIEDOT OK";
             
