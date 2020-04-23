@@ -12,9 +12,8 @@ import java.util.regex.Pattern;
  * Pelirekisterin yksittäisen pelin nimike eli nimi
  * Keräämällä pelien nimet omaan tietorakenteeseen vältetään,
  * että ei jouduta toistamaan samaa nimeä useaan kertaan
- * 
  * @author Anssi Lepikko
- * @version 18 Feb 2020
+ * @version 23.4.2020
  *
  */
 public class Nimike {
@@ -26,8 +25,9 @@ public class Nimike {
      
     
     /**
-     * @param tunniste Tunista
-     * @param nimi Nimi
+     * Muodostaja
+     * @param tunniste Nimikkeen tunniste
+     * @param nimi Nimikkeen (pelin) nimi
      */
     public Nimike (int tunniste, String nimi) {
         this.nTunniste = tunniste;
@@ -36,7 +36,7 @@ public class Nimike {
     
     
     /**
-     *  Muodostaa nimikkeen annetulla nimellä
+     * Muodostaja
      * @param nimi Nimikkeen (pelin) nimi
      */
     public Nimike(String nimi) {
@@ -45,10 +45,10 @@ public class Nimike {
     
     
     /**
-     *  Parametriton
+     *  Oletusmuodostaja
      */
     public Nimike() {
-        // Parametriton
+        // Ei käytössä
     }
     
     
@@ -62,7 +62,13 @@ public class Nimike {
     
     /**
      * Lukee nimikkeen merkkijonosyötteestä
-     * @param merkkijono Syote, mikä muutetaan Nimike-olioksi
+     * @param merkkijono Merkkijono, mikä muutetaan Nimike-olion tiedoiksi
+     * <pre name="test">
+     * Nimike nimike = new Nimike();
+     * nimike.parsiNimike("1|Testi Peli");
+     * nimike.getTunniste() === 1;
+     * nimike.getNimi() === "Testi Peli";
+     * </pre>
      */
     public void parsiNimike(String merkkijono) {
         // https://regex101.com/r/HCcqzC/1/
@@ -92,22 +98,11 @@ public class Nimike {
     public void tulosta(OutputStream os) {
         tulosta(new PrintStream(os));
     }
-         
     
+
     /**
-     * Antaa nimikkeelle seuraavan tunnistenumeron.
-     * @return nTunniste Uusi tunnistenumero
-     * @example
-     * <pre name="test">
-     *   Nimike n1 = new Nimike();
-     *   n1.getTunniste() === 0;
-     *   n1.rekisteroi();
-     *   Nimike n2 = new Nimike();
-     *   n2.rekisteroi();
-     *   int nimi1 = n1.getTunniste();
-     *   int nimi2 = n2.getTunniste();
-     *   nimi1 === nimi2-1;
-     * </pre>
+     * Rekisteröi nimikkeelle seuraavan tunnisteen
+     * @return Palauttaa rekisteröidyn tunnisteen
      */
     public int rekisteroi() {
         nTunniste = seuraavaTunniste;
@@ -128,24 +123,27 @@ public class Nimike {
      
     /**
      * Palauttaa nimikkeen tunnisteen
-     * @return nimikkeen nTunniste
+     * @return nimikkeen tunniste
      */
     public int getTunniste() {
         return nTunniste;
     }
     
-    
+  
     /**
-     * @return pelin nimike
-     * @example
-     * <pre name="test">
-     * Nimike tr2 = new Nimike();
-     * tr2.taytaNimikeTiedoilla();
-     * tr2.getNimi() =R= "Tomb Raider 2"
-     * </pre>
+     * Palauttaa nimikkeen nimen
+     * @return Nimikkeen nimi
      */
     public String getNimi() {
         return this.nimi;
+    }
+    
+    /**
+     * Asettaa nimikkeen nimen suoraan. Testien apumetodi.
+     * @param merkkijono Merkkijono, mikä asetetaan nimeksi
+     */
+    public void setNimi(String merkkijono) {
+        this.nimi = merkkijono;
     }
     
     
@@ -158,7 +156,15 @@ public class Nimike {
     /**
      * Tarkistaa syötetyn merkkijonon oikeellisuuden
      * @param merkkijono Mitä tarkastellaan
-     * @return True => oikeellinen, false => virheellinen
+     * @return Tosi, jos oikeellinen ja epätosi, jos väärä
+     * @example
+     * <pre name="test">
+     * Alusta alusta = new Alusta();
+     * alusta.tarkista("|") === false;
+     * alusta.tarkista("") === false;
+     * alusta.tarkista("Final Fantasy 7 Remake|") === false;
+     * alusta.tarkista("Final Fantasy 7 Remake") === true;
+     * </pre>
      */
     public boolean tarkista(String merkkijono) {
         // Tyhjän merkkijonon käsittely
@@ -174,10 +180,39 @@ public class Nimike {
     
     
     /**
+     * Vertaa merkkijonoa nimikkeeseen. Vertailun onnistumiseen riittää, että
+     * nimike alkaa hakuehdolla.
+     * @param merkkijono Merkkijono, jolla haetaan
+     * @return Totuusarvo siitä onko nimike hakuehdon mukainen
+     * @example
+     * <pre name="test">    
+     *  Nimike nimike = new Nimike("Tomb Raider");
+     *  nimike.vertaa("T")         === true;
+     *  nimike.vertaa("To")        === true;
+     *  nimike.vertaa("Tom")       === true;
+     *  nimike.vertaa("Tomb")      === true;
+     *  nimike.vertaa("R")         === true;
+     *  nimike.vertaa("Ra")        === true;
+     *  nimike.vertaa("Rai")       === true;
+     *  nimike.vertaa("Raid")      === true;
+     *  nimike.vertaa("Raide")     === true;
+     *  nimike.vertaa("Raider")    === true;
+     *  nimike.vertaa("")          === true;
+     *  nimike.vertaa(" ")         === true;
+     *  nimike.vertaa("  ")        === false;
+     *  nimike.vertaa("Topi")      === false;
+     * </pre>
+     */
+    public boolean vertaa(String merkkijono) {
+        return this.getNimi().toLowerCase().contains(merkkijono.toLowerCase());
+    }
+
+    
+    /**
+     * Testipääohjelma
      * @param args Ei käytössä
      */
     public static void main(String[] args) {
-        
         Nimike nimi1 = new Nimike();
         Nimike nimi2 = new Nimike();
         nimi1.rekisteroi();

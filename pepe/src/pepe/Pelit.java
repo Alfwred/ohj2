@@ -13,22 +13,22 @@ import java.util.*;
 import fxPepe.SailoException;
 
 /**
- * @author anssi
- * @version 28 Feb 2020
+ * Tietorakenneluokka peli-olioille
+ * @author Anssi Lepikko
+ * @version 23.4.2020
  *
  */
 public class Pelit implements Iterable<Peli> {
     
-    
-    /** Taulukko peleistä */
+    /** Lista peleistä */
     private final List<Peli> alkiot = new ArrayList<Peli>();
 
 
     /**
-     * Konstruktori
+     * Oletusmuodostaja
      */
     public Pelit() {
-        // Tyhjä
+        // Ei tarvetta
     }
     
     
@@ -61,7 +61,6 @@ public class Pelit implements Iterable<Peli> {
         try (Scanner sc = new Scanner(new FileInputStream(tiedosto),StandardCharsets.UTF_8)) {
             while (sc.hasNextLine()) {
                 String rivi = sc.nextLine();
-                if (rivi.charAt(0) == ';') continue;
                 var uusi = new Peli();
                 uusi.parsiPeli(rivi);
                 lisaa(uusi);            
@@ -138,18 +137,19 @@ public class Pelit implements Iterable<Peli> {
         return alkiot.iterator();
     }
     
+    
     /**
      * @return Lista peleistä
      */
     public List<Peli> annaPelit() {
         return alkiot;
     }
-    
+
     
     /**
      * Palauttaa pelin tunnisteen perusteella
      * @param tunniste Haettavan pelin tunniste
-     * @return Peli
+     * @return Peli-olio
      */
     public Peli annaPeli(int tunniste) {
         for (Peli peli : alkiot) {
@@ -160,7 +160,7 @@ public class Pelit implements Iterable<Peli> {
 
     
     /**
-     * Testiohjelma PeliTiedoille
+     * Testiohjelma
      * @param args ei käytössä
      */
     public static void main(String[] args) {
@@ -176,7 +176,6 @@ public class Pelit implements Iterable<Peli> {
             e.printStackTrace();
         }
         
-        /**
         Peli peli1 = new Peli();
         peli1.rekisteroi();
         peli1.taytaPeliTiedoilla();
@@ -191,7 +190,6 @@ public class Pelit implements Iterable<Peli> {
         
         System.out.println("Haetaan pelejä pelin tunnisteen perusteella:");    
         pelit.annaPeli(1).tulosta(System.out);
-        */
     }
 
 }

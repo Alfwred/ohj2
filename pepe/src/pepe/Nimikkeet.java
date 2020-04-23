@@ -6,24 +6,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-
 import fxPepe.SailoException;
 
 /**
- * Pepen pelistö joka osaa mm. lisätä uuden pelin
+ * Tietorakenneluokka nimikkeille.
  * @author Anssi Lepikko
- * @version 18 Feb 2020
+ * @version 23.4.2020
  *
  */
 public class Nimikkeet {
     
     private static final int MAX_NIMIKKEITA     = 5;
     private int              lkm                = 0;
-    private String           tiedostonNimi      = "";
     private Nimike           alkiot[]           = new Nimike[MAX_NIMIKKEITA];
 
     /**
@@ -40,7 +36,8 @@ public class Nimikkeet {
      * @throws SailoException jos tietorakenne on jo täynnä
      * @example
      * <pre name="test">
-     * #THROWS SailoException 
+     * #THROWS SailoException
+     * #import fxPepe.SailoException;
      * Nimikkeet nimikkeet = new Nimikkeet();
      * Nimike cnc = new Nimike(), ra = new Nimike();
      * nimikkeet.getLkm() === 0;
@@ -55,11 +52,10 @@ public class Nimikkeet {
      * nimikkeet.anna(3) === cnc; #THROWS IndexOutOfBoundsException 
      * nimikkeet.lisaa(cnc); nimikkeet.getLkm() === 4;
      * nimikkeet.lisaa(cnc); nimikkeet.getLkm() === 5;
-     * nimikkeet.lisaa(cnc);  #THROWS SailoException
      * </pre>
      */
     public void lisaa(Nimike nimike) throws SailoException {
-        if (lkm >= alkiot.length)
+        if (lkm >= alkiot.length) 
         {
             alkiot = Arrays.copyOf(alkiot, lkm * 2);
         }
@@ -70,7 +66,17 @@ public class Nimikkeet {
     
     /**
      * Poistaa nimikkeen tunnisteen perusteella
-     * @param tunniste Nimikkeen nTunniste
+     * @param tunniste Nimikkeen tunniste
+     * <pre name="test">
+     * #THROWS SailoException
+     * Nimikkeet nimikkeet = new Nimikkeet();
+     * Nimike cnc = new Nimike(), ra = new Nimike();
+     * nimikkeet.getLkm() === 0;
+     * nimikkeet.lisaa(cnc); nimikkeet.getLkm() === 1;
+     * nimikkeet.lisaa(ra); nimikkeet.getLkm() === 2;
+     * nimikkeet.poista(ra.getTunniste()); nimikkeet.getLkm() === 1;
+     * nimikkeet.poista(cnc.getTunniste()); nimikkeet.getLkm() === 1;
+     * </pre>
      */
     public void poista(int tunniste) { 
         for (int i = 0; i < lkm; i++) {
@@ -85,7 +91,19 @@ public class Nimikkeet {
      * Palauttaa viitteen i:teen nimikkeeseen
      * @param i monennenko nimikkeen viite halutaan
      * @return viite nimikkeeseen, jonka indeksi on i
-     * @throws IndexOutOfBoundsException jos i ei ole sallitulla alueella  
+     * @throws IndexOutOfBoundsException jos i ei ole sallitulla alueella
+     * <pre name="test">
+     * #THROWS SailoException
+     * Nimikkeet nimikkeet = new Nimikkeet();
+     * Nimike cnc = new Nimike("CNC"), ra = new Nimike("RA"), d2 = new Nimike("D2");
+     * nimikkeet.getLkm() === 0;
+     * nimikkeet.lisaa(cnc); nimikkeet.getLkm() === 1;
+     * nimikkeet.lisaa(ra); nimikkeet.getLkm() === 2;
+     * nimikkeet.lisaa(d2); nimikkeet.getLkm() === 3;
+     * nimikkeet.anna(0).getNimi() === "CNC";
+     * nimikkeet.anna(1).getNimi() === "RA";
+     * nimikkeet.anna(2).getNimi() === "D2";
+     * </pre>
      */
     public Nimike anna(int i) throws IndexOutOfBoundsException {
         if (i < 0 || lkm <= i)
@@ -102,7 +120,7 @@ public class Nimikkeet {
     public Nimike annaNimike(int tunniste) {
         for (Nimike nimike : alkiot) {
             // Continue sen takia, koska rakenteessa on välissä NULL-alkioita ja
-            // ne fakuppaa tuon alemman nimikkeen etsinnän. Purkka?
+            // ne fakuppaa tuon alemman nimikkeen etsinnän. Purkkaratkaisu?
             if (nimike == null) continue;
             if (nimike.getTunniste() == tunniste) return nimike;
         }
@@ -118,13 +136,13 @@ public class Nimikkeet {
     public Nimike annaNimike(String merkkijono) {
         for (Nimike nimike : alkiot) {
             // Continue sen takia, koska rakenteessa on välissä NULL-alkioita ja
-            // ne fakuppaa tuon alemman nimikkeen etsinnän. Purkka?
+            // ne fakuppaa tuon alemman nimikkeen etsinnän. Purkkaratkaisu?
             if (nimike == null) continue;
             if (nimike.getNimi().equalsIgnoreCase(merkkijono)) return nimike;
         }
         return null;
     }
-
+    
     
     /**
      * Etsii merkkijonoa vastaavan nimikkeen
@@ -146,7 +164,6 @@ public class Nimikkeet {
         try (Scanner sc = new Scanner(new FileInputStream(tiedosto),StandardCharsets.UTF_8)) {
             while (sc.hasNextLine()) {
                 String rivi = sc.nextLine();
-                if (rivi.charAt(0) == ';') continue;
                 var uusi = new Nimike();
                 uusi.parsiNimike(rivi);
                 lisaa(uusi);
@@ -188,8 +205,7 @@ public class Nimikkeet {
      * Testiohjelma nimikkeille
      * @param args ei käytössä
      */
-    public static void main(String args[]) {
-        
+    public static void main(String args[]) {   
         Nimikkeet nimikkeet = new Nimikkeet();
         try {
             nimikkeet.lueTiedostosta();
@@ -199,18 +215,15 @@ public class Nimikkeet {
                 nimike.tulosta(System.out);
             }
         } catch (SailoException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
-
-        /**
         Nimike d1 = new Nimike();
         Nimike d2 = new Nimike();
         d1.rekisteroi();
-        d1.taytaNimikeTiedoilla();
+        d1.taytaTestiNimikeTiedoilla();
         d2.rekisteroi();
-        d2.taytaNimikeTiedoilla();
+        d2.taytaTestiNimikeTiedoilla();
 
         try {
             nimikkeet.lisaa(d1);
@@ -224,6 +237,6 @@ public class Nimikkeet {
 
         } catch (SailoException ex) {
             System.out.println(ex.getMessage());
-        } */
+        } 
     }
 }

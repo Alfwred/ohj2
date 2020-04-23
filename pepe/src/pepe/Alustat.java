@@ -14,23 +14,22 @@ import java.util.*;
 import fxPepe.SailoException;
 
 /**
- * @author anssi
- * @version 28 Feb 2020
+ * Tietorakenneluokka alusta-olioille
+ * @author Anssi Lepikko
+ * @version 23.4.2020
  *
  */
 public class Alustat implements Iterable<Alusta> {
     
-    private String tiedostonNimi = "";
-    
     /** Taulukko alustoista */
-    private final ArrayList<Alusta> alkiot = new ArrayList<Alusta>();
+    private final List<Alusta> alkiot = new ArrayList<Alusta>();
 
 
     /**
-     * 
+     * Oletusmuodostaja
      */
     public Alustat() {
-        // Toistaiseksi tyhja
+        // Ei tarvetta
     }
     
     
@@ -47,6 +46,10 @@ public class Alustat implements Iterable<Alusta> {
      * Poistaa alustan
      * @param alusta Poistettava alusta
      * @return tosi jos löytyi poistettava alusta
+     * Alustat alusta = new Alustat();
+     * Alusta alusta = new Alusta(10,"PC","Personal Computer");
+     * alustat.lisaa(alusta);
+     * alustat.poista(alusta) === true;
      */
     public boolean poista(Alusta alusta) {
         boolean poistettu = alkiot.remove(alusta);
@@ -63,7 +66,6 @@ public class Alustat implements Iterable<Alusta> {
         try (Scanner sc = new Scanner(new FileInputStream(tiedosto),StandardCharsets.UTF_8)) {
             while (sc.hasNextLine()) {
                 String rivi = sc.nextLine();
-                if (rivi.charAt(0) == ';') continue;
                 var uusi = new Alusta();
                 uusi.parsiAlusta(rivi);
                 lisaa(uusi);
@@ -73,7 +75,6 @@ public class Alustat implements Iterable<Alusta> {
         }
     }
 
-    
     
     /**
      * Tallentaa alustat tiedostoon  
@@ -88,7 +89,6 @@ public class Alustat implements Iterable<Alusta> {
             System.err.println("Virhe luettaessa tiedostoa! " + ex.getMessage());
             return;
         }
-
     }
 
 
@@ -101,41 +101,6 @@ public class Alustat implements Iterable<Alusta> {
     }
 
 
-    /**
-     * Iteraattori kaikkien alustojen läpikäymiseen
-     * @return alustojen iteraattori
-     * 
-     * @example
-     * <pre name="test">
-     * #PACKAGEIMPORT
-     * #import java.util.*;
-     * 
-     *  Alustat alustat = new Alustat();
-     *  Alusta alusta21 = new Alusta(1); alustat.lisaa(alusta21);
-     *  Alusta alusta11 = new Alusta(2); alustat.lisaa(alusta11);
-     *  Alusta alusta22 = new Alusta(3); alustat.lisaa(alusta22);
-     *  Alusta alusta12 = new Alusta(4); alustat.lisaa(alusta12);
-     *  Alusta alusta23 = new Alusta(5); alustat.lisaa(alusta23);
-     * 
-     *  Iterator<Alusta> i2=alustat.iterator();
-     *  i2.next() === alusta21;
-     *  i2.next() === alusta11;
-     *  i2.next() === alusta22;
-     *  i2.next() === alusta12;
-     *  i2.next() === alusta23;
-     *  i2.next() === alusta11;  #THROWS NoSuchElementException  
-     *  
-     *  int n = 0;
-     *  int anrot[] = {1,2,3,4,5};
-     *  
-     *  for (Alusta alusta:alustat) { 
-     *    alusta.getTunniste() === anrot[n]; n++;  
-     *  }
-     *  
-     *  n === 5;
-     *  
-     * </pre>
-     */
     @Override
     public Iterator<Alusta> iterator() {
         return alkiot.iterator();
@@ -176,11 +141,10 @@ public class Alustat implements Iterable<Alusta> {
 
 
     /**
-     * Testiohjelma alustoille
+     * Testipääohjelma alustat-luokalle
      * @param args ei käytössä
      */
     public static void main(String[] args) {
-        
         Alustat alustat = new Alustat();
         
         try {
@@ -195,7 +159,6 @@ public class Alustat implements Iterable<Alusta> {
             e.printStackTrace();
         }
         
-        /**
         Alusta a1 = new Alusta();
         a1.rekisteroi();
         a1.taytaTestiAlustaTiedoilla();
@@ -222,7 +185,6 @@ public class Alustat implements Iterable<Alusta> {
         alustat.annaAlusta(a1.getTunniste()).tulosta(System.out);
         alustat.annaAlusta(a2.getTunniste()).tulosta(System.out);
         alustat.annaAlusta(a3.getTunniste()).tulosta(System.out);
-        */
     }
 
 }

@@ -9,23 +9,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author anssi
- * @version 18 Feb 2020
+ * Luokka pelien alustoista.
+ * @author Anssi Lepikko
+ * @version 23.4.2020
  *
  */
 public class Alusta {
     
-    private int     aTunniste;              // Alustan id (järjestysnumero)
-    private String  lyhenne;                // Pelin lyhenne
-    private String  nimi;                   // Pelin koko nimi
+    private int     aTunniste;  // Alustan id (järjestysnumero)
+    private String  lyhenne;    // Pelin lyhenne
+    private String  nimi;       // Pelin koko nimi
     
     private static int seuraavaTunniste = 0;
     
     /**
-     * 
+     * Oletusmuodostaja
      */
     public Alusta() {
-        // Myöhemmin
+        // Ei tarvetta
     }
     
     /**
@@ -70,12 +71,19 @@ public class Alusta {
     /**
      * Lukee alustan merkkijonosyötteestä
      * @param merkkijono Syote, mikä muutetaan Nimike-olioksi
+     * @example
+     * <pre name="test">
+     * Alusta alusta = new Alusta();
+     * alusta.parsiAlusta("10|PS2|PlayStation 2");
+     * alusta.getTunniste() === 10;
+     * alusta.getLyhenne() === "PS2";
+     * alusta.getNimi() === "PlayStation 2";
+     * </pre>
      */
     public void parsiAlusta(String merkkijono) {
         // https://regex101.com/r/8faG5b/4/
         Pattern esiintyma = Pattern.compile("^(\\d+)\\|(.+)\\|(.+)$");
         Matcher etsija = esiintyma.matcher(merkkijono);
-
         if (etsija.find()) {
             setTunniste(Integer.parseInt(etsija.group(1)));
             this.lyhenne = etsija.group(2);
@@ -87,16 +95,23 @@ public class Alusta {
     /**
      * Tarkistaa syötetyn merkkijonon oikeellisuuden
      * @param merkkijono Mitä tarkastellaan
-     * @return True => oikeellinen, false => virheellinen
+     * @return Tosi, jos oikeellinen ja epätosi, jos väärä
+     * @example
+     * <pre name="test">
+     * Alusta alusta = new Alusta();
+     * alusta.tarkista("|") === false;
+     * alusta.tarkista("") === false;
+     * alusta.tarkista("PlayStation|") === false;
+     * alusta.tarkista("PlayStation") === true;
+     * </pre>
      */
     public boolean tarkista(String merkkijono) {
         // Tyhjän merkkijonon käsittely
         if (merkkijono.equalsIgnoreCase("")) return false;
         
-        // Estetään, että ei voi asettaa tolppaa nimen seassa
+        // Palautetaan false, jos merkkijonossa esiintyy tolppamerkki
         Pattern esiintyma = Pattern.compile("\\|");
         Matcher etsija = esiintyma.matcher(merkkijono);
-
         if (etsija.find()) return false;
         return true;
     }
@@ -119,6 +134,7 @@ public class Alusta {
         tulosta(new PrintStream(os));
     }
     
+    
     @Override
     public String toString() {
         return this.lyhenne;
@@ -130,12 +146,12 @@ public class Alusta {
      * @example
      * <pre name="test">
      *   Alusta a1 = new Alusta();
-     *   a1.getAlustanTunniste() === 0;
+     *   a1.getTunniste() === 0;
      *   a1.rekisteroi();
      *   Alusta a2 = new Alusta();
      *   a2.rekisteroi();
-     *   int n1 = a1.getAlustanTunniste();
-     *   int n2 = a2.getAlustanTunniste();
+     *   int n1 = a1.getTunniste();
+     *   int n2 = a2.getTunniste();
      *   n1 === n2-1;
      * </pre>
      */
@@ -212,6 +228,7 @@ public class Alusta {
     
       
     /**
+     * Testipääohjelma alusta-luokalle
      * @param args Ei käytössä
      */
     public static void main(String[] args) {

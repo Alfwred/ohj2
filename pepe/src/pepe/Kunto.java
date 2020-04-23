@@ -9,18 +9,18 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @author anssi
- * @version 7 Apr 2020
- *
+ * Tietorakenne kuntoluokituksille, jotka auttavat asettamaan pelille kuntotiedot
+ * @author Anssi Lepikko
+ * @version 23.4.2020
+ * 
  */
 public class Kunto implements Iterable<Kuntoluokitus> {
     
-
     /** Taulukko Kunto-olioista */
     private final List<Kuntoluokitus> alkiot = new ArrayList<Kuntoluokitus>();
 
     /**
-     * Kuntoluokitusten luonti
+     * Kuntoluokitusten luonti. Kovakoodatut oliot ja niiden ominaisuudet
      */
     public Kunto() {
         this.alkiot.add(new Kuntoluokitus(3, "MINT"));
@@ -39,6 +39,13 @@ public class Kunto implements Iterable<Kuntoluokitus> {
      * Hakee luokitusta vastaavan kuvaavan Kunto-olion
      * @param arvo Peliin sidottu kunnon arvo
      * @return kuntoa vastaava Kunto-olio
+     * @example
+     * <pre name="test">
+     * Kunto luokitukset = new Kunto();
+     * luokitukset.haeLuokitus(3).toString() === "MINT";
+     * luokitukset.haeLuokitus(2).toString() === "OK";
+     * luokitukset.haeLuokitus(1).toString() === "HUONO";
+     * </pre>
      */
     public Kuntoluokitus haeLuokitus(int arvo) {
         for (Kuntoluokitus kunto : alkiot) {
@@ -58,6 +65,7 @@ public class Kunto implements Iterable<Kuntoluokitus> {
     
 
     /**
+     * Testipääohjelma
      * @param args Ei käytössä
      */
     public static void main(String[] args) {

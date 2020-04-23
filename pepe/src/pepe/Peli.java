@@ -10,8 +10,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author anssi
- * @version 18 Feb 2020
+ * Luokka peleille. Pelit koostuvat nimikkeen ja alustan tunnisteen lisäksi muista tiedoista.
+ * @author Anssi Lepikko
+ * @version 23.4.2020
  *
  */
 public class Peli {
@@ -23,16 +24,16 @@ public class Peli {
     private int     hankintavuosi;          // Pelin hankintavuosi
     private int     levy;                   // Levyn kunto 0-2
     private int     kotelo;                 // Kotelon kunto 0-2
-    private int     ohje;              // Ohjekirjan kunto 0-2
+    private int     ohje;                   // Ohjekirjan kunto 0-2
     private String  lisatiedot;             // Lisätiedot pelille (muistiinpanoja)
     
     private static int seuraavaTunniste = 0;
 
     /**
-     * Parametriton
+     * Oletusmuodostaja
      */
     public Peli() {
-        // Parametriton
+        // Ei tarvetta
     }
     
     
@@ -80,15 +81,14 @@ public class Peli {
     
     
     /**
-    * Apumetodi, jolla saadaan täytettyä testiarvot peliTiedolle
+    * Apumetodi, jolla saadaan täytettyä testiarvot pelille
     * Tunniste arvotaan, jotta kahdella peliTiedolla olisi
     * samoja tietoja.
     */
     public void taytaPeliTiedoilla() {
         Random random = new Random();
         int t = random.nextInt(100 - 1 + 1);
-        int a = random.nextInt(100 - 1 + 1);
-          
+        int a = random.nextInt(100 - 1 + 1);    
         taytaTestiPeliTiedoilla(t, a);
     }
     
@@ -134,17 +134,17 @@ public class Peli {
     }
     
     /**
-     * Antaa peliTiedolle seuraavan tunnistenumeron.
-     * @return pTunniste Uusi tunnistenumero
+     * Antaa pelille seuraavan tunnistenumeron
+     * @return Uusi tunniste
      * @example
      * <pre name="test">
-     *   PeliTieto ra1 = new PeliTieto();
-     *   ra1.getPelinTunniste() === 0;
+     *   Peli ra1 = new Peli();
+     *   ra1.getTunniste() === 0;
      *   ra1.rekisteroi();
-     *   PeliTieto ra2 = new PeliTieto();
+     *   Peli ra2 = new Peli();
      *   ra2.rekisteroi();
-     *   int n1 = ra1.getPelinTunniste();
-     *   int n2 = ra2.getPelinTunniste();
+     *   int n1 = ra1.getTunniste();
+     *   int n2 = ra2.getTunniste();
      *   n1 === n2-1;
      * </pre>
      */
@@ -337,7 +337,15 @@ public class Peli {
     /**
      * Tarkistaa syötetyn merkkijonon oikeellisuuden
      * @param merkkijono Mitä tarkastellaan
-     * @return True => oikeellinen, false => virheellinen
+     * @return Tosi, jos oikeellinen ja epätosi, jos virheellinen
+     * @example
+     * <pre name="test">
+     * Peli peli = new Peli();
+     * peli.tarkista("|") === false;
+     * peli.tarkista("") === false;
+     * peli.tarkista("merkkijono|") === false;
+     * peli.tarkista("merkkijono") === true;
+     * </pre>
      */
     public boolean tarkista(String merkkijono) {
         // Tyhjän merkkijonon käsittely
@@ -346,7 +354,6 @@ public class Peli {
         // Estetään, että ei voi asettaa tolppaa nimen seassa
         Pattern esiintyma = Pattern.compile("\\|");
         Matcher etsija = esiintyma.matcher(merkkijono);
-
         if (etsija.find()) return false;
         return true;
     }
@@ -355,14 +362,33 @@ public class Peli {
     /**
      * Tarkistaa syötetyn vuosiluvun oikeellisuden
      * @param merkkijono Tarkasteltava merkkijono
-     * @return True => oikeellinen, false => virheellinen
+     * @return Tosi, jos oikeellinen ja epätosi, jos virheellinen
+     * @example
+     * <pre name="test">
+     * Peli peli = new Peli();
+     * peli.setHankintavuosi(2000);
+     * peli.tarkistaJulkaisuvuosi("") === false;
+     * peli.tarkistaJulkaisuvuosi("0") === false;
+     * peli.tarkistaJulkaisuvuosi("0000") === false;
+     * peli.tarkistaJulkaisuvuosi("2020") === false;
+     * peli.tarkistaJulkaisuvuosi("1998") === true;
+     * peli.tarkistaJulkaisuvuosi("1982") === true;
+     * 
+     * peli.setJulkaisuvuosi(2020);
+     * peli.tarkistaHankintavuosi("") === false;
+     * peli.tarkistaHankintavuosi("0") === false;
+     * peli.tarkistaHankintavuosi("0000") === false;
+     * peli.tarkistaHankintavuosi("1999") === false;
+     * peli.tarkistaHankintavuosi("2020") === true;
+     * </pre>
      */
     public boolean tarkistaJulkaisuvuosi(String merkkijono) {
         // Estetään väärä syöte
         // https://regex101.com/r/BQpUZC/1
         Pattern esiintyma = Pattern.compile("^(19|20)\\d{2}$");
         Matcher etsija = esiintyma.matcher(merkkijono);
-        if (etsija.find() && Integer.parseInt(merkkijono) < this.getHankintavuosi()) return true;
+        // TODO: IF-lause pitäisi hyödyntää regexpii
+        if (etsija.find() && Integer.parseInt(merkkijono) <= this.getHankintavuosi()) return true;
         return false;
     }
     
@@ -377,7 +403,7 @@ public class Peli {
         // https://regex101.com/r/BQpUZC/1
         Pattern esiintyma = Pattern.compile("^(19|20)\\d{2}$");
         Matcher etsija = esiintyma.matcher(merkkijono);
-        if (etsija.find() && Integer.parseInt(merkkijono) > this.getJulkaisuvuosi()) return true;
+        if (etsija.find() && Integer.parseInt(merkkijono) >= this.getJulkaisuvuosi()) return true;
         return false;
     }
     

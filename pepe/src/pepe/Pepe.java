@@ -1,13 +1,14 @@
 package pepe;
 
+import java.util.ArrayList;
 import java.util.List;
 import fxPepe.SailoException;
 
 /**
- * Pepe-luokka, joka huolehtii pelikannasta. Pääosin kaikki metodit
- * ovat vain "välittäjämetodeja" pelikantaan.
- * @author anssi
- * @version 23 Feb 2020
+ * Pepe-luokka, joka on kaikkien tietorakenneluokkien yläluokka.
+ * Pääosin kaikki metodit ovat vain "välittäjämetodeja" pelikannan luokkiin.
+ * @author Anssi Lepikko
+ * @version 23.4.2020
  *
  */
 public class Pepe {
@@ -38,6 +39,7 @@ public class Pepe {
         this.peliViite = peli;
     }
     
+    
     /**
      * Haetaan controlleria varten talletetun pelin viite
      * @return Viite peliin
@@ -49,8 +51,7 @@ public class Pepe {
     
     /**
      * Asetetaan lipun totuusarvo. Lippua voi käyttää välittämään tietoa tehtävien onnistumisesta.
-     * True => Onnistui
-     * False => Epäonnistui/ei muutoksia
+     * Tosi, jos onnistui. Epätosi, jos epäonnistui.
      * @param totuusarvo Lipun totuusarvo
      */
     public void setLippu(boolean totuusarvo) {
@@ -65,55 +66,27 @@ public class Pepe {
     public boolean getLippu() {
         return this.lippu;
     }
-
-
+    
+    
     /**
-     * Lisää pepeen uuden pelin
-     * @param peli lisättävä peli
-     * @throws SailoException jos lisäystä ei voida tehdä
-     * @example
-     * <pre name="test">
-     * #THROWS SailoException
-     * Pepe pepe = new Pepe();
-     * Peli cnc = new Peli(), d2 = new Peli();
-     * cnc.rekisteroi(); d2.rekisteroi();
-     * pepe.getPeleja() === 0;
-     * pepe.lisaa(cnc); pepe.getPeleja() === 1;
-     * pepe.lisaa(d2); pepe.getPeleja() === 2;
-     * pepe.lisaa(cnc); pepe.getPeleja() === 3;
-     * pepe.getPeleja() === 3;
-     * pepe.annaPeli(0) === cnc;
-     * pepe.annaPeli(1) === d2;
-     * pepe.annaPeli(2) === cnc;
-     * pepe.annaPeli(3) === cnc; #THROWS IndexOutOfBoundsException 
-     * pepe.lisaa(cnc); pepe.getPeleja() === 4;
-     * pepe.lisaa(cnc); pepe.getPeleja() === 5;
-     * pepe.lisaa(cnc);            #THROWS SailoException
-     * </pre>
+     * Lisää pelin
+     * @param peli Lisättävä peli-olio
      */
-    public void lisaa(Peli peli) throws SailoException {
+    public void lisaa(Peli peli) {
         pelit.lisaa(peli);
     }
     
     
-    /** 
-     * Poistaa tämän pelin (ja nimikkeen, jos mikään muu peli
-     * ei viittaa samaan nimikkeeseen)
-     * @param peli Poistettava peli
-     * @example
-     * TODO paskat testit
-     * <pre name="test">
-     * #THROWS Exception
-     *   alustaKerho();
-     *   kerho.annaHarrastukset(aku1).size() === 2;
-     *   kerho.poistaHarrastus(pitsi11);
-     *   kerho.annaHarrastukset(aku1).size() === 1;
-     */ 
+    /**
+     * Poistaa pelin
+     * @param peli Poistettava peli-olio
+     */
     public void poista(Peli peli) {
         int lkm = annaSamatNimikkeet(peli);
         if (lkm <= 1) nimikkeet.poista(peli.getNimike());
         pelit.poista(peli);
     }
+    
     
     /**
      * Poistaa alustan
@@ -128,20 +101,46 @@ public class Pepe {
      * Etsii kuinka monessa pelissä on sama nimike
      * @param peli Peli, jonka nimikettä tarkastellaan
      * @return Nimikkeiden lukumäärä
+     * @example
+     * <pre name="test">
+     *  #THROWS SailoException
+     *  #import fxPepe.SailoException;
+     *  Pepe pepe = new Pepe();
+     *  Pelit pelit = new Pelit();
+     *  Nimikkeet nimikkeet = new Nimikkeet();
+     *  Nimike n1 = new Nimike();
+     *  n1.rekisteroi();
+     *  n1.taytaTestiNimikeTiedoilla();
+     *  nimikkeet.lisaa(n1);
+     *  Peli p1 = new Peli();
+     *  Peli p2 = new Peli();
+     *  Peli p3 = new Peli();
+     *  p1.rekisteroi();
+     *  p2.rekisteroi();
+     *  p3.rekisteroi();
+     *  p1.taytaTestiPeliTiedoilla(n1.getTunniste(), 0);
+     *  p2.taytaTestiPeliTiedoilla(n1.getTunniste(), 0);
+     *  p3.taytaTestiPeliTiedoilla(n1.getTunniste(), 0);
+     *  pelit.lisaa(p1);
+     *  pelit.lisaa(p2);
+     *  pelit.lisaa(p3);
+     *  pepe.annaSamatNimikkeet(p1) === 0;
+     *  pepe.annaSamatNimikkeet(p2) === 0;
+     *  pepe.annaSamatNimikkeet(p3) === 0;
+     * </pre>
      */
     public int annaSamatNimikkeet(Peli peli) {
         int lkm = 0;
         for (Peli loydetty : pelit)
             if (loydetty.getNimike() == peli.getNimike()) lkm++;;
-            System.out.println("PEPE: Samoja nimikkeitä jäljellä: " + (lkm - 1));
         return lkm;
     }
    
 
     /**
      * Listään uusi nimike Pepeen
-     * @param nimike lisättävä nimike
-     * @throws SailoException jos lisäystä ei voida tehdä
+     * @param nimike Lisättävä nimike
+     * @throws SailoException Jos lisäystä ei voida tehdä
      */
     public void lisaa(Nimike nimike) throws SailoException {
         nimikkeet.lisaa(nimike);
@@ -149,7 +148,7 @@ public class Pepe {
     
     
     /**
-     * Listään uusi alusta Pepeen
+     * Listään uusi alusta PEPE:en
      * @param alusta Lisättävä alusta 
      */
     public void lisaa(Alusta alusta) {
@@ -168,6 +167,7 @@ public class Pepe {
     
     
     /**
+     * Antaa kaikki pelit listassa
      * @return Lista peleistä
      */
     public List<Peli> annaPelit() {
@@ -176,6 +176,23 @@ public class Pepe {
     
     
     /**
+     * Haetaan pelit hakuehdon perusteella (hakee nyt vain nimikkeistä)
+     * @param hakuehto Hakuehto, minkä mukaan pelejä haetaan
+     * @return Lista peleistä, jotka täyttävät hakuehdon
+     */
+    public List<Peli> etsiPelit(String hakuehto) {
+        List<Peli> haetut = new ArrayList<Peli>();
+        for (Peli peli : pelit) {
+            if (nimikkeet.annaNimike(peli.getNimike()).vertaa(hakuehto)) {
+                haetut.add(peli);
+            }
+        }    
+        return haetut;
+    }
+    
+    
+    /**
+     * Antaa kaikki alustat listassa
      * @return Lista alustoista
      */
     public List<Alusta> annaAlustat() {
@@ -183,6 +200,7 @@ public class Pepe {
     }
     
     /**
+     * Antaa kaikki kuntoluokitukset listassa
      * @return Lista kuntoluokituksista
      */
     public List<Kuntoluokitus> annaKuntoluokitukset() {
@@ -392,11 +410,10 @@ public class Pepe {
     
     
     /**
-     * Testiohjelma pepesta
-     * @param args ei käytössä
+     * Testiohjelma
+     * @param args Ei käytössä
      */
     public static void main(String args[]) {
-        
         Pepe pepe = new Pepe();
         
         try {
@@ -406,12 +423,9 @@ public class Pepe {
                 loytynyt.tulosta(System.out);
             }
         } catch (SailoException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        
-        /**
         try {
             
             // Alustojen testiluonti
@@ -451,10 +465,6 @@ public class Pepe {
 
             System.out.println("============= Pepen testi =================");
             
-            // pepe.annaPeli(0).tulosta(System.out);
-            // pepe.annaNimike(pepe.annaPeli(0)).tulosta(System.out);
-            // pepe.annaAlusta(pepe.annaPeli(0)).tulosta(System.out);
-            
             for (int i = 0; i  < pepe.getPeleja(); i++) {
                 Peli loytynyt = pepe.annaPeli(i);
                 loytynyt.tulosta(System.out);
@@ -466,7 +476,6 @@ public class Pepe {
         } catch (SailoException ex) {
             System.out.println(ex.getMessage());
         }
-        */
     }
 
 }

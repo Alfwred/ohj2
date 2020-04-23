@@ -2,27 +2,18 @@ package fxPepe;
 
 import java.awt.Desktop;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import fi.jyu.mit.fxgui.Dialogs;
-import fi.jyu.mit.fxgui.ListChooser;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.StringGrid;
-import fi.jyu.mit.fxgui.TextAreaOutputStream;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Font;
-import pepe.Alusta;
 import pepe.Nimike;
 import pepe.Peli;
 import pepe.Pepe;
@@ -32,7 +23,7 @@ import fxPepe.SailoException;
 /**
  * Luokka Pepen käyttöliittymän tapahtumien hoitamiseksi.
  * @author Anssi Lepikko
- * @version 14 Feb 2020
+ * @version 23.4.2020
  *
  */
 public class PepeGUIController implements Initializable {
@@ -43,51 +34,28 @@ public class PepeGUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
-        alusta();
-        
         // Avataan muokkausikkuna, kun tuplaklikataan peliä
         gridPelit.setOnMouseClicked( e -> { if ( e.getClickCount() == 2 ) muokkaaPeli(); });
-     
     }
     
-    @FXML private void handleHakuehto() {
-        String hakukentta = hakuehto.getSelectedText();
-        String ehto = hakuehto.getText(); 
-        if ( ehto.isEmpty() )
-            naytaIlmoitus(null);
-        else
-            naytaIlmoitus("Ei osata vielä hakea " + hakukentta + ": " + ehto);
-    }
-    
+    @FXML void handleHakuehto() { haku(); }
     @FXML void handleInfo() { avustus(); }
-    @FXML void handleListaLaskeva() { naytaIlmoitus("Ei toimi vielä!"); }
-    @FXML void handleListaNouseva() { naytaIlmoitus("Ei toimi vielä!"); }
-    @FXML void handleListaSuodata() { naytaIlmoitus("Ei toimi vielä!"); }
     @FXML void handlePeliLisaa() { uusiPeli(); }
     @FXML void handlePeliMuokkaa() { muokkaaPeli(); }
     @FXML void handlePeliPoista() { poistaPeli(); }
-    @FXML void handleAlustaMuokkaa() { muokkaaAlusta(); }
-    @FXML void handleRekisteriAvaa() { Dialogs.showMessageDialog("Ei toimi"); }
+    @FXML void handleAlustaMuokkaa() { muokkaaAlustoja(); }
     @FXML void handleRekisteriTallenna() throws SailoException { tallenna(); }
-    @FXML private void handleLopeta() throws SailoException { tallenna(); Platform.exit(); }
+    @FXML void handleLopeta() throws SailoException { tallenna(); Platform.exit(); }
     
 //===========================================================================================
     
     private Pepe pepe;
     private Peli peliValittu;
 
-    
     /**
-     * Tekee tarvittavat muut alustukset, nyt vaihdetaan GridPanen tilalle
-     * yksi iso tekstikenttä, johon voidaan tulostaa jäsenten tiedot.
-     * Alustetaan myös jäsenlistan kuuntelija 
+     * Näyttää ilmoituksen käyttöliittymässä
+     * @param merkkijono Ilmoitus
      */
-    protected void alusta() {
-        gridPelit.clear();
-        
-    }
-
-    
     private void naytaIlmoitus(String merkkijono) {
         if ( merkkijono == null || merkkijono.isEmpty() ) {
             labelVirhe.setText("");
@@ -100,9 +68,9 @@ public class PepeGUIController implements Initializable {
     
     
     /**
-     * Alustaa pepen lukemalla pelikannan
+     * Lukee PEPE:n pelikannan
      */
-    protected void lueTiedosto() {
+    private void lueTiedosto() {
         try {
             pepe.lueTiedostosta();
             naytaIlmoitus("Pelikanta luettu!");
@@ -113,31 +81,19 @@ public class PepeGUIController implements Initializable {
 
     
     /**
-     * Tietojen tallennus
-     * @throws SailoException 
+     * Pelikannan tallennus
+     * @throws SailoException Virhe
      */
     private void tallenna() throws SailoException {
         pepe.tallenna();
         naytaIlmoitus("Pelikanta tallennettu!");
     }
-
-
-    /**
-     * Tarkistetaan onko tallennus tehty
-     * @return true jos saa sulkea sovelluksen, false jos ei
-     * @throws SailoException Virhe
-     */
-    public boolean voikoSulkea() throws SailoException {
-        tallenna();
-        return true;
-    }
     
     
     /**
-     * Poistaavalitun pelin
+     * Poistaa gridistä valitun pelin
      */
-    protected void poistaPeli() {
-        
+    private void poistaPeli() {
         peliValittu = gridPelit.getObject();
         
         // Ei poisteta, jos ei ole valittu peliä
@@ -151,7 +107,7 @@ public class PepeGUIController implements Initializable {
         pepe.poista(peliValittu);
 
         // Päivitetään pelilista
-        hae();
+        haeGridiin();
     }
     
     
@@ -180,25 +136,46 @@ public class PepeGUIController implements Initializable {
         else naytaIlmoitus("Peli muokattu onnistuneesti!");
         
         // Päivitetään pelilista
-        hae(); 
+        haeGridiin(); 
     }
     
     
     /**
      * Hakee pelien tiedot StrinGridiin
      */
-    protected void hae() {
+    private void haeGridiin() {
         gridPelit.clear();        
         List<Peli> pelit = pepe.annaPelit();
+        for (Peli peli : pelit) gridPelit.add(peli, pepe.haeKentat(peli));
+    }
+    
+    /**
+     * Hakukentän lukeminen
+     */
+    private void haku() {
+        String ehto = hakuehto.getText(); 
+        if ( ehto.isEmpty() )
+            naytaIlmoitus("");
+        else
+            naytaIlmoitus("Haetaan hakuehdolla: " + ehto);
+            etsi(ehto);
+    }
+    
+    /**
+     * Etsii pelit tietyin ehdoin
+     * @param merkkijono Hakuehto, jolla pelejä haetaan
+     */
+    private void etsi(String merkkijono) {
+        gridPelit.clear();        
+        List<Peli> pelit = pepe.etsiPelit(merkkijono);
         for (Peli peli : pelit) gridPelit.add(peli, pepe.haeKentat(peli));
     }
 
 
     /**
-     * Luo uuden pelin, jota aletaan editoimaan
+     * Luodaan uusi peli ja avataan muokkausikkuna
      */
-    protected void uusiPeli() {
-        
+    private void uusiPeli() {
         // Nimikkeen luonti
         Nimike nimike = new Nimike("Uusi peli");
         nimike.rekisteroi();
@@ -232,15 +209,14 @@ public class PepeGUIController implements Initializable {
         else naytaIlmoitus("Uusi peli luotu: " + pepe.annaNimike(uusi).getNimi());
         
         // Päivitetään pelilista
-        hae();
+        haeGridiin();
     }
     
     
     /**
      * Avataan alusten muokkausdialogi
      */
-    protected void muokkaaAlusta() {
-        
+    private void muokkaaAlustoja() {
         // Lipun arvon asetus, jotta voidaan alempana testa muutoksia
         pepe.setLippu(false);
         
@@ -252,17 +228,17 @@ public class PepeGUIController implements Initializable {
         else naytaIlmoitus("Alustojen muokkaus onnistunut!");
         
         // Päivitetään pelilista
-        hae();
+        haeGridiin();
     }
     
 
     /**
-     * @param pepe Pepe jota käytetään tässä käyttöliittymässä
+     * @param pepe PEPE-olio jota käytetään tässä käyttöliittymässä
      */
     public void setPepe(Pepe pepe) {
         this.pepe = pepe;
         lueTiedosto();
-        hae();
+        haeGridiin();
     }
 
     

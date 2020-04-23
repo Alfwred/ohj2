@@ -3,30 +3,21 @@ package fxPepe;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import fi.jyu.mit.fxgui.StringGrid;
-import fi.jyu.mit.ohj2.Mjonot;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import pepe.*;
 
 
 /**
- * @author anssi
- * @version 6 Apr 2020
+ * Alustojen käyttöliittymäluokka.
+ * @author Anssi Lepikko
+ * @version 23.4.2020
  *
  */
 public class PepeAlustaController implements ModalControllerInterface<Pepe>, Initializable  {
@@ -41,9 +32,36 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
     @FXML private Text textIlmoitus;
     @FXML private StringGrid<Alusta> gridAlustat;
     
+    @FXML void handleUUSI() { uusiAlusta(); }
+    @FXML void handlePOISTA() { poistaAlusta(); }
+    @FXML void handleOK() { pepe.setLippu(true); ModalController.closeStage(alustaNimi); }
+    
+    @Override public void initialize(URL url, ResourceBundle bundle) { /** Ilman käyttötarkoitusta */ }
+    @Override public Pepe getResult() { return pepe; }
+    @Override public void handleShown()  { /** Ilman käyttötarkoitusta */ }
 
-    @FXML void handleUUSI() { 
-        Alusta uusi = new Alusta("UUDEN ALUSTAN LYHENNE", "Uuden alustan nimi");
+    @Override
+    public void setDefault(Pepe pepe) {
+        this.pepe = pepe;
+        haeGridiin();
+    }
+    
+    
+    /**
+     * Hakee alustat StringGridiin
+     */
+    private void haeGridiin() {
+        gridAlustat.clear();        
+        List<Alusta> alustat = pepe.annaAlustat();
+        for (Alusta alusta : alustat) gridAlustat.add(alusta, pepe.haeKentat(alusta));
+    }
+    
+    
+    /**
+     * Uuden alustan luonti
+     */
+    private void uusiAlusta() {
+        Alusta uusi = new Alusta("LYHENNE", "Nimi");
         uusi.rekisteroi();
         pepe.lisaa(uusi);
         
@@ -51,7 +69,7 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
         String ilmoitus;
         ilmoitus = pepe.asetaMuutokset(uusi, "lyhenne", alustaLyhenne.getText());
         if (ilmoitus.equalsIgnoreCase("VIRHE")) {
-            alustaLyhenne.getStyleClass().add("virhe"); // Värjäys ei vielä toimi
+            alustaLyhenne.getStyleClass().add("virhe");
             naytaIlmoitus("Alustan lyhenne virheellinen!");
             pepe.poista(uusi);
             return;
@@ -59,21 +77,28 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
         
         ilmoitus = pepe.asetaMuutokset(uusi, "nimi", alustaNimi.getText());
         if (ilmoitus.equalsIgnoreCase("VIRHE")) {
-            alustaNimi.getStyleClass().add("virhe"); // Värjäys ei vielä toimi
+            alustaNimi.getStyleClass().add("virhe");
             naytaIlmoitus("Alustan nimi virheellinen!");
             pepe.poista(uusi);
             return;
         }
         
+        alustaLyhenne.clear();
+        alustaNimi.clear();
+        naytaIlmoitus("Uusi alusta luotu!");
+        
         // Alustoihin tehty muutoksia ja muutokset ok
         pepe.setLippu(true);
         
         // Päivitetään listaus
-        hae();
+        haeGridiin();
     }
     
     
-    @FXML void handlePOISTA() {
+    /**
+     * Alustan poisto
+     */
+    private void poistaAlusta() {
         if (gridAlustat.getObject() == null) return;
         naytaIlmoitus("Alusta " + gridAlustat.getObject() + " poistettu!");
         pepe.poista(gridAlustat.getObject());
@@ -82,51 +107,14 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
         pepe.setLippu(true);
         
         // Päivitetään listaus
-        hae();
-    }
-    
-    
-    @FXML void handleOK() {
-        pepe.setLippu(true);
-        ModalController.closeStage(alustaNimi);
-    }
-    
-
-    @Override
-    public void initialize(URL url, ResourceBundle bundle) {
-        // Kommentti
-    }
-    
-
-    @Override
-    public Pepe getResult() {
-        return pepe;
-    }
-    
-
-    @Override
-    public void handleShown() {
-        // Kommentti
-    }
-
-    
-    @Override
-    public void setDefault(Pepe pepe) {
-        this.pepe = pepe;
-        hae();
+        haeGridiin();
     }
     
     
     /**
-     * Hakee alustat StringGridiin
+     * Näytetään ilmoitus käyttöliittymässä
+     * @param merkkijono Ilmoitus
      */
-    protected void hae() {
-        gridAlustat.clear();        
-        List<Alusta> alustat = pepe.annaAlustat();
-        for (Alusta alusta : alustat) gridAlustat.add(alusta, pepe.haeKentat(alusta));
-    }
-    
-    
     private void naytaIlmoitus(String merkkijono) {
         if ( merkkijono == null || merkkijono.isEmpty() ) {
             textIlmoitus.setText("");

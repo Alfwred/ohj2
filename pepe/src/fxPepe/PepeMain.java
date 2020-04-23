@@ -1,22 +1,17 @@
 package fxPepe;
 	
-import fi.jyu.mit.fxgui.Dialogs;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import pepe.Pepe;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
 
 
 /**
- * 
- * @author anssi
- * @version 14 Feb 2020
- * 
- * Pääohjelma Pepe-ohjelman käynnistämiseksi
- *
+ * PEPE:n pääohjelma, joka käynnistää käyttöliittymän
+ * @author Anssi Lepikko
+ * @version 23.4.2020
  */
 public class PepeMain extends Application {
 	@Override
@@ -30,11 +25,6 @@ public class PepeMain extends Application {
 	    scene.getStylesheets().add(getClass().getResource("pepe.css").toExternalForm());
 	    primaryStage.setScene(scene);
 	    primaryStage.setTitle("PEPE");
-	    
-	    // Voiko sulkea -dialogi
-	    //primaryStage.setOnCloseRequest((event) -> {
-	    //   if ( !pepeCtrl.voikoSulkea() ) event.consume();
-	    //});
 	    
 	    Pepe pepe = new Pepe();  
         pepeCtrl.setPepe(pepe);

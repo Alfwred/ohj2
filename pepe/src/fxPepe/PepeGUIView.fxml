@@ -18,7 +18,6 @@
         <menus>
           <Menu mnemonicParsing="false" text="Tiedosto">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleRekisteriAvaa" text="Avaa rekisteri" />
                   <MenuItem mnemonicParsing="false" onAction="#handleRekisteriTallenna" text="Tallenna rekisteri">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -54,7 +53,7 @@
                <center>
                   <BorderPane BorderPane.alignment="CENTER">
                      <center>
-                        <StringGrid fx:id="gridPelit" emptyStyleClass="" minWidth="820.0" rivit="#|Peli|Alusta|Julkaisuvuosi|Hankintavuosi|Levy|Ohje|Kunto|Lisätietoja" scaleShape="false" BorderPane.alignment="CENTER">
+                        <StringGrid fx:id="gridPelit" emptyStyleClass="" minWidth="815.0" rivit="#|Peli|Alusta|Julkaisuvuosi|Hankintavuosi|Levy|Ohje|Kunto|Lisätietoja" scaleShape="false" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets />
                            </BorderPane.margin></StringGrid>
@@ -84,12 +83,12 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                            <HBox.margin>
-                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                              <Insets right="20.0" />
                            </HBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#handlePeliPoista" text="POISTA">
                            <HBox.margin>
-                              <Insets bottom="20.0" right="20.0" />
+                              <Insets right="20.0" />
                            </HBox.margin>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -100,28 +99,12 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                            <HBox.margin>
-                              <Insets bottom="20.0" right="20.0" />
+                              <Insets right="20.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#handleListaNouseva" text="↑">
+                        <TextField fx:id="hakuehto" onAction="#handleHakuehto" prefWidth="250.0" promptText="Syötä hakutermi">
                            <HBox.margin>
-                              <Insets bottom="20.0" right="20.0" />
-                           </HBox.margin>
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#handleListaLaskeva" text="↓">
-                           <HBox.margin>
-                              <Insets bottom="20.0" right="20.0" />
-                           </HBox.margin>
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </Button>
-                        <TextField fx:id="hakuehto" onAction="#handleHakuehto" prefWidth="200.0" promptText="Syötä hakutermi">
-                           <HBox.margin>
-                              <Insets bottom="20.0" right="20.0" top="6.0" />
+                              <Insets right="20.0" top="6.0" />
                            </HBox.margin>
                         </TextField>
                         <Button mnemonicParsing="false" onAction="#handleHakuehto" text="HAE">
@@ -129,17 +112,20 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                            <HBox.margin>
-                              <Insets bottom="20.0" right="15.0" />
+                              <Insets right="20.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#handleListaSuodata" text="SUODATA">
+                        <Button mnemonicParsing="false" onAction="#handleAlustaMuokkaa" text="ALUSTAT">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
                         </Button>
                      </children>
                      <padding>
-                        <Insets top="20.0" />
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                   </HBox>
                </center>
