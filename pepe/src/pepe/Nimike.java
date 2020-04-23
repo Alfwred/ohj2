@@ -138,14 +138,6 @@ public class Nimike {
         return this.nimi;
     }
     
-    /**
-     * Asettaa nimikkeen nimen suoraan. Testien apumetodi.
-     * @param merkkijono Merkkijono, mikä asetetaan nimeksi
-     */
-    public void setNimi(String merkkijono) {
-        this.nimi = merkkijono;
-    }
-    
     
     @Override
     public String toString() {

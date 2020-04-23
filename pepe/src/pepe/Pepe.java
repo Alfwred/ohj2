@@ -342,12 +342,13 @@ public class Pepe {
                     break;
                 }
                 
-                // Lisätään nimike
-                peli.setNimike(uusi.getTunniste());
-                
                 // Poistetaan aikaisempi nimike, jos se ei ole muiden pelien käytössä
                 int lkm = annaSamatNimikkeet(peli);
-                if (lkm <= 1) nimikkeet.poista(peli.getNimike());
+                if (lkm <= 1) { nimikkeet.poista(peli.getNimike());
+                
+                // Lisätään nimike
+                peli.setNimike(uusi.getTunniste());
+                }
                 
                 return "UUSI NIMIKE OK";
             }

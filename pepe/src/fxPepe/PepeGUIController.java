@@ -206,7 +206,7 @@ public class PepeGUIController implements Initializable {
             pepe.poista(uusi);
             naytaIlmoitus("Pelin muokkaus peruutettu!");
         }
-        else naytaIlmoitus("Uusi peli luotu: " + pepe.annaNimike(uusi).getNimi());
+        else naytaIlmoitus("Uusi peli luotu!");
         
         // Päivitetään pelilista
         haeGridiin();

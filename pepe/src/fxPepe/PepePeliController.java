@@ -37,7 +37,7 @@ public class PepePeliController implements ModalControllerInterface<Pepe>, Initi
     @FXML private TextField peliLisatiedot;
     @FXML private Text textIlmoitus;
 
-    @FXML void handleOK() { asetaMuutokset(); }
+    @FXML void handleOK() { hyvaksyMuutokset(); }
     
     @Override public void initialize(URL url, ResourceBundle bundle)  { /** Ilman käyttötarkoitusta */ }
     @Override public Pepe getResult() { return pepe; }
@@ -77,7 +77,7 @@ public class PepePeliController implements ModalControllerInterface<Pepe>, Initi
     /**
      * Asettaa muutokset peliin
      */
-    private void asetaMuutokset() {
+    private void hyvaksyMuutokset() {
         // Muutokset
         String ilmoitus;
         
