@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxPepe.PepeAlustaController">
+<BorderPane stylesheets="@pepe.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxPepe.PepeAlustaController">
    <right>
       <StringGrid fx:id="gridAlustat" emptyStyleClass="" prefWidth="350.0" rivit="#|Lyhenne|Nimi" BorderPane.alignment="CENTER" />
    </right>
@@ -56,7 +56,7 @@
             </HBox>
             <HBox prefHeight="20.0">
                <children>
-                  <Text fx:id="textIlmoitus" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text fx:id="textIlmoitus" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
                <padding>
                   <Insets left="15.0" />

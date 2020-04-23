@@ -81,6 +81,7 @@ public class PepePeliController implements ModalControllerInterface<Pepe>, Initi
         // Muutokset
         String ilmoitus;
         
+        peliNimike.getStyleClass().remove("virhe");
         ilmoitus = pepe.asetaMuutokset(peli, "nimike", peliNimike.getText());
         if (ilmoitus.equalsIgnoreCase("VIRHE")) {
             peliNimike.getStyleClass().add("virhe");
@@ -88,21 +89,24 @@ public class PepePeliController implements ModalControllerInterface<Pepe>, Initi
             return;
         }
         
+        peliAlusta.getStyleClass().remove("virhe");
         if (peliAlusta.getValue() == null) {
             peliAlusta.getStyleClass().add("virhe");
             naytaIlmoitus("Valitse alusta!");
             return;
-        }     
+        }    
         
         pepe.asetaMuutokset(peli, "alusta", peliAlusta.getValue().getTunniste() + "");
 
+        peliJulkaisuvuosi.getStyleClass().remove("virhe");
         ilmoitus = pepe.asetaMuutokset(peli, "julkaisuvuosi", peliJulkaisuvuosi.getText());
         if (ilmoitus.equalsIgnoreCase("VIRHE")) {
             peliJulkaisuvuosi.getStyleClass().add("virhe");
             naytaIlmoitus("Virheellinen julkaisuvuosi!");
             return;
         }
-
+        
+        peliHankintavuosi.getStyleClass().remove("virhe");
         ilmoitus = pepe.asetaMuutokset(peli, "hankintavuosi", peliHankintavuosi.getText());
         if (ilmoitus.equalsIgnoreCase("VIRHE")) {
             peliHankintavuosi.getStyleClass().add("virhe");
@@ -111,7 +115,8 @@ public class PepePeliController implements ModalControllerInterface<Pepe>, Initi
         }
         
         ilmoitus = pepe.asetaMuutokset(peli, "kunto", peliKuntoLevy.getValue().getLuokitus() + "" + peliKuntoOhje.getValue().getLuokitus() + "" + peliKuntoKotelo.getValue().getLuokitus());
-
+        
+        peliLisatiedot.getStyleClass().remove("virhe");
         ilmoitus = pepe.asetaMuutokset(peli, "lisatiedot", peliLisatiedot.getText());
         if (ilmoitus.equalsIgnoreCase("VIRHE")) {
             peliLisatiedot.getStyleClass().add("virhe");

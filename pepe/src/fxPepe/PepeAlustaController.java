@@ -67,6 +67,8 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
         
         // Muutokset
         String ilmoitus;
+        
+        alustaLyhenne.getStyleClass().removeAll("virhe");
         ilmoitus = pepe.asetaMuutokset(uusi, "lyhenne", alustaLyhenne.getText());
         if (ilmoitus.equalsIgnoreCase("VIRHE")) {
             alustaLyhenne.getStyleClass().add("virhe");
@@ -75,6 +77,7 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
             return;
         }
         
+        alustaNimi.getStyleClass().removeAll("virhe");
         ilmoitus = pepe.asetaMuutokset(uusi, "nimi", alustaNimi.getText());
         if (ilmoitus.equalsIgnoreCase("VIRHE")) {
             alustaNimi.getStyleClass().add("virhe");
@@ -118,10 +121,10 @@ public class PepeAlustaController implements ModalControllerInterface<Pepe>, Ini
     private void naytaIlmoitus(String merkkijono) {
         if ( merkkijono == null || merkkijono.isEmpty() ) {
             textIlmoitus.setText("");
-            textIlmoitus.getStyleClass().removeAll("Virhe");
+            textIlmoitus.getStyleClass().removeAll("virhe");
             return;
         }
         textIlmoitus.setText(merkkijono);
-        textIlmoitus.getStyleClass().add("Virhe");
+        textIlmoitus.getStyleClass().add("virhe");
     }
 }

@@ -7,4 +7,5 @@
  .normaali {
    /* @SuppressWarning */
    -fx-background-color: white;
+   -fx-color: white;
  }
