@@ -106,12 +106,11 @@ public class Pepe {
      *  #THROWS SailoException
      *  #import fxPepe.SailoException;
      *  Pepe pepe = new Pepe();
-     *  Pelit pelit = new Pelit();
-     *  Nimikkeet nimikkeet = new Nimikkeet();
+     *  
      *  Nimike n1 = new Nimike();
      *  n1.rekisteroi();
      *  n1.taytaTestiNimikeTiedoilla();
-     *  nimikkeet.lisaa(n1);
+     *  pepe.lisaa(n1);
      *  Peli p1 = new Peli();
      *  Peli p2 = new Peli();
      *  Peli p3 = new Peli();
@@ -121,12 +120,15 @@ public class Pepe {
      *  p1.taytaTestiPeliTiedoilla(n1.getTunniste(), 0);
      *  p2.taytaTestiPeliTiedoilla(n1.getTunniste(), 0);
      *  p3.taytaTestiPeliTiedoilla(n1.getTunniste(), 0);
-     *  pelit.lisaa(p1);
-     *  pelit.lisaa(p2);
-     *  pelit.lisaa(p3);
-     *  pepe.annaSamatNimikkeet(p1) === 0;
-     *  pepe.annaSamatNimikkeet(p2) === 0;
-     *  pepe.annaSamatNimikkeet(p3) === 0;
+     *  pepe.lisaa(p1);
+     *  pepe.lisaa(p2);
+     *  pepe.lisaa(p3);
+     *  
+     *  pepe.annaSamatNimikkeet(p1) === 3;
+     *  pepe.poista(p1);
+     *  pepe.annaSamatNimikkeet(p2) === 2;
+     *  pepe.poista(p2);
+     *  pepe.annaSamatNimikkeet(p3) === 1;
      * </pre>
      */
     public int annaSamatNimikkeet(Peli peli) {
